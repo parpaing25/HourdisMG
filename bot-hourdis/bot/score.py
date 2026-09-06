@@ -49,6 +49,24 @@ def _repoussoirs(cfg: dict | None) -> list[tuple[str, re.Pattern]]:
 
 _TUTORIEL = re.compile(lexique.TUTORIEL)
 _THEMES = {nom: re.compile(motif) for nom, motif in lexique.THEMES.items()}
+_ESSENTIELS = [re.compile(rf"\b(?:{m})\b") for m in lexique.ESSENTIELS]
+
+# Combien de fois le produit doit être nommé dans le TEXTE quand le titre ne le
+# nomme pas. Trois : une mention isolée arrive dans n'importe quel article de
+# BTP (« le mur en brique du voisin »), trois marquent un sujet.
+ESSENTIEL_MIN_TEXTE = 3
+
+
+def signal_essentiel(t_titre: str, t_texte: str) -> tuple[int, int]:
+    """(dans le titre, dans le texte) — combien de fois le PRODUIT est nommé.
+
+    Voir `lexique.ESSENTIELS` : c'est le garde-fou qui a manqué le 06/09/2026,
+    quand un article sur la pression d'eau et un autre sur les gants de
+    protection sont entrés sans nommer une seule fois ce qu'Andry vend.
+    """
+    titre = sum(min(len(rx.findall(t_titre)), 2) for rx in _ESSENTIELS)
+    texte = sum(min(len(rx.findall(t_texte)), 4) for rx in _ESSENTIELS)
+    return titre, texte
 
 
 def langue_probable(texte: str) -> str:
@@ -118,9 +136,14 @@ def noter(titre: str, texte: str, genre: str = "article", langue: str = "",
     if points == 0:
         return {"score": 0, "themes": [], "motifs": ["aucun mot du métier"],
                 "hors_sujet": True, "raison": "aucun mot du métier", "langue": langue}
+
     coeur = min(58, round(points * 0.55))
 
     # ── Repoussoirs ──
+    # ⚠ AVANT la porte du produit, à dessein : « Villa à vendre, murs en brique,
+    #   toit en tuile » sera rejeté par les deux, et le motif le plus PRÉCIS doit
+    #   gagner. « annonce immobilière » se lit et se règle dans le journal ;
+    #   « le produit n'est jamais nommé » y serait trompeur — il l'est deux fois.
     for nom, motif in _repoussoirs(cfg):
         if motif.search(t_titre) or motif.search(t_texte[:4000]):
             if coeur < 30:
@@ -130,31 +153,51 @@ def noter(titre: str, texte: str, genre: str = "article", langue: str = "",
             motifs.append(f"repoussoir atténué : {nom}")
             break
 
-    score = coeur
+    # 🔴 LE PRODUIT DOIT ÊTRE NOMMÉ. Voir `lexique.ESSENTIELS` : sans cette
+    #   porte, un article de BTP générique passe sur ses seuls bonus.
+    ess_titre, ess_texte = signal_essentiel(t_titre, t_texte)
+    if ess_titre == 0 and ess_texte < ESSENTIEL_MIN_TEXTE:
+        return {"score": 0, "themes": [], "motifs": motifs + ["le produit n'est jamais nommé"],
+                "hors_sujet": True,
+                "raison": "ni hourdis, ni brique, ni tuile, ni terre cuite — BTP générique",
+                "langue": langue}
+    if ess_titre:
+        motifs.append(f"produit dans le titre ×{ess_titre}")
+
+    # ⚠ LES BONUS NE PEUVENT PAS PORTER UN ARTICLE À EUX SEULS. Ils s'ajoutent
+    #   au cœur, plafonnés par lui : un contenu qui parle peu du sujet ne peut
+    #   pas doubler sa note parce qu'il est long, pédagogique et multi-thèmes.
+    #   L'article sur les gants avait 21 de cœur et 30 de bonus (51/100) ; il en
+    #   aurait eu 21, donc 42, avant même la porte du produit.
+    bonus = 0
 
     # ── Signal « ça enseigne » ──
     if _TUTORIEL.search(t_titre) or _TUTORIEL.search(t_texte[:600]):
-        score += 12
+        bonus += 12
         motifs.append("tutoriel / conseil")
     if dans_titre:
-        score += 6
+        bonus += 6
         motifs.append("sujet dans le titre")
 
     # ── Thèmes ──
     themes = themes_de(texte, titre)
-    score += min(12, 3 * len([t for t in themes if t not in ("prix", "madagascar")]))
+    bonus += min(12, 3 * len([t for t in themes if t not in ("prix", "madagascar")]))
     if "madagascar" in themes:
-        score += 6
+        bonus += 6
         motifs.append("Madagascar")
 
-    # ── Genre, longueur, langue ──
-    score += lexique.BONUS_GENRE.get(genre, 0)
+    # ── Genre, longueur ──
+    bonus += lexique.BONUS_GENRE.get(genre, 0)
     longueur = len(t_texte)
     if longueur >= 1500:
-        score += 6
+        bonus += 6
     elif longueur >= 600:
-        score += 3
-    elif longueur < 150 and genre not in ("video", "post_fb"):
+        bonus += 3
+
+    score = coeur + min(bonus, coeur)
+
+    # ── Malus : ils ne sont PAS plafonnés, eux ──
+    if longueur < 150 and genre not in ("video", "post_fb"):
         score -= 12
         motifs.append("texte très court")
     if langue == "en":

@@ -113,6 +113,11 @@ main { padding: 20px 22px 60px; max-width: 1400px; width: 100%; margin: 0 auto; 
 .tuile.bleu b { color: var(--bleu); }
 .rangee { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .rangee.entre { justify-content: space-between; }
+/* Les largeurs des champs vivent ICI, pas dans un attribut style du HTML :
+   une règle de média ne peut pas battre un style en ligne (mesuré le
+   06/09/2026 — les champs restaient à 48 px sur téléphone). */
+.rangee > input.large { flex: 2 1 260px; min-width: 0; }
+.rangee > input.moyen { flex: 1 1 150px; min-width: 0; }
 .liste-cle-valeur div { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--bordure-fine); }
 .liste-cle-valeur div:last-child { border: 0; }
 .liste-cle-valeur span:first-child { color: var(--encre-douce); }
@@ -178,6 +183,13 @@ textarea { width: 100%; resize: vertical; }
 .badge.date-douteuse { border: 1px dashed var(--encre-legere); background: transparent; }
 
 /* ── Tables ─────────────────────────────────────────────────────────────── */
+/* 🔴 UN TABLEAU LARGE DÉFILE DANS SON PROPRE CADRE, la page jamais.
+   Mesuré le 06/09/2026 à 390 px : le tableau des sources et ses huit colonnes
+   faisaient 512 px, et toute la page partait à 543 px de large — l'écran
+   glissait sous le doigt à chaque geste vertical. Les autres vues étaient
+   saines : c'est bien le tableau, pas la coque. */
+.table-large { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-large .table { min-width: 520px; }
 .table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .table th { text-align: left; font-weight: 600; color: var(--encre-douce); font-size: 12px; padding: 8px 8px; border-bottom: 1px solid var(--bordure); }
 .table td { padding: 8px; border-bottom: 1px solid var(--bordure-fine); vertical-align: top; }
@@ -200,6 +212,8 @@ textarea { width: 100%; resize: vertical; }
 .journal { list-style: none; margin: 0; padding: 0; font-size: 12.5px; max-height: 300px; overflow: auto; }
 .journal.long { max-height: none; }
 .journal li { padding: 4px 0; border-bottom: 1px solid var(--bordure-fine); display: flex; gap: 10px; }
+/* Une adresse sans espace déborde de son enfant flex sans `min-width: 0`. */
+.journal li span { min-width: 0; overflow-wrap: anywhere; }
 .journal time { color: var(--encre-legere); flex: none; width: 46px; }
 .journal .n-erreur { color: var(--rouge); }
 .journal .n-avert { color: hsl(40 80% 30%); }
@@ -253,5 +267,12 @@ textarea { width: 100%; resize: vertical; }
   .filtres select, .filtres input { min-width: 100%; }
   .tuiles { grid-template-columns: repeat(2, 1fr); }
   h1 { font-size: 16px; }
-  .table th:nth-child(4), .table td:nth-child(4), .table th:nth-child(6), .table td:nth-child(6) { display: none; }
+  /* 🔴 UN CHAMP DE SAISIE PASSE LA LARGEUR ENTIÈRE SUR TÉLÉPHONE.
+     Mesuré le 06/09/2026 à 390 px : les deux champs d'« Ajouter une source »,
+     posés côte à côte en flex:2 / flex:1, étaient réduits à « http » et « Nc ».
+     On ne colle pas une adresse dans un champ de 40 px, et l'audience d'Andry
+     est mobile. Le bouton, lui, garde sa taille. */
+  .rangee > input[type=text], .rangee > input[type=url], .rangee > input[type=search],
+  .rangee > input[type=datetime-local], .rangee > select, .rangee > textarea { flex: 1 1 100%; min-width: 0; }
+  .un-clic { gap: 10px; }
 }

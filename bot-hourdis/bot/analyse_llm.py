@@ -36,7 +36,7 @@ SYSTEME = """Tu es l'assistant éditorial de la page Facebook « Hourdis Madagas
   "themes": ["parmi : pose, calcul, erreurs, comparatif, isolation, toiture, murs, plancher, etaiement, securite, fabrication, entretien, madagascar"],
   "langue": "fr" | "mg" | "en" — langue du contenu,
   "post_fr": "publication Facebook prête : accroche d'une ligne avec un emoji, puis 4 à 7 lignes courtes et aérées, SANS prix, SANS numéro de téléphone, SANS hashtags, SANS lien (ils sont ajoutés ensuite)",
-  "post_mg": "la même publication en malgache correct — alphabet malgache seulement (pas de c, u, q, w, x, ç), particule VE pour une question fermée, ton chaleureux et vouvoiement (ianao / tompoko)",
+  "post_mg": "la même publication en malgache correct, tel qu'un maçon de Tananarive le lit : les NOMS DE PRODUITS restent tels quels (hourdis, tuile, brique creuse, beton — il n'existe pas de mot malgache pour eux), mais tout le reste s'écrit en vrai malgache, jamais du français transcrit. Une question fermée prend la particule VE (« Manana trano ve ianao ? ») ; une question ouverte (firy, iza, inona, nahoana) et une alternative avec SA n'en prennent pas. Ton chaleureux, vouvoiement (ianao, tompoko).",
   "avertissements": ["ce que le contenu affirme de faux, de dangereux ou d'inapplicable à Madagascar ; ou vide"]
 }
 

@@ -203,6 +203,30 @@ def recuperer_pdf(url: str, session: requests.Session | None = None) -> tuple[by
     return contenu, ""
 
 
+# Un libellé de bouton n'est pas un titre. Mesuré le 06/09/2026 : quatre fiches
+# produit de Bouyer Leroux et deux brochures Rector sont entrées sous les titres
+# « Télécharger la fiche » et « Afficher le document » — le texte du lien, pas
+# celui du document. Le PDF, lui, s'annonce en première page : « Fiche produit
+# FIBROCO | Tuile décor fibro L 460 mm ».
+_LIGNE_SANS_INTERET = re.compile(
+    r"^\s*(?:\d+\s*)?(?:edition|édition|version|page|sommaire|©|www\.|http)", re.I)
+
+
+def titre_du_pdf(texte: str) -> str:
+    """La première ligne du PDF qui ressemble à un titre, ou '' si aucune."""
+    for brut in (texte or "").split("\n")[:14]:
+        ligne = re.sub(r"\s+", " ", brut).strip(" -–—|·")
+        # « 1ÉDITION 04/2026Fiche produit FIBROCO | … » : le numéro de page et la
+        # mention d'édition sont collés au titre par l'extracteur.
+        ligne = re.sub(r"^\s*\d*\s*(?:ÉDITION|EDITION|VERSION)\s*[\d/.-]*\s*", "", ligne, flags=re.I)
+        if _LIGNE_SANS_INTERET.match(ligne) or not (15 <= len(ligne) <= 140):
+            continue
+        if sum(c.isalpha() for c in ligne) < 10:
+            continue
+        return ligne
+    return ""
+
+
 def texte_du_pdf(octets: bytes, pages_max: int = 12) -> tuple[str, str]:
     """(texte, titre) des premières pages d'un PDF. Vide si pypdf manque."""
     try:
@@ -346,6 +370,84 @@ def contenu_principal(code: str) -> str:
     return code
 
 
+# 🔴 CE QUI N'EST PAS UN ARTICLE, MÊME QUAND LE SERVEUR REND 200.
+#
+# MESURÉ LE 06/09/2026 : le bot a range une fiche complete pour
+# journals.openedition.org/rao/3510 dont tout le texte tenait en 529 caracteres
+# — « Chargement… anubis n'a pas reussi a charger son code javascript. Le
+# serveur est peut-etre surcharge. » C'etait un mur anti-robot, pas un article.
+# Meme famille que la page de blocage o2switch (le tigre, HTTP 429) qui a fausse
+# un audit d'accessibilite entier le 05/09/2026 : un serveur qui repond 200 ne
+# prouve pas qu'il a servi le contenu.
+MURS = re.compile(
+    r"anubis|just a moment|checking your browser|verification que vous n|"
+    r"cloudflare|captcha|are you a robot|acces refuse|access denied|"
+    r"activez javascript|enable javascript|javascript est desactive|"
+    r"veuillez recharger la page|le serveur est peut-etre surcharge|"
+    r"page (?:introuvable|non trouvee)|erreur 40[034]|404 not found|"
+    r"cookies? (?:pour continuer|avant de continuer)|"
+    r"connectez-vous pour|abonnez-vous pour lire|article reserve aux abonnes|"
+    r"contenu reserve aux abonnes|log in to continue", re.I)
+
+# Sous cette longueur, une page qui se dit article n'a pas servi son contenu :
+# un mur, une redirection, un resume vide, un gabarit. Mesure sur les pages
+# reellement collectees : les vrais articles font 5 000 a 30 000 caracteres.
+LONGUEUR_ARTICLE_MIN = 400
+
+
+def est_sans_contenu(texte: str, genre: str = "article") -> str:
+    """Rend la RAISON pour laquelle ce n'est pas un article, ou '' si ça en est un.
+
+    Une video ou une publication Facebook n'ont pas de corps de texte : elles
+    sont exemptees de la longueur minimale, jamais du mur.
+    """
+    reduit = (texte or "").strip()
+    trouve = MURS.search(reduit[:3000])
+    if trouve and len(reduit) < 4000:
+        return f"mur ou page de service (« {trouve.group(0)[:40]} »)"
+    if genre in ("video", "post_fb"):
+        return ""
+    if len(reduit) < LONGUEUR_ARTICLE_MIN:
+        return f"page presque vide ({len(reduit)} caractères de texte)"
+    return ""
+
+
+_H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.I | re.S)
+# « Titre de l'article | Nom du site », « … - Nom du site », « … — Nom du site ».
+_QUEUE_SITE = re.compile(r"\s*[|·—–]\s*[^|·—–]{2,40}$")
+
+
+def titre_de_page(code: str, plat: dict, corps: dict) -> str:
+    """Le vrai titre de l'article : le <h1> d'abord, la balise <title> ensuite.
+
+    🔴 MESURÉ LE 06/09/2026. Batirama sert dans sa PROPRE balise <title> et dans
+    son og:title un titre abîmé — « Ddécryptage des normes pourvos gants de
+    protection professionnels » — alors que son <h1> est intact : « Sécurité :
+    décryptage des normes pour sélectionner vos gants de protection
+    professionnels ». Une fiche est rangée sous ce titre, et c'est lui qui part
+    dans le brouillon de publication : un titre casse se voit sur la page.
+    Deuxième cas mesuré sur le même site : « Les nouvelles tuiles à emboîtement
+    Solutions Charpente-Couverture » — la rubrique collée au titre, sans
+    séparateur ; le <h1> rend « Les nouvelles tuiles à emboîtement ».
+
+    Le <h1> n'est retenu que s'il ressemble à un titre d'article (12 à 200
+    caractères) : sur une page d'accueil c'est un slogan, et ces pages-là ne
+    sont de toute façon pas gardées comme articles.
+    """
+    for source in (corps.get("html_corps") or "", code or ""):
+        trouve = _H1.search(source)
+        if not trouve:
+            continue
+        texte = mettre_a_plat(trouve.group(0))["texte"]
+        texte = re.sub(r"\s+", " ", texte).strip(" -–—|·:")
+        if 12 <= len(texte) <= 200:
+            return texte
+    titre = (plat.get("titre") or corps.get("titre") or "").strip()
+    # « Pose d'un plancher hourdis | Rector » -> « Pose d'un plancher hourdis ».
+    court = _QUEUE_SITE.sub("", titre).strip()
+    return court if len(court) >= 12 else titre
+
+
 IMAGES_REFUSEES = re.compile(
     r"logo|icon|favicon|sprite|pixel|spacer|placeholder|avatar|flag|drapeau|banner-?ad|"
     r"wp-content/plugins|/emoji|badge|button|arrow|fleche|gravatar|share|partage|\.svg", re.I)
@@ -383,11 +485,13 @@ def lire_page(url: str, session: requests.Session | None = None) -> dict:
                 "html": "", "url": finale, "raison": raison,
                 "refuse": LIBELLES_ECHEC.get(raison, raison or "page illisible")}
     entier = mettre_a_plat(code)
-    corps = mettre_a_plat(contenu_principal(code))
+    html_corps = contenu_principal(code)
+    corps = mettre_a_plat(html_corps)
+    corps["html_corps"] = html_corps
     texte = corps["texte"] if len(corps["texte"]) >= 400 else entier["texte"]
     return {
         "texte": texte[:120_000],
-        "titre": entier["titre"] or corps["titre"],
+        "titre": titre_de_page(code, entier, corps),
         "description": entier["description"],
         "images": images_utiles(corps["images"] + entier["images"], finale)[:20],
         "liens": entier["liens"],
@@ -412,7 +516,9 @@ NAVIGATION = re.compile(
     r"sitemenu|menu[-_]?(nav|bar|principal)|(?:main|top|left|nav)[-_]?menu|/tag/|/tags/|"
     r"/author/|/auteur/|/page/\d+|[-_/]page[-_]?\d+\.|[?&]page=\d+|/category/|/categorie/|"
     r"/search|/recherche|/login|/panier|/cart|/compte|/account|mentions-legales|cookies|"
-    r"politique|cgv|cgu|/rss|/feed|/wp-json|/wp-admin|#", re.I)
+    r"politique|cgv|cgu|/rss|/feed|/wp-json|/wp-admin|#|"
+    # Lettres d'information et archives : ce sont des CONDENSÉS, pas des articles.
+    r"/emailing|newsletter|/archives?/|/sitemap|/plan-du-site", re.I)
 
 # Ce qui, dans une adresse, dit « une liste » (rubrique, catégorie, thème) ou
 # « un article » (un slug long, une date, /article/). Sert à choisir quels
@@ -489,12 +595,16 @@ def ressemble_a_une_liste(page: dict, nb_liens_articles: int) -> bool:
     Un long guide structuré a des titres AUSSI, mais ses paragraphes sont
     longs et nombreux — d'où le plafond `longs <= 8`.
     """
-    if nb_liens_articles < 10:
-        return False
-    # Une « sélection quotidienne » de 82 000 caractères (Batirama, 06/09) : un
-    # article n'a jamais cette taille, un condensé de vingt articles si.
+    # ⚠ LA TAILLE SE JUGE AVANT LE NOMBRE DE LIENS. « La sélection quotidienne
+    #   de l'actu du BTP » (batirama.com/emailing/…, 82 092 caractères) est
+    #   entrée le 06/09/2026 avec 80/100 : c'est une lettre d'information qui
+    #   condense vingt articles, et elle ne portait pas dix liens d'articles
+    #   reconnus — le garde-fou de taille était donc hors de portée, place
+    #   derrière celui des liens. Un article n'a jamais cette taille.
     if len(page.get("texte") or "") > 60_000:
         return True
+    if nb_liens_articles < 10:
+        return False
     blocs = [b.strip() for b in (page.get("texte") or "").split("\n") if b.strip()]
     longs = sum(1 for b in blocs if len(b) >= 300)
     moyens_courts = sum(1 for b in blocs if 15 <= len(b) < 300)

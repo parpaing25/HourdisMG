@@ -31,14 +31,45 @@ def test_traiter_range_puis_refuse_le_doublon(cfg):
     assert c.etat["ecartees_doublons"] == 2
 
 
+ANNONCE = ("A vendre villa F5 à Ambohimanga, murs en brique, toit en tuile, terrain titré borné de "
+           "500 m². Prix 250 millions Ariary à débattre, contact 034 00 000 00. Avendre urgent, "
+           "belle vue, quartier calme, proche école et marché. Visite sur rendez-vous uniquement. ") * 3
+
+
 def test_hors_sujet_est_ecarte_sans_dossier(cfg):
     c = collecteur.Collecteur()
-    statut, tid = c._traiter(_item(url="https://x.fr/villa", titre="Villa à vendre",
-                                   texte="A vendre villa en brique, terrain titré, 250 millions. Avendre."), {"id": 1, "nom": "T"}, cfg)
+    statut, tid = c._traiter(_item(url="https://x.fr/villa", titre="Villa à vendre", texte=ANNONCE),
+                             {"id": 1, "nom": "T"}, cfg)
     assert statut == "ecartee"
     t = base.trouvaille(tid)
     assert t["statut"] == "ecartee" and t["dossier"] == "" and "immobili" in t["motif_ecart"]
     assert c.etat["ecartees_hors_sujet"] == 1
+
+
+def test_mur_anti_robot_n_entre_pas_en_base(cfg):
+    """🔴 Un serveur qui rend 200 n'a pas forcément servi son contenu.
+
+    Le 06/09/2026, journals.openedition.org a servi une page de blocage
+    (« anubis n'a pas réussi à charger son code javascript ») et le bot en a
+    fait une fiche complète de 529 caractères."""
+    c = collecteur.Collecteur()
+    mur = ("Chargement… anubis n'a pas réussi à charger son code javascript. Le serveur est "
+           "peut-être surchargé. Veuillez recharger la page pour réessayer.")
+    statut, tid = c._traiter(_item(url="https://x.fr/mur", titre="Les tuiles au Moyen Âge", texte=mur),
+                             {"id": 1, "nom": "T"}, cfg)
+    assert statut == "sans_contenu" and tid is None
+    assert base.lister_trouvailles(statut="") == []
+    assert c.etat["ecartees_sans_contenu"] == 1
+
+
+def test_page_presque_vide_refusee_mais_pas_une_video(cfg):
+    c = collecteur.Collecteur()
+    assert c._traiter(_item(url="https://x.fr/court", texte="Hourdis."), {"id": 1, "nom": "T"}, cfg)[0] == "sans_contenu"
+    # Une vidéo n'a pas de corps de texte : elle n'est jamais refusée pour ça.
+    statut, _ = c._traiter(_item(url="https://youtube.com/watch?v=zz", genre="video",
+                                 titre="Pose d'un plancher hourdis", texte="Les étapes."),
+                           {"id": 1, "nom": "T"}, cfg)
+    assert statut == "nouvelle"
 
 
 def test_trop_ancien_selon_le_genre(cfg):
@@ -46,6 +77,13 @@ def test_trop_ancien_selon_le_genre(cfg):
     cfg["jours_max_actualites"] = 30
     statut, _ = c._traiter(_item(url="https://x.fr/news", genre="actualite", publie_le=date(2024, 1, 1)), {"id": 1, "nom": "T"}, cfg)
     assert statut == "ecartee" and c.etat["ecartees_anciennes"] == 1
+    # 🔴 Une TECHNIQUE ne se périme pas : « La liste des DTU à jour » (88/100),
+    #    publiée en 2011, était jetée par annee_minimum avant le 06/09/2026.
+    autre = TUTO.replace("Comment poser", "Tout savoir sur la pose d'")
+    statut, tid = c._traiter(_item(url="https://x.fr/dtu", genre="article", texte=autre,
+                                   publie_le=date(2011, 3, 10)), {"id": 1, "nom": "T"}, cfg)
+    assert statut == "nouvelle", "un contenu technique de 2011 doit rester"
+    assert base.trouvaille(tid)["dossier"].startswith("2011-03-10/")
     # Un autre texte (le premier est déjà en base, écarté, et bloquerait par empreinte).
     autre = TUTO.replace("Comment poser", "Guide complet pour poser").replace("9 hourdis", "neuf hourdis")
     statut, _ = c._traiter(_item(url="https://x.fr/tuto", genre="article", texte=autre,

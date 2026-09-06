@@ -24,7 +24,10 @@ from pydantic import BaseModel
 
 from . import analyse_llm, base, facebook, publication, rangement, redaction, sources_decouverte
 from . import planificateur as plan
-from .collecteur import analyser_source, collecteur, semer_sources_par_defaut
+from .collecteur import (
+    ajouter_sources_conseillees, analyser_source, collecteur, renoter_tout,
+    semer_sources_par_defaut,
+)
 from .config import PORT, RACINE, charger, enregistrer
 
 WEB = RACINE / "web"
@@ -32,7 +35,9 @@ app = FastAPI(title="Bot de veille Hourdis", docs_url=None, redoc_url=None)
 
 tache = {"type": None, "actif": False, "message": "", "detail": "", "cible": ""}
 RESSOURCE = {"collecte": "collecte", "import": "collecte", "connexion": "navigateur",
-             "relecture": "llm", "decouverte": "reseau", "publication": "publication"}
+             "relecture": "llm", "decouverte": "reseau", "publication": "publication",
+             # La renotation réécrit les mêmes fiches que la collecte : même ressource.
+             "renotation": "collecte"}
 _prises: dict[str, str] = {}
 _verrou_taches = threading.Lock()
 _planificateur: plan.Planificateur | None = None
@@ -225,6 +230,12 @@ def modifier_source(sid: int, entree: SourceModif):
     return base.source(sid)
 
 
+@app.post("/api/sources/conseillees")
+def sources_conseillees():
+    """Ajoute les sources conseillées manquantes. Ne supprime ni ne modifie rien."""
+    return ajouter_sources_conseillees()
+
+
 @app.delete("/api/sources/{sid}")
 def supprimer_source(sid: int):
     base.supprimer_source(sid)
@@ -345,6 +356,24 @@ def supprimer_trouvaille(tid: str):
         rangement.supprimer(t["dossier"], charger())
     base.supprimer_trouvaille(tid)
     return {"ok": True}
+
+
+@app.post("/api/trouvailles/renoter")
+def renoter(tout: bool = False):
+    """Recalcule les notes du stock avec les règles d'aujourd'hui.
+
+    Par défaut ne touche que la pile « à trier ». `tout=true` renote aussi les
+    notes des gardées et des écartées — sans jamais changer le statut de ce
+    qu'Andry a lui-même gardé.
+    """
+    resultat: dict = {}
+
+    def travail():
+        resultat.update(renoter_tout(charger(), seulement_a_trier=not tout))
+
+    if not _lancer("renotation", travail):
+        raise HTTPException(409, "Une renotation est déjà en cours.")
+    return {"lancee": True}
 
 
 @app.post("/api/trouvailles/lot")

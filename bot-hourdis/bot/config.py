@@ -46,6 +46,8 @@ DEFAUTS = {
     "score_min": 35,
     # 0 = pas de limite d'âge. Un tuto de pose de 2018 vaut encore ; ce sont
     # les ACTUALITÉS qui vieillissent, et elles passent par `jours_max_actualites`.
+    # ⚠ `annee_minimum` ne s'applique QU'AUX ACTUALITÉS (voir collecteur._traiter) :
+    #   appliqué à tout, il jetait la liste des DTU de 2011, notée 88/100.
     "jours_max": 0,
     "jours_max_actualites": 540,
     "annee_minimum": 2012,

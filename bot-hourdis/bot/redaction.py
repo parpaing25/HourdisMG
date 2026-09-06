@@ -17,6 +17,15 @@ import re
 
 from . import lexique, score, youtube
 
+# ⚠ « hourdis », « tuile », « beton », « polystyrène » GARDENT leurs lettres
+#   étrangères ici, et c'est délibéré. La règle « aucun mot hors de l'alphabet
+#   malgache » vient des TUTOS VIDÉO : elle protège le moteur de synthèse vocale,
+#   qui massacre c, u, q, w, x et ç. Ces textes-ci sont ÉCRITS, personne ne les
+#   lit à voix haute, et un maçon de Tana dit « hourdis » — il n'existe pas de
+#   mot malgache pour ça. Vérifié le 06/09/2026 : les cinq questions malgaches
+#   ci-dessous sont ouvertes (firy, iza, nahoana, inona) ou alternatives (sa),
+#   donc aucune ne prend la particule VE ; seule une question fermée l'exige, et
+#   c'est le cas du seul appel à l'action fermé (« … ve ianao ? »).
 ACCROCHES = {
     "pose": {"fr": ["🧱 Bien poser un plancher hourdis : ce que les pros font, étape par étape",
                     "🔧 Technique de pose : le détail qui change tout sur un plancher hourdis"],

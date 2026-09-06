@@ -141,7 +141,7 @@ async function rafraichirEtat() {
   prog.hidden = !enCours && !col.fin;
   if (!prog.hidden) {
     prog.innerHTML = (enCours ? `<b>En cours</b> — ${echapper(col.source || "préparation")}<br>` : `<b>Dernière tournée</b> terminée à ${heure(col.fin)}<br>`)
-      + `${col.examines} examinée(s) · <b>${col.trouvees} gardée(s)</b> · ${col.rangees} rangée(s) · ${col.ecartees_hors_sujet} hors sujet · ${col.ecartees_score} sous le score · ${col.ecartees_doublons} doublon(s) · ${col.ecartees_anciennes} anciennes`
+      + `${col.examines} examinée(s) · <b>${col.trouvees} gardée(s)</b> · ${col.rangees} rangée(s) · ${col.ecartees_hors_sujet} hors sujet · ${col.ecartees_score} sous le score · ${col.ecartees_doublons} doublon(s) · ${col.ecartees_anciennes} anciennes · ${col.ecartees_sans_contenu || 0} sans contenu`
       + (col.relues_ia ? ` · ${col.relues_ia} relue(s) IA` : "") + (col.facebook ? ` · Facebook : ${echapper(col.facebook)}` : "");
   }
   $("#chemin-collecte").textContent = e.dossier_collecte;
@@ -317,6 +317,12 @@ $$("[data-lot]").forEach((b) => (b.onclick = async () => {
   }
 }));
 surClic("#lot-vider", () => { etat.selection.clear(); chargerTrouvailles(); });
+surClic("#btn-renoter", async () => {
+  if (!confirm("Recalculer la note de toute la pile à trier avec les règles d'aujourd'hui ?\n\nCe que vous avez gardé, programmé ou publié n'est pas touché.")) return;
+  if (await agir(api("/api/trouvailles/renoter", { method: "POST" }), "Renotation lancée — le journal dira ce qui a changé.")) {
+    setTimeout(() => { chargerTrouvailles(); }, 4000);
+  }
+});
 
 // ── Panneau de détail ──────────────────────────────────────────────────────
 async function ouvrirPanneau(id) {
@@ -459,6 +465,11 @@ async function chargerSources(silencieux = false) {
     chargerSources();
   }));
 }
+surClic("#btn-src-conseillees", async () => {
+  const r = await agir(api("/api/sources/conseillees", { method: "POST" }),
+    (r) => r.ajoutees ? `${r.ajoutees} source(s) ajoutée(s) : ${r.noms.slice(0, 3).join(", ")}${r.noms.length > 3 ? "…" : ""}` : "Rien à ajouter, vous les avez déjà toutes.");
+  if (r) chargerSources();
+});
 surClic("#btn-src-ajouter", async () => {
   const entree = $("#src-entree").value.trim();
   if (!entree) return toast("Collez une adresse ou tapez des mots.", "erreur");

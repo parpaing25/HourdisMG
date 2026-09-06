@@ -26,9 +26,14 @@ from urllib.parse import urlsplit
 
 import requests
 
-from . import base, dates_web, facebook, flux, rangement, redaction, score, toile, youtube
+from . import base, dates_web, facebook, flux, lexique, rangement, redaction, score, toile, youtube
 from . import analyse_llm, session_claude, verrou_navigateur
 from .config import NOM_BOT, charger
+
+# Une adresse qui annonce elle-même un contenu de fond plutôt qu'une dépêche.
+EST_EDITORIAL = re.compile(
+    r"/(article|edito|dossier|dossiers|conseil|conseils|guide|guides|fiche|fiches|"
+    r"tuto|tutoriel|technique|savoir-faire|expertise|blog|magazine|pratique)s?/", re.I)
 
 SOURCES_PAR_DEFAUT = [
     # (nom, url, genre, requête)
@@ -37,6 +42,23 @@ SOURCES_PAR_DEFAUT = [
     ("Recherche : brique terre cuite", "", "recherche_web", "brique terre cuite construction technique"),
     ("Recherche : tuile terre cuite", "", "recherche_web", "tuile terre cuite pose toiture conseils"),
     ("Recherche : hourdis Madagascar", "", "recherche_web", "hourdis Madagascar"),
+    # ── Madagascar et le tropical ────────────────────────────────────────────
+    # ⚠ MESURÉ LE 06/09/2026 : les 17 sources d'origine étaient TOUTES
+    #   françaises (fabricants métropolitains, presse du bâtiment). Le bot
+    #   ramenait des poutrelles précontraintes et des DTU, du contenu vrai mais
+    #   lointain : à Tana on ne pose pas comme en Normandie, et un client
+    #   malgache ne se reconnaît pas dans un pavillon de Vendée. Ces
+    #   recherches-là visent ce qu'Andry vend, là où il le vend.
+    ("Recherche : construction brique Madagascar", "", "recherche_web",
+     "construction brique terre cuite Madagascar Antananarivo"),
+    ("Recherche : trano gasy fanorenana", "", "recherche_web",
+     "fanorenana trano biriky tanimanga Madagasikara"),
+    ("Recherche : toiture tuile tropical", "", "recherche_web",
+     "toiture tuile terre cuite climat tropical pluie"),
+    ("YouTube : construction Madagascar", "", "youtube_recherche",
+     "fanorenana trano Madagascar biriky"),
+    ("YouTube : maçonnerie Afrique", "", "youtube_recherche",
+     "maçonnerie brique construction Afrique chantier"),
     ("YouTube : pose hourdis", "", "youtube_recherche", "pose hourdis plancher poutrelles"),
     ("YouTube : plancher hourdis étapes", "", "youtube_recherche", "plancher hourdis étapes chantier"),
     ("YouTube : brique creuse", "", "youtube_recherche", "monter mur brique creuse terre cuite"),
@@ -65,6 +87,102 @@ def semer_sources_par_defaut() -> int:
     if n:
         base.logguer(f"{n} sources semées au premier démarrage — modifiez-les dans l'onglet Sources.", "info")
     return n
+
+
+def ajouter_sources_conseillees() -> dict:
+    """Ajoute les sources conseillées qui MANQUENT, sans toucher aux autres.
+
+    ⚠ Distinct de `semer_sources_par_defaut()`, qui ne joue qu'une fois et se
+    tait ensuite : une source supprimée par Andry ne doit jamais revenir toute
+    seule (règle héritée du bot AKORA, où une boucle de nettoyage avait effacé
+    ses 32 sources). Ici c'est LUI qui appuie, depuis l'onglet Sources, quand la
+    liste conseillée s'est enrichie — comme le 06/09/2026, où cinq recherches
+    tournées vers Madagascar ont été ajoutées à une liste entièrement française.
+    """
+    connues = {(s["genre"], s["url"], s["requete"]) for s in base.sources()}
+    ajoutees = []
+    for nom, url, genre, requete in SOURCES_PAR_DEFAUT:
+        if (genre, url, requete) in connues:
+            continue
+        base.ajouter_source(nom, url, genre, requete)
+        ajoutees.append(nom)
+    if ajoutees:
+        base.logguer(f"{len(ajoutees)} source(s) conseillée(s) ajoutée(s) : "
+                     + ", ".join(f"« {n} »" for n in ajoutees[:6])
+                     + (" …" if len(ajoutees) > 6 else ""), "info")
+    return {"ajoutees": len(ajoutees), "noms": ajoutees, "deja": len(connues)}
+
+
+def renoter_tout(cfg: dict, seulement_a_trier: bool = True) -> dict:
+    """Recalcule la note de ce qui est DÉJÀ en base, avec les règles d'aujourd'hui.
+
+    🔴 POURQUOI. Une correction du tri ne vaut que pour les trouvailles à venir :
+    les anciennes gardent la note qu'elles avaient. Le 06/09/2026, après avoir
+    fermé la porte qui laissait passer le BTP générique, « comment maintenir une
+    pression d'eau régulière ? » était toujours là, à 41/100, dans la pile à
+    trier d'Andry. Une règle corrigée doit nettoyer le stock, pas seulement le flux.
+
+    ⚠ NE TOUCHE QUE CE QU'ANDRY N'A PAS ENCORE JUGÉ. Une trouvaille qu'il a
+    gardée, programmée ou publiée garde son statut quoi qu'en dise le barème :
+    c'est son avis, pas celui du score. `seulement_a_trier=False` renote quand
+    même leur note (utile pour reclasser), sans jamais changer leur statut.
+    """
+    from . import rangement
+    statuts = ("nouvelle",) if seulement_a_trier else ("nouvelle", "gardee", "ecartee")
+    bilan = {"relues": 0, "montees": 0, "descendues": 0, "ecartees": 0, "reprises": 0}
+    for court in base.lister_trouvailles(statut="", limite=5000):
+        if court["statut"] not in statuts:
+            continue
+        t = base.trouvaille(court["id"])
+        if not t:
+            continue
+        bilan["relues"] += 1
+        publie_le = dates_web.lire_iso(t.get("publie_le") or "")
+        note = score.noter(t.get("titre", ""), t.get("texte", ""), t.get("genre", "article"),
+                           t.get("langue", ""), publie_le, cfg)
+        champs = {"score": note["score"], "themes": note["themes"], "motifs": note["motifs"]}
+        ancien = int(t.get("score") or 0)
+        if note["score"] > ancien:
+            bilan["montees"] += 1
+        elif note["score"] < ancien:
+            bilan["descendues"] += 1
+
+        # ⚠ LE MÊME GARDE-FOU AUX DEUX BOUTS. `_traiter` refuse les libellés
+        #   d'interface à la collecte ; sans ce test ici, les quatre fiches
+        #   « Télécharger la fiche » entrées avant la règle resteraient dans la
+        #   pile pour toujours — une renotation qui ne renote que le barème
+        #   laisse passer tout ce que les autres règles ont appris depuis.
+        service = bool(lexique.TITRE_DE_SERVICE.match((t.get("titre") or "").strip()))
+        if t["statut"] in ("nouvelle", "ecartee"):
+            trop_faible = (note["hors_sujet"] or service
+                           or note["score"] < int(cfg.get("score_min", 35)))
+            if service:
+                note = dict(note, raison="libellé d'interface, pas un article")
+            if trop_faible and t["statut"] == "nouvelle":
+                champs["statut"] = "ecartee"
+                champs["motif_ecart"] = note["raison"] or f"score {note['score']} sous le minimum"
+                bilan["ecartees"] += 1
+                if t.get("dossier"):
+                    rangement.supprimer(t["dossier"], cfg)
+                    champs["dossier"] = ""
+            elif not trop_faible and t["statut"] == "ecartee":
+                # Une règle assouplie (l'âge, un repoussoir retiré) rend sa
+                # chance à une trouvaille jetée hier.
+                champs["statut"] = "nouvelle"
+                champs["motif_ecart"] = ""
+                bilan["reprises"] += 1
+        base.modifier_trouvaille(t["id"], champs)
+        t.update(champs)
+        if t.get("statut") != "ecartee":
+            try:
+                base.modifier_trouvaille(t["id"], {"dossier": rangement.ranger(t, cfg)})
+            except OSError:
+                pass
+    base.logguer(
+        f"Renotation : {bilan['relues']} relue(s), {bilan['montees']} en hausse, "
+        f"{bilan['descendues']} en baisse, {bilan['ecartees']} écartée(s), "
+        f"{bilan['reprises']} reprise(s).", "info")
+    return bilan
 
 
 def analyser_source(entree: str) -> dict:
@@ -129,8 +247,8 @@ class Collecteur:
     def _etat_vierge() -> dict:
         return {"actif": False, "source": None, "examines": 0, "trouvees": 0, "rangees": 0,
                 "ecartees_hors_sujet": 0, "ecartees_score": 0, "ecartees_doublons": 0,
-                "ecartees_anciennes": 0, "relues_ia": 0, "debut": "", "fin": "",
-                "automatique": False, "facebook": ""}
+                "ecartees_anciennes": 0, "ecartees_sans_contenu": 0, "relues_ia": 0,
+                "debut": "", "fin": "", "automatique": False, "facebook": ""}
 
     def _compter(self, cle: str, n: int = 1) -> None:
         with self._compteurs:
@@ -223,7 +341,8 @@ class Collecteur:
         base.logguer(
             f"Tournée terminée : {e['examines']} examinée(s), {e['trouvees']} gardable(s), "
             f"{e['ecartees_hors_sujet']} hors sujet, {e['ecartees_score']} sous le score, "
-            f"{e['ecartees_doublons']} doublon(s), {e['ecartees_anciennes']} trop ancienne(s)"
+            f"{e['ecartees_doublons']} doublon(s), {e['ecartees_anciennes']} trop ancienne(s), "
+            f"{e['ecartees_sans_contenu']} sans contenu"
             + (f", {e['relues_ia']} relue(s) par le modèle" if e["relues_ia"] else "") + ".",
             "succes" if e["trouvees"] else "info")
         return self.etat
@@ -275,7 +394,13 @@ class Collecteur:
                         "auteur": e.get("source") or e.get("auteur", ""), "auteur_url": "",
                         "publie_le": e.get("publie_le"), "date_origine": "flux" if e.get("publie_le") else "",
                         "images": [e["image"]] if e.get("image") else []}
-            if e.get("moteur") == "Google Actualités":
+            # ⚠ LE CANAL DE DÉCOUVERTE NE DÉCIDE PAS DU GENRE. Google Actualités
+            #   indexe aussi de l'éditorial : « Un pavillon des années 40
+            #   enveloppé de tuiles » (92/100) y a été trouvé, étiqueté
+            #   « actualité », puis jeté par le couperet des 540 jours — alors
+            #   que son adresse dit /edito/ et que c'est un reportage technique
+            #   qui ne se périme pas. L'adresse tranche avant le canal.
+            if e.get("moteur") == "Google Actualités" and not EST_EDITORIAL.search(url):
                 item["genre"] = "actualite"
             statut, _ = self._traiter(item, source, cfg)
             trouvees += statut in ("nouvelle",)
@@ -448,7 +573,16 @@ class Collecteur:
         origine = "texte" if quand else ""
         if quand is None:
             quand, origine = dates_web.date_de_page("", url, "")
-        nom = titre or libelle or url.rsplit("/", 1)[-1].replace("-", " ").replace("_", " ")[:-4]
+        # ⚠ L'ORDRE COMPTE. Le libellé du lien passait en premier et donnait
+        #   quatre fiches intitulées « Télécharger la fiche » et deux
+        #   « Afficher le document » (06/09/2026). Le document lui-même sait
+        #   comment il s'appelle : métadonnée d'abord, première page ensuite,
+        #   libellé du lien seulement s'il n'est pas un libellé de bouton.
+        nom = titre or toile.titre_du_pdf(texte)
+        if not nom and libelle and not lexique.TITRE_DE_SERVICE.match(libelle.strip()):
+            nom = libelle
+        if not nom:
+            nom = url.rsplit("/", 1)[-1].replace("-", " ").replace("_", " ")[:-4]
         return {"url": url, "titre": nom[:200], "texte": texte, "resume": texte[:600],
                 "genre": "pdf", "auteur": _nom_de_site(url),
                 "auteur_url": f"https://{urlsplit(url).netloc}", "publie_le": quand,
@@ -558,11 +692,29 @@ class Collecteur:
             self._compter("ecartees_doublons")
             return "doublon", None
         texte = (item.get("texte") or item.get("resume") or "").strip()
+
+        # 🔴 UN SERVEUR QUI REND 200 N'A PAS FORCÉMENT SERVI SON CONTENU. Le mur
+        #   anti-robot, le bandeau « activez JavaScript », le paywall et la page
+        #   presque vide n'entrent pas en base : ni fiche, ni dossier, ni ligne
+        #   « écartée » a trier. Le garde-fou est ICI, sur le chemin unique, donc
+        #   il couvre aussi bien un article qu'un PDF, une vidéo ou un post.
+        mur = toile.est_sans_contenu(texte, item.get("genre", "article"))
+        if mur:
+            self._compter("ecartees_sans_contenu")
+            base.logguer(f"Page sans contenu ignorée — {mur} : {url[:80]}", "info")
+            return "sans_contenu", None
+
         empreinte = base.empreinte_texte(texte)
         if empreinte and base.texte_deja_vu(empreinte):
             self._compter("ecartees_doublons")
             base.logguer(f"Texte déjà collecté mot pour mot : « {item.get('titre', '')[:60]} »", "info")
             return "doublon", None
+
+        # Un libellé d'interface n'annonce pas un article (voir lexique).
+        if lexique.TITRE_DE_SERVICE.match((item.get("titre") or "").strip()):
+            self._compter("ecartees_sans_contenu")
+            base.logguer(f"Page de service ignorée (« {item.get('titre', '')[:40]} ») : {url[:70]}", "info")
+            return "sans_contenu", None
 
         genre = item.get("genre", "article")
         publie_le = item.get("publie_le")
@@ -577,15 +729,26 @@ class Collecteur:
         elif note["score"] < int(cfg.get("score_min", 35)):
             statut, motif = "ecartee", f"score {note['score']} sous le minimum {cfg.get('score_min', 35)}"
             self._compter("ecartees_score")
+        # 🔴 L'ÂGE NE JETTE QUE CE QUI SE PÉRIME. Une ACTUALITÉ vieille de trois
+        #   ans ne sert plus ; une TECHNIQUE DE POSE, elle, ne vieillit pas.
+        #   Mesuré le 06/09/2026 : « La liste des DTU à jour » (88/100, la
+        #   référence des règles de l'art, exactement ce qu'Andry veut publier)
+        #   et « Les nouvelles tuiles à emboîtement » (92/100) étaient jetées
+        #   pour être nées avant 2012 — un seuil hérité du bot AKORA, où il
+        #   protégeait des PRIX périmés. Ici il n'y a pas de prix : le vieux
+        #   contenu technique descend dans le classement, il ne disparaît pas.
         if statut == "nouvelle" and publie_le:
-            jours_max = int(cfg.get("jours_max_actualites", 540) if genre == "actualite"
-                            else cfg.get("jours_max", 0))
             age = (date.today() - publie_le).days
-            if publie_le.year < int(cfg.get("annee_minimum", 2012)):
-                statut, motif = "ecartee", f"publiée en {publie_le.year}, avant {cfg.get('annee_minimum')}"
+            perissable = genre == "actualite"
+            jours_max = int(cfg.get("jours_max_actualites", 540) if perissable
+                            else cfg.get("jours_max", 0))
+            if perissable and publie_le.year < int(cfg.get("annee_minimum", 2012)):
+                statut, motif = "ecartee", f"actualité de {publie_le.year}, avant {cfg.get('annee_minimum')}"
                 self._compter("ecartees_anciennes")
             elif jours_max > 0 and age > jours_max:
-                statut, motif = "ecartee", f"vieille de {age} jours (maximum {jours_max})"
+                statut, motif = ("ecartee",
+                                 f"{'actualité' if perissable else 'contenu'} vieux de {age} jours "
+                                 f"(maximum {jours_max})")
                 self._compter("ecartees_anciennes")
         if statut == "ecartee" and not cfg.get("garder_les_ecartees", True):
             return "ecartee", None

@@ -11,6 +11,8 @@ des expressions régulières sur du texte MIS EN MINUSCULES ET SANS ACCENTS
 """
 from __future__ import annotations
 
+import re
+
 # (motif, poids). Les motifs longs d'abord : « plancher hourdis » doit compter
 # comme tel avant que « plancher » et « hourdis » ne comptent séparément.
 MOTS_METIER: list[tuple[str, int]] = [
@@ -76,6 +78,38 @@ MOTS_METIER: list[tuple[str, int]] = [
     (r"economie de beton|leger|legerete", 3),
 ]
 
+# 🔴 LES MOTS QUI NOMMENT LE PRODUIT — sans eux, ce n'est pas notre sujet.
+#
+# MESURÉ LE 06/09/2026 sur les 13 premières trouvailles. Deux articles de BTP
+# générique étaient GARDÉS : « comment maintenir une pression d'eau régulière ? »
+# (37/100) et « décryptage des normes pour vos gants de protection » (51/100).
+# Aucun des deux ne parle de hourdis, de brique, de tuile ou de terre cuite. Ils
+# passaient parce que le score s'additionne : « chantiers » ×8 et « gros œuvre »
+# valaient 12 points de métier, et les BONUS (tutoriel +12, thèmes +12,
+# longueur +6) faisaient le reste. Un article peut donc être porté au-dessus du
+# seuil sans jamais nommer ce qu'Andry vend.
+#
+# D'où cette liste, qui n'est PAS une question de poids mais de nature : le
+# produit (brique, tuile, terre cuite, briquette, plaquette) ou le système
+# constructif (hourdis, entrevous, poutrelle, plancher à poutrelles) doit être
+# nommé. « brique » et « tuile » y sont, alors qu'ils ne pèsent que 4 et 5 dans
+# le barème : le tuto « Comment monter une cloison en brique » (76/100, un bon
+# contenu) n'a QUE ce mot-là, et une règle fondée sur le poids l'aurait jeté.
+# Les faux amis (brique de lait, brique Lego) restent traités par REPOUSSOIRS.
+ESSENTIELS: tuple[str, ...] = (
+    # Le système constructif du plancher
+    r"hourdis", r"entrevous", r"poutrelles?", r"predalles?", r"dalle de compression",
+    r"plancher[s]? (?:a |en |de )?(?:poutrelles?|hourdis|beton|corps creux)",
+    r"beam[- ]and[- ]block", r"hollow (?:clay |core )?(?:blocks?|pots?)",
+    r"suspended floor",
+    # Les produits en terre cuite
+    r"terre[- ]cuite", r"terracotta", r"briques?", r"briquettes?", r"plaquettes?",
+    r"tuiles?", r"tuileries?", r"monomur", r"blocs? (?:de )?terre cuite",
+    r"bricks?", r"roof tiles?", r"clay (?:blocks?|bricks?|tiles?)",
+    # Malgache
+    r"biriky", r"tanimanga", r"rihana", r"tafo(?:n-trano|ntrano)?", r"gorodona",
+)
+
 # Ce qui fait un CONSEIL, un TUTO, une leçon — plutôt qu'une simple mention.
 TUTORIEL = (
     r"\b(comment|tuto(riel)?s?|etapes?|guide|conseils?|astuces?|erreurs?|"
@@ -110,11 +144,34 @@ REPOUSSOIRS: list[tuple[str, str]] = [
     ("offre d'emploi", r"\b(recrut|offre d'emploi|tolotr'?asa|cv a envoyer|poste a pourvoir)\b"),
     ("brique alimentaire", r"\bbriques? (de|d')\s?(lait|jus|soupe|creme|coco)\b"),
     ("jeu / Lego", r"\b(lego|minecraft|briques? de construction (pour )?enfants?|jouets?)\b"),
-    ("informatique", r"\b(tuiles? (d'interface|graphiques?|windows)|tile ?set|plancher de verre|"
-                     r"javascript|plugin|wordpress theme)\b"),
+    # ⚠ NI « javascript », NI « plugin », NI « wordpress theme » ICI. Ces mots-là
+    #   sont de l'OSSATURE de page, pas un sujet : ils apparaissent dans les
+    #   bandeaux « activez JavaScript », les messages d'erreur et les pieds de
+    #   page de la moitié du web. Mesuré le 06/09/2026 : un article universitaire
+    #   sur « les tuiles et les briques au Moyen Âge en Pays de la Loire » a été
+    #   rejeté comme « informatique » parce que sa page de blocage disait
+    #   « anubis n'a pas réussi à charger son code javascript ».
+    ("informatique", r"\b(tuiles? (d'interface|graphiques?|windows)|tile ?set|"
+                     r"plancher de verre|feuille de style|balise html)\b"),
     ("pari / casino", r"\b(casino|paris? sportifs?|bookmaker|loto)\b"),
     ("fer plat / autre métier", r"\b(hourdis de tole|bardage seul)\b"),
 ]
+
+# Un libellé d'interface n'est pas un titre d'article. Mesuré le 06/09/2026 sur
+# la première tournée complète : « Télécharger la fiche » ×4, « Afficher le
+# document » ×2, « Tableau d'ouverture », « Foire aux questions ». Ces pages
+# n'enseignent rien, elles servent la navigation d'un site de fabricant.
+# ⚠ L'APOSTROPHE TYPOGRAPHIQUE ’ EST UN AUTRE CARACTÈRE QUE '. Les sites en
+#   servent l'une ou l'autre sans prévenir : « Tableau d’ouverture » de
+#   bouyer-leroux.com passait au travers d'un motif écrit avec l'apostrophe
+#   droite. `_APO` accepte les deux partout.
+_APO = r"['’]"
+TITRE_DE_SERVICE = re.compile(
+    r"^\s*(t[ée]l[ée]charger|afficher|voir|consulter|ouvrir|imprimer|partager|"
+    r"foire aux questions|questions fr[ée]quentes|faq|nous contacter|contactez|"
+    r"mentions l[ée]gales|plan du site|espace presse|recrutement|nous rejoindre|"
+    rf"tableau d{_APO}ouverture|documentation|accueil|connexion|inscription|"
+    rf"newsletter|lettre d{_APO}information|cookies?)\b[^.!?]{{0,40}}$", re.I)
 
 # Mots vides pour deviner la langue. Volontairement courts et fréquents.
 LANGUES: dict[str, tuple[str, ...]] = {

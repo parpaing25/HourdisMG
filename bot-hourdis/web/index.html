@@ -75,7 +75,7 @@
       </div>
       <div class="progression" id="progression" hidden></div>
       <div class="rangee" style="margin-top:14px">
-        <input type="url" id="import-url" placeholder="Importer une adresse précise (article, PDF, vidéo YouTube…)" style="flex:1">
+        <input type="url" id="import-url" placeholder="Importer une adresse précise (article, PDF, vidéo YouTube…)" class="large">
         <button class="btn" id="btn-importer">Importer</button>
       </div>
     </article>
@@ -135,6 +135,10 @@
     <button class="btn petit danger" data-lot="supprimer">Supprimer</button>
     <button class="btn petit" id="lot-vider">Tout décocher</button>
   </div>
+  <div class="rangee">
+    <button class="btn petit" id="btn-renoter">Renoter la pile avec les règles d'aujourd'hui</button>
+    <span class="aide">Applique les corrections du tri aux trouvailles déjà collectées. Ne touche pas à ce que vous avez gardé.</span>
+  </div>
   <p class="aide" id="trouvailles-aide"></p>
   <div class="grille" id="grille-trouvailles"></div>
 </section>
@@ -155,7 +159,7 @@
   </article>
   <article class="carte">
     <h2>Historique</h2>
-    <table class="table" id="table-historique"><thead><tr><th>Quand</th><th>Trouvaille</th><th>Résultat</th><th>Programmé</th></tr></thead><tbody></tbody></table>
+    <div class="table-large"><table class="table" id="table-historique"><thead><tr><th>Quand</th><th>Trouvaille</th><th>Résultat</th><th>Programmé</th></tr></thead><tbody></tbody></table></div>
   </article>
 </section>
 
@@ -180,15 +184,19 @@
     <h2>Ajouter une source</h2>
     <p class="aide">Collez une adresse (site de fabricant, flux RSS, chaîne YouTube, page ou groupe Facebook) — ou tapez simplement des <strong>mots</strong> : ils deviennent une recherche sur Google Actualités + Bing, et sur YouTube.</p>
     <div class="rangee">
-      <input type="text" id="src-entree" placeholder="https://www.rector.fr/  ·  ou  ·  étaiement plancher hourdis" style="flex:2">
-      <input type="text" id="src-nom" placeholder="Nom (facultatif)" style="flex:1">
+      <input type="text" id="src-entree" placeholder="https://www.rector.fr/  ·  ou  ·  étaiement plancher hourdis" class="large">
+      <input type="text" id="src-nom" placeholder="Nom (facultatif)" class="moyen">
       <label class="case"><input type="checkbox" id="src-youtube" checked> aussi sur YouTube</label>
       <button class="btn primaire" id="btn-src-ajouter">Ajouter</button>
+    </div>
+    <div class="rangee" style="margin-top:10px">
+      <button class="btn" id="btn-src-conseillees">Ajouter les sources conseillées manquantes</button>
+      <span class="aide">N'ajoute que ce qui manque. Ne supprime ni ne modifie aucune de vos sources.</span>
     </div>
   </article>
   <article class="carte">
     <h2>Les sources et leur rendement</h2>
-    <table class="table" id="table-sources"><thead><tr><th></th><th>Source</th><th>Genre</th><th>Examinées</th><th>Gardées</th><th>Dernier passage</th><th>État</th><th></th></tr></thead><tbody></tbody></table>
+    <div class="table-large"><table class="table" id="table-sources"><thead><tr><th></th><th>Source</th><th>Genre</th><th>Examinées</th><th>Gardées</th><th>Dernier passage</th><th>État</th><th></th></tr></thead><tbody></tbody></table></div>
   </article>
 </section>
 
@@ -206,7 +214,7 @@
     <button class="btn petit" data-cand="ecarter">Écarter</button>
   </div>
   <p class="aide" id="candidats-aide"></p>
-  <table class="table" id="table-candidats"><thead><tr><th></th><th>Candidat</th><th>Genre</th><th>Note</th><th>Pourquoi</th></tr></thead><tbody></tbody></table>
+  <div class="table-large"><table class="table" id="table-candidats"><thead><tr><th></th><th>Candidat</th><th>Genre</th><th>Note</th><th>Pourquoi</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <!-- ═══════════ AUTOMATISATION ═══════════ -->

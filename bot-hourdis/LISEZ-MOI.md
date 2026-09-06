@@ -49,14 +49,46 @@ Tout passe par le même chemin : adresse canonique (sans `utm_`, `fbclid`…), e
 du texte (le même tuto repris par trois sites n'entre qu'une fois), **score**, date,
 dossier. Ce qui est écarté est **compté et dit** dans le journal.
 
+### Audit du 06/09/2026 — ce qui a changé, et pourquoi
+
+La première tournée complète (131 pages examinées) et les 13 premières trouvailles ont servi
+de banc. Sept défauts mesurés, tous corrigés et tenus par des tests :
+
+| Ce qui n'allait pas | Ce qui a été fait |
+|---|---|
+| **Le BTP générique passait.** « Comment maintenir une pression d'eau régulière ? » (37/100) et « décryptage des normes pour vos gants » (51/100) sont entrés sans jamais nommer un hourdis, une brique, une tuile ou la terre cuite : 12 points de métier et 30 de bonus. | Le **produit doit être nommé** (`lexique.ESSENTIELS`) : dans le titre, ou trois fois dans le texte. Et les **bonus sont plafonnés par le cœur** — un article ne peut plus doubler sa note parce qu'il est long et pédagogique. |
+| **Les titres étaient abîmés.** Batirama sert dans sa propre balise `<title>` « Ddécryptage des normes pourvos gants » alors que son `<h1>` est intact. | Le `<h1>` de l'article passe **avant** la balise `<title>` (`toile.titre_de_page`), et la queue « … \| Nom du site » est retirée. |
+| **Un mur anti-robot devenait une fiche.** Une page de blocage de 529 caractères (« anubis n'a pas réussi à charger son code javascript ») a été rangée comme un article. | `toile.est_sans_contenu()` refuse les murs, les paywalls et les pages presque vides, **sur le chemin unique**, avant toute écriture. |
+| **« javascript » rejetait de bons articles.** Un article universitaire sur les tuiles médiévales était classé « informatique » à cause du bandeau de sa page. | Les mots d'ossature de page (`javascript`, `plugin`, `wordpress theme`) sortent des repoussoirs. |
+| **L'âge jetait l'intemporel.** « La liste des DTU à jour » (88/100) et « Les nouvelles tuiles à emboîtement » (92/100) étaient écartées pour être nées avant 2012 — un seuil hérité d'AKORA, où il protégeait des prix. | Le couperet d'âge ne s'applique **qu'aux actualités**. Une technique ne se périme pas. Et le **canal de découverte ne décide plus du genre** : une adresse en `/edito/` ou `/article/` reste un article même trouvée par Google Actualités. |
+| **Les condensés entraient.** « La sélection quotidienne de l'actu du BTP » (82 092 caractères, vingt articles) était gardée à 80/100. | La taille se juge **avant** le nombre de liens, et `/emailing`, `newsletter`, `/archives/` sont exclus. |
+| **Les titres de PDF étaient des libellés de bouton.** Quatre fiches « Télécharger la fiche », deux « Afficher le document ». | Le document s'annonce lui-même (`toile.titre_du_pdf`), et `lexique.TITRE_DE_SERVICE` refuse les libellés d'interface. |
+
+Trois ajouts qui en découlent :
+
+- **« Renoter la pile »** (onglet Trouvailles) applique les règles d'aujourd'hui aux trouvailles
+  déjà collectées — une correction du tri doit nettoyer le stock, pas seulement le flux. Ce
+  qu'Andry a gardé, programmé ou publié n'est **jamais** dégardé ; seule sa note est rafraîchie.
+- **« Ajouter les sources conseillées manquantes »** (onglet Sources) : les 17 sources d'origine
+  étaient toutes françaises. Cinq recherches tournées vers Madagascar et l'Afrique s'y ajoutent,
+  sans jamais faire revenir une source qu'Andry a supprimée.
+- **Une recherche YouTube qui dépasse son délai garde ses résultats partiels** au lieu de rendre
+  la source morte, et le délai passe de 120 à 240 s (les requêtes en malgache sont les plus lentes).
+
 ### Le score (0-100), et pourquoi il s'explique
 
 `score.py` est déterministe. Il additionne les mots du métier (`lexique.py` : « hourdis »
 pèse 10, « béton » 3, « biriky » 7, « beam and block » 10…), le signal « ça enseigne »
 (comment, étapes, erreurs, ahoana, torohevitra…), les thèmes reconnus, le genre (une
 vidéo de pose vaut plus qu'un communiqué), la longueur, la langue. Il **écarte d'office**
-un texte sans aucun mot du métier, ou un repoussoir non contredit (annonce immobilière,
-brique de lait, Lego…).
+un texte sans aucun mot du métier, un repoussoir non contredit (annonce immobilière,
+brique de lait, Lego…), et — depuis l'audit — **un texte qui ne nomme jamais le produit**.
+
+Trois portes, dans cet ordre : les **repoussoirs** (le motif le plus précis gagne : « annonce
+immobilière » se lit mieux dans le journal que « produit jamais nommé »), puis le **produit
+nommé**, puis le **barème**, dont les bonus ne peuvent pas dépasser le cœur. Mesuré sur les
+13 premières trouvailles : deux verdicts changent, les deux dans le bon sens, et le bon tuto
+« Comment monter une cloison en brique » — qui n'a que le mot « brique » — reste.
 
 Chaque fiche garde ses **motifs** (« hourdis ×4 », « tutoriel », « anglais ») : un
 score qu'on comprend se règle. Les écartées restent visibles (filtre « Écartées ») pour
@@ -182,7 +214,7 @@ compte dédié à la veille.
 ## Tests
 
 ```
-python -m pytest tests -q        (57 tests, dossier de données jetable)
+python -m pytest tests -q        (81 tests, dossier de données jetable)
 ```
 
 Les tests posent `HOURDIS_BOT_DATA` sur un dossier temporaire avant tout import : ils
@@ -212,6 +244,6 @@ bot/
   serveur.py           API + interface (FastAPI)
   verrou_navigateur.py, session_claude.py   copies à l'identique des trois bots frères
 web/                   index.html, app.js, style.css
-tests/                 57 tests
+tests/                 81 tests
 data/                  base, config, session Facebook, collecte — HORS dépôt
 ```

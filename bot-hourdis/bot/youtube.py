@@ -23,7 +23,12 @@ from pathlib import Path
 
 from . import dates_web
 
-DELAI_RECHERCHE = 120
+# ⚠ 240 s ET NON 120. Mesuré à la première tournée complète (06/09/2026) : la
+#   recherche « fanorenana trano Madagascar biriky » a dépassé les 120 s et la
+#   source entière est repartie en échec, sans une seule vidéo. Les requêtes en
+#   malgache sont les plus lentes — YouTube a peu de résultats à trier et remonte
+#   loin — et ce sont justement celles qui intéressent Andry.
+DELAI_RECHERCHE = 240
 DELAI_FICHE = 60
 DELAI_SOUS_TITRES = 90
 
@@ -44,8 +49,16 @@ def _executer(arguments: list[str], delai: int) -> tuple[str, str, int]:
                               creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     except FileNotFoundError:
         return "", "yt-dlp introuvable (pip install yt-dlp)", 127
-    except subprocess.TimeoutExpired:
-        return "", f"yt-dlp : délai de {delai} s dépassé", 124
+    except subprocess.TimeoutExpired as e:
+        # ⚠ NE PAS JETER CE QUI EST DÉJÀ ARRIVÉ. yt-dlp écrit une fiche JSON par
+        #   ligne au fil de la recherche : au moment où le délai tombe, les
+        #   premières vidéos sont souvent déjà là. Les perdre transformait une
+        #   recherche lente en source morte (06/09/2026, « fanorenana trano
+        #   Madagascar biriky » : zéro vidéo pour un dépassement de délai).
+        partiel = e.stdout or ""
+        if isinstance(partiel, bytes):
+            partiel = partiel.decode("utf-8", "replace")
+        return partiel, f"yt-dlp : délai de {delai} s dépassé", 124
     return fini.stdout, fini.stderr, fini.returncode
 
 
@@ -96,6 +109,9 @@ def rechercher(requete: str, n: int = 12) -> tuple[list[dict], str]:
             continue
     if not fiches and code != 0:
         return [], (erreur.strip().splitlines() or ["yt-dlp a échoué"])[-1][:200]
+    # Un délai dépassé avec des fiches déjà lues n'est pas un échec : c'est une
+    # recherche écourtée. Prouvé le 06/09/2026 — délai forcé à 6 s sur
+    # « fanorenana trano Madagascar biriky », 8 vidéos récupérées quand même.
     return fiches, ""
 
 
