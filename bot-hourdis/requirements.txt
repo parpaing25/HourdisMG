@@ -1,0 +1,14 @@
+# Bot de veille Hourdis — dépendances
+fastapi>=0.110
+uvicorn>=0.27
+pydantic>=2.6
+requests>=2.31
+Pillow>=10.2
+# YouTube (recherche, fiches, sous-titres) sans clé d'API
+yt-dlp>=2025.1.1
+# Guides PDF des fabricants (facultatif : sans lui, les PDF sont seulement signalés)
+pypdf>=4.0
+# Partie Facebook (facultative : sans elle, les sources page_fb/groupe_fb sont sautées)
+playwright>=1.42
+# Relecture par l'API Claude officielle (facultatif ; Groq/compatible passe par requests)
+# anthropic>=1.0

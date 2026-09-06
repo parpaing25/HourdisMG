@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bot de veille — Hourdis Madagascar</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23b6532a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Inter,Arial,sans-serif' font-size='18' font-weight='700' fill='white'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<svg hidden aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-bord" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-trouvailles" viewBox="0 0 24 24"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M2 15h10"/><path d="m9 18 3-3-3-3"/></symbol>
+  <symbol id="i-publication" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-dossiers" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="i-sources" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+  <symbol id="i-candidats" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-auto" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-reglages" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></symbol>
+  <symbol id="i-journal" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+</svg>
+
+<div class="coque">
+
+<aside class="nav" id="nav" aria-label="Navigation principale">
+  <div class="marque">
+    <span class="pastille">H</span>
+    <div><strong>Veille Hourdis</strong><small>web → dossiers → page Facebook</small></div>
+  </div>
+  <nav class="onglets">
+    <span class="groupe">Le travail du jour</span>
+    <button class="onglet actif" data-vue="bord"><svg class="ico"><use href="#i-bord"/></svg><span>Tableau de bord</span></button>
+    <button class="onglet" data-vue="trouvailles"><svg class="ico"><use href="#i-trouvailles"/></svg><span>Trouvailles</span> <span id="pastille-trier" class="compteur zero">0</span></button>
+    <button class="onglet" data-vue="publication"><svg class="ico"><use href="#i-publication"/></svg><span>Publication</span> <span id="pastille-file" class="compteur zero">0</span></button>
+    <button class="onglet" data-vue="dossiers"><svg class="ico"><use href="#i-dossiers"/></svg><span>Dossiers</span></button>
+    <span class="groupe">Où le bot cherche</span>
+    <button class="onglet" data-vue="sources"><svg class="ico"><use href="#i-sources"/></svg><span>Sources</span></button>
+    <button class="onglet" data-vue="candidats"><svg class="ico"><use href="#i-candidats"/></svg><span>Nouvelles sources</span> <span id="pastille-candidats" class="compteur zero">0</span></button>
+    <span class="groupe">Le bot</span>
+    <button class="onglet" data-vue="automatisation"><svg class="ico"><use href="#i-auto"/></svg><span>Automatisation</span></button>
+    <button class="onglet" data-vue="reglages"><svg class="ico"><use href="#i-reglages"/></svg><span>Réglages</span></button>
+    <button class="onglet" data-vue="journal"><svg class="ico"><use href="#i-journal"/></svg><span>Journal</span></button>
+  </nav>
+  <div class="etats">
+    <div class="etat" id="etat-collecte" title="Tournée en cours ?"><i></i><span>Bot au repos</span></div>
+    <div class="etat" id="etat-fb" title="Compte Facebook pour la lecture des pages"><i></i><span>Facebook : non connecté</span></div>
+    <div class="etat" id="etat-pub" title="Publication sur la page"><i></i><span>Publication : préparée seulement</span></div>
+  </div>
+</aside>
+<button class="nav-voile" id="nav-voile" aria-label="Fermer le menu" hidden></button>
+
+<div class="page">
+<header class="barre">
+  <button class="menu" id="btn-nav" aria-label="Ouvrir le menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+  <h1 id="titre-vue">Tableau de bord</h1>
+  <div class="barre-etat" id="barre-etat" aria-live="polite"></div>
+</header>
+
+<main>
+
+<!-- ═══════════ TABLEAU DE BORD ═══════════ -->
+<section class="vue active" id="vue-bord">
+  <div class="tuiles" id="tuiles"></div>
+
+  <div class="colonnes">
+    <article class="carte">
+      <h2>La tournée</h2>
+      <p class="aide">Le bot lit ses sources web (recherches, YouTube, sites de fabricants, flux), puis — si un compte est connecté — deux ou trois pages Facebook. Chaque trouvaille est notée, datée et rangée dans <code id="chemin-collecte">data/collecte</code>.</p>
+      <div class="rangee">
+        <button class="btn primaire" id="btn-collecte">Lancer la tournée</button>
+        <button class="btn" id="btn-arret" hidden>Arrêter</button>
+        <button class="btn" id="btn-ouvrir-racine">Ouvrir le dossier</button>
+      </div>
+      <div class="progression" id="progression" hidden></div>
+      <div class="rangee" style="margin-top:14px">
+        <input type="url" id="import-url" placeholder="Importer une adresse précise (article, PDF, vidéo YouTube…)" style="flex:1">
+        <button class="btn" id="btn-importer">Importer</button>
+      </div>
+    </article>
+
+    <article class="carte">
+      <h2>Aujourd'hui</h2>
+      <div id="planning-bord" class="liste-cle-valeur"></div>
+    </article>
+  </div>
+
+  <article class="carte">
+    <h2>Dernières trouvailles gardées</h2>
+    <div class="grille-mini" id="dernieres"></div>
+  </article>
+
+  <article class="carte">
+    <h2>Journal</h2>
+    <ul class="journal" id="journal-bord"></ul>
+  </article>
+</section>
+
+<!-- ═══════════ TROUVAILLES ═══════════ -->
+<section class="vue" id="vue-trouvailles">
+  <div class="filtres">
+    <select id="f-statut">
+      <option value="actives">Actives (à trier + gardées + programmées)</option>
+      <option value="nouvelle">À trier</option>
+      <option value="gardee">Gardées</option>
+      <option value="programmee">Programmées</option>
+      <option value="publiee">Publiées</option>
+      <option value="ecartee">Écartées (pour régler le tri)</option>
+      <option value="">Toutes</option>
+    </select>
+    <select id="f-genre">
+      <option value="">Tous les genres</option>
+      <option value="video">Vidéos</option>
+      <option value="article">Articles</option>
+      <option value="actualite">Actualités</option>
+      <option value="pdf">Guides PDF</option>
+      <option value="post_fb">Publications Facebook</option>
+    </select>
+    <select id="f-theme"><option value="">Tous les thèmes</option></select>
+    <select id="f-source"><option value="0">Toutes les sources</option></select>
+    <input type="search" id="f-q" placeholder="Chercher un mot…">
+    <select id="f-tri">
+      <option value="score">Par score</option>
+      <option value="date">Par date de publication</option>
+      <option value="collecte">Par date de collecte</option>
+      <option value="vues">Par vues (vidéos)</option>
+    </select>
+  </div>
+  <div class="lot" id="lot" hidden>
+    <span id="lot-n">0 sélectionnée</span>
+    <button class="btn petit" data-lot="garder">Garder</button>
+    <button class="btn petit" data-lot="programmer">Programmer</button>
+    <button class="btn petit" data-lot="ecarter">Écarter</button>
+    <button class="btn petit danger" data-lot="supprimer">Supprimer</button>
+    <button class="btn petit" id="lot-vider">Tout décocher</button>
+  </div>
+  <p class="aide" id="trouvailles-aide"></p>
+  <div class="grille" id="grille-trouvailles"></div>
+</section>
+
+<!-- ═══════════ PUBLICATION ═══════════ -->
+<section class="vue" id="vue-publication">
+  <article class="carte">
+    <h2>La page Facebook</h2>
+    <div class="rangee">
+      <div id="page-etat" class="aide">Jeton non vérifié.</div>
+      <button class="btn petit" id="btn-page-verifier">Vérifier le jeton</button>
+    </div>
+    <p class="aide" id="publication-mode"></p>
+  </article>
+  <article class="carte">
+    <h2>File d'attente <small class="aide">— programmées d'abord, puis gardées, par score</small></h2>
+    <div class="grille" id="grille-file"></div>
+  </article>
+  <article class="carte">
+    <h2>Historique</h2>
+    <table class="table" id="table-historique"><thead><tr><th>Quand</th><th>Trouvaille</th><th>Résultat</th><th>Programmé</th></tr></thead><tbody></tbody></table>
+  </article>
+</section>
+
+<!-- ═══════════ DOSSIERS ═══════════ -->
+<section class="vue" id="vue-dossiers">
+  <article class="carte">
+    <div class="rangee entre">
+      <div><h2 style="margin:0">Un dossier par date de publication</h2><p class="aide" id="dossiers-racine"></p></div>
+      <button class="btn" id="btn-dossiers-ouvrir">Ouvrir dans l'Explorateur</button>
+    </div>
+    <p class="aide">Chaque fiche contient <code>texte.txt</code> (en-tête + texte intégral ou transcription), <code>fiche.json</code>, <code>post-facebook.txt</code> et ses images. Un <code>INDEX.txt</code> par jour liste les fiches par score. « date-inconnue » regroupe ce que la page ne datait pas — corrigez la date dans la fiche, elle déménage.</p>
+  </article>
+  <div class="colonnes dossiers">
+    <article class="carte"><h2>Dates</h2><ul class="dates" id="liste-dates"></ul></article>
+    <article class="carte"><h2 id="titre-date">Fiches</h2><div class="grille" id="grille-date"></div></article>
+  </div>
+</section>
+
+<!-- ═══════════ SOURCES ═══════════ -->
+<section class="vue" id="vue-sources">
+  <article class="carte">
+    <h2>Ajouter une source</h2>
+    <p class="aide">Collez une adresse (site de fabricant, flux RSS, chaîne YouTube, page ou groupe Facebook) — ou tapez simplement des <strong>mots</strong> : ils deviennent une recherche sur Google Actualités + Bing, et sur YouTube.</p>
+    <div class="rangee">
+      <input type="text" id="src-entree" placeholder="https://www.rector.fr/  ·  ou  ·  étaiement plancher hourdis" style="flex:2">
+      <input type="text" id="src-nom" placeholder="Nom (facultatif)" style="flex:1">
+      <label class="case"><input type="checkbox" id="src-youtube" checked> aussi sur YouTube</label>
+      <button class="btn primaire" id="btn-src-ajouter">Ajouter</button>
+    </div>
+  </article>
+  <article class="carte">
+    <h2>Les sources et leur rendement</h2>
+    <table class="table" id="table-sources"><thead><tr><th></th><th>Source</th><th>Genre</th><th>Examinées</th><th>Gardées</th><th>Dernier passage</th><th>État</th><th></th></tr></thead><tbody></tbody></table>
+  </article>
+</section>
+
+<!-- ═══════════ NOUVELLES SOURCES ═══════════ -->
+<section class="vue" id="vue-candidats">
+  <article class="carte">
+    <div class="rangee entre">
+      <div><h2 style="margin:0">Ce que le bot propose de suivre</h2><p class="aide">Une chaîne YouTube dont deux vidéos ont été gardées, un site dont deux articles sont remontés par les moteurs : candidats à suivre en direct. Vous adoptez ou écartez ; un écarté ne revient jamais.</p></div>
+      <button class="btn" id="btn-decouvrir">Chercher maintenant</button>
+    </div>
+  </article>
+  <div class="lot" id="lot-candidats" hidden>
+    <span id="lot-candidats-n">0 coché</span>
+    <button class="btn petit primaire" data-cand="adopter">Adopter</button>
+    <button class="btn petit" data-cand="ecarter">Écarter</button>
+  </div>
+  <p class="aide" id="candidats-aide"></p>
+  <table class="table" id="table-candidats"><thead><tr><th></th><th>Candidat</th><th>Genre</th><th>Note</th><th>Pourquoi</th></tr></thead><tbody></tbody></table>
+</section>
+
+<!-- ═══════════ AUTOMATISATION ═══════════ -->
+<section class="vue" id="vue-automatisation">
+  <article class="carte">
+    <h2>Tournées automatiques</h2>
+    <label class="case"><input type="checkbox" data-cle="collecte_auto" data-type="bool"> Lancer la tournée tout seul aux heures dites</label>
+    <div class="champs">
+      <label>Heures (séparées par des virgules) <input type="text" data-cle="heures_collecte" data-type="liste" placeholder="08:30, 18:30"></label>
+      <label>Objectif : trouvailles gardables par jour <input type="number" data-cle="objectif_par_jour" data-type="int" min="0"></label>
+    </div>
+    <label class="case"><input type="checkbox" data-cle="web_pendant_session_claude" data-type="bool"> La partie <strong>web</strong> tourne même quand une session Claude est ouverte sur ce PC (seule la partie Facebook/Chromium attend — règle du 03/09/2026)</label>
+  </article>
+  <article class="carte">
+    <h2>Après chaque tournée</h2>
+    <label class="case"><input type="checkbox" data-cle="llm_relire_auto" data-type="bool"> Faire relire les meilleures trouvailles par le modèle (s'il est allumé dans Réglages)</label>
+    <div class="champs">
+      <label>Au plus, par tournée <input type="number" data-cle="llm_relire_max" data-type="int" min="0"></label>
+      <label>Seulement au-dessus du score <input type="number" data-cle="llm_score_min_pour_relire" data-type="int" min="0" max="100"></label>
+    </div>
+    <label class="case"><input type="checkbox" data-cle="decouverte_auto" data-type="bool"> Chercher de nouvelles sources (chaînes, sites) à partir de ce qui a été gardé</label>
+    <div class="champs"><label>Tous les … jours <input type="number" data-cle="decouverte_jours" data-type="int" min="1"></label></div>
+  </article>
+  <article class="carte">
+    <h2>Publication programmée</h2>
+    <p class="aide">Aux heures dites, le bot publie la <strong>prochaine trouvaille que vous avez passée en « programmée »</strong> — jamais une que vous n'avez pas relue. Il faut aussi que la publication soit active (Réglages).</p>
+    <label class="case"><input type="checkbox" data-cle="publication_auto_programmee" data-type="bool"> Publier les programmées aux heures dites</label>
+    <div class="champs"><label>Heures de publication <input type="text" data-cle="heures_publication" data-type="liste" placeholder="07:00, 19:00"></label></div>
+  </article>
+  <div class="rangee"><button class="btn primaire" data-enregistrer="automatisation">Enregistrer</button></div>
+</section>
+
+<!-- ═══════════ RÉGLAGES ═══════════ -->
+<section class="vue" id="vue-reglages">
+  <article class="carte">
+    <h2>Le tri</h2>
+    <div class="champs">
+      <label>Score minimum pour garder (0-100) <input type="number" data-cle="score_min" data-type="int" min="0" max="100"></label>
+      <label>Âge maximum des tutos/articles (jours, 0 = illimité) <input type="number" data-cle="jours_max" data-type="int" min="0"></label>
+      <label>Âge maximum des actualités (jours) <input type="number" data-cle="jours_max_actualites" data-type="int" min="0"></label>
+      <label>Année minimum <input type="number" data-cle="annee_minimum" data-type="int" min="2000"></label>
+      <label>Langues suivies <input type="text" data-cle="langues" data-type="liste" placeholder="fr, mg, en"></label>
+      <label>Pénalité pour l'anglais <input type="number" data-cle="penalite_anglais" data-type="int" min="0"></label>
+    </div>
+    <div class="champs">
+      <label>Mots du métier en plus (un par ligne) <textarea data-cle="mots_metier" data-type="lignes" rows="4" placeholder="hourdis négatif&#10;rupteur thermique"></textarea></label>
+      <label>Repoussoirs en plus (un par ligne) <textarea data-cle="repoussoirs" data-type="lignes" rows="4" placeholder="jeu vidéo"></textarea></label>
+    </div>
+    <label class="case"><input type="checkbox" data-cle="garder_les_ecartees" data-type="bool"> Garder les écartées en base (visibles dans Trouvailles, jamais en dossier) — utile pour régler le tri</label>
+  </article>
+
+  <article class="carte">
+    <h2>Budget d'une tournée</h2>
+    <div class="champs">
+      <label>Vidéos par recherche YouTube <input type="number" data-cle="videos_par_recherche" data-type="int" min="1"></label>
+      <label>Fiches complètes YouTube (max) <input type="number" data-cle="videos_details_max" data-type="int" min="0"></label>
+      <label>Transcriptions (max) <input type="number" data-cle="transcriptions_max" data-type="int" min="0"></label>
+      <label>Articles par flux <input type="number" data-cle="articles_par_flux" data-type="int" min="1"></label>
+      <label>Résultats par recherche web <input type="number" data-cle="resultats_par_recherche_web" data-type="int" min="1"></label>
+      <label>Pages lues par site <input type="number" data-cle="pages_par_site" data-type="int" min="1"></label>
+      <label>Images par fiche (max) <input type="number" data-cle="images_max" data-type="int" min="0"></label>
+    </div>
+    <label class="case"><input type="checkbox" data-cle="transcrire_videos" data-type="bool"> Lire les sous-titres des vidéos (le texte du tuto dans texte.txt)</label>
+    <label class="case"><input type="checkbox" data-cle="lire_les_pdf" data-type="bool"> Lire les guides PDF des fabricants</label>
+    <label class="case"><input type="checkbox" data-cle="telecharger_images" data-type="bool"> Télécharger les images</label>
+  </article>
+
+  <article class="carte">
+    <h2>Rangement</h2>
+    <div class="champs">
+      <label>Dossier des collectes (vide = data/collecte ; chemin absolu sur C:, jamais sur G: pendant une synchro Drive) <input type="text" data-cle="dossier_collecte" data-type="texte" placeholder="C:\Users\ANDRIANIRINA\Desktop\Veille hourdis"></label>
+    </div>
+  </article>
+
+  <article class="carte">
+    <h2>Facebook — lecture des pages (petite partie)</h2>
+    <div class="rangee">
+      <span id="reglages-fb-etat" class="aide">Aucun compte connecté.</span>
+      <button class="btn petit" id="btn-fb-connexion">Connecter un compte</button>
+      <button class="btn petit" id="btn-fb-oublier">Oublier la session</button>
+    </div>
+    <p class="aide">Utilisez un compte <strong>dédié à la veille</strong>, pas votre compte principal. Le bot n'aime, ne commente et ne rejoint rien.</p>
+    <label class="case"><input type="checkbox" data-cle="facebook_actif" data-type="bool"> Lire les pages et groupes Facebook déclarés dans Sources</label>
+    <div class="champs">
+      <label>Défilements par source <input type="number" data-cle="scrolls_max_par_source" data-type="int" min="1"></label>
+      <label>Publications retenues par source (max) <input type="number" data-cle="posts_max_par_source" data-type="int" min="1"></label>
+      <label>Mémoire minimum pour ouvrir Chromium (Mo) <input type="number" data-cle="memoire_mini_mo" data-type="int" min="0"></label>
+    </div>
+    <label class="case"><input type="checkbox" data-cle="navigateur_visible" data-type="bool"> Navigateur visible pendant la lecture</label>
+  </article>
+
+  <article class="carte">
+    <h2>Publication sur la page « Hourdis Madagascar »</h2>
+    <p class="aide">Éteinte, la publication est seulement <strong>préparée</strong> : un <code>post-facebook.txt</code> dans chaque dossier, à copier. Allumée, le bouton « Publier » et la programmation parlent à Meta avec le jeton de la page (profil Hermes hourdis, ou <code>~/.hourdis-secrets/facebook.txt</code>).</p>
+    <label class="case"><input type="checkbox" data-cle="publication_active" data-type="bool"> <strong>Publication active</strong> (le bot peut envoyer sur la page)</label>
+    <label class="case"><input type="checkbox" data-cle="publier_avec_photo" data-type="bool"> Publier avec la première image quand il y en a une (sinon texte + lien)</label>
+    <label class="case"><input type="checkbox" data-cle="signature_source" data-type="bool"> Toujours citer la source (auteur + lien) dans le post</label>
+    <div class="champs">
+      <label>Langue des brouillons <select data-cle="langue_post" data-type="texte"><option value="mix">Malgache + français</option><option value="mg">Malgache</option><option value="fr">Français</option></select></label>
+      <label>Ligne de contact <input type="text" data-cle="contact_ligne" data-type="texte"></label>
+      <label>Hashtags <input type="text" data-cle="hashtags" data-type="texte"></label>
+    </div>
+  </article>
+
+  <article class="carte">
+    <h2>Relecture par un modèle (facultatif)</h2>
+    <p class="aide">Le tri et le rangement n'en dépendent pas. Le modèle résume, tire 3 à 5 conseils et rédige un brouillon FR + MG. ⚠ La clé Groq du profil hourdis partage peut-être son quota journalier avec le bot Messenger de Fonenako : gardez des plafonds bas.</p>
+    <label class="case"><input type="checkbox" data-cle="llm_actif" data-type="bool"> Modèle allumé</label>
+    <div class="champs">
+      <label>Transport <select data-cle="llm_transport" data-type="texte"><option value="compatible">OpenAI-compatible (Groq, Cerebras…)</option><option value="anthropic">Anthropic (Claude)</option><option value="passerelle">Passerelle LiteLLM d'Hermes</option></select></label>
+      <label>Adresse (compatible) <input type="text" data-cle="llm_url" data-type="texte"></label>
+      <label>Modèle (compatible) <input type="text" data-cle="llm_modele" data-type="texte"></label>
+      <label>Modèle (passerelle) <input type="text" data-cle="llm_modele_passerelle" data-type="texte"></label>
+      <label>Modèle (Anthropic) <input type="text" data-cle="llm_modele_anthropic" data-type="texte"></label>
+      <label>Délai (s) <input type="number" data-cle="llm_delai" data-type="int" min="10"></label>
+    </div>
+    <div class="rangee"><button class="btn petit" id="btn-llm-test">Tester le modèle</button><span id="llm-test-resultat" class="aide"></span></div>
+  </article>
+
+  <div class="rangee"><button class="btn primaire" data-enregistrer="reglages">Enregistrer les réglages</button><a class="btn" href="/api/export.csv" download>Exporter les trouvailles (CSV)</a></div>
+</section>
+
+<!-- ═══════════ JOURNAL ═══════════ -->
+<section class="vue" id="vue-journal">
+  <div class="filtres">
+    <select id="j-niveau"><option value="">Tout</option><option value="erreur">Erreurs</option><option value="avert">Avertissements</option><option value="succes">Succès</option><option value="info">Infos</option></select>
+    <button class="btn petit" id="btn-journal-rafraichir">Rafraîchir</button>
+  </div>
+  <ul class="journal long" id="journal-complet"></ul>
+</section>
+
+</main>
+</div>
+</div>
+
+<!-- ═══════════ PANNEAU DE DÉTAIL ═══════════ -->
+<div class="voile" id="voile" hidden></div>
+<aside class="panneau" id="panneau" hidden aria-label="Détail de la trouvaille">
+  <header>
+    <div><span class="badge" id="p-genre"></span> <span class="badge score" id="p-score"></span> <span class="badge" id="p-date"></span></div>
+    <button class="fermer" id="p-fermer" aria-label="Fermer">×</button>
+  </header>
+  <div class="panneau-corps">
+    <h2 id="p-titre"></h2>
+    <p class="aide" id="p-meta"></p>
+    <div id="p-images" class="p-images"></div>
+    <div class="p-actions">
+      <button class="btn petit" data-p="garder">Garder</button>
+      <button class="btn petit" data-p="programmer">Programmer</button>
+      <button class="btn petit" data-p="ecarter">Écarter</button>
+      <button class="btn petit" data-p="ouvrir">Ouvrir le dossier</button>
+      <button class="btn petit" data-p="relire">Relire (IA)</button>
+      <button class="btn petit danger" data-p="supprimer">Supprimer</button>
+    </div>
+    <details open><summary>Brouillon de publication</summary>
+      <textarea id="p-post" rows="14"></textarea>
+      <div class="rangee">
+        <button class="btn petit" data-p="rediger-mix">Rédiger MG+FR</button>
+        <button class="btn petit" data-p="rediger-mg">MG</button>
+        <button class="btn petit" data-p="rediger-fr">FR</button>
+        <button class="btn petit" data-p="post-enregistrer">Enregistrer le texte</button>
+        <button class="btn petit" data-p="copier">Copier</button>
+      </div>
+      <div class="rangee">
+        <button class="btn petit primaire" data-p="publier">Publier maintenant</button>
+        <input type="datetime-local" id="p-quand">
+        <button class="btn petit" data-p="programmer-fb">Programmer sur Facebook</button>
+        <button class="btn petit" data-p="a-blanc">À blanc</button>
+      </div>
+      <p class="aide" id="p-publication-aide"></p>
+    </details>
+    <details><summary>Date, note</summary>
+      <div class="champs">
+        <label>Date de publication (AAAA-MM-JJ, vide = inconnue) <input type="text" id="p-publie-le" placeholder="2026-09-04"></label>
+        <label>Note libre <input type="text" id="p-note"></label>
+      </div>
+      <button class="btn petit" data-p="meta-enregistrer">Enregistrer</button>
+    </details>
+    <details><summary>Conseils et avertissements</summary><div id="p-conseils"></div></details>
+    <details><summary>Pourquoi ce score</summary><p class="aide" id="p-motifs"></p></details>
+    <details><summary>Texte intégral</summary><pre id="p-texte"></pre></details>
+  </div>
+</aside>
+
+<div class="toast" id="toast" hidden></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

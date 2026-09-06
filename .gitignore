@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Bot de veille Hourdis : base, session Facebook, collectes (hors depot)
+bot-hourdis/data/
+bot-hourdis/.pytest_cache/
+__pycache__/
