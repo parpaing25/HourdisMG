@@ -20,6 +20,7 @@ const etat = {
   ouvert: null,
   dateOuverte: null,
   dernierEtat: null,
+  publicationEnCours: null,   // id de la trouvaille qu'un « Publier en un clic » traite
 };
 
 const GENRES = { video: "Vidéo", article: "Article", actualite: "Actualité", pdf: "Guide PDF", post_fb: "Publication FB" };
@@ -123,6 +124,18 @@ async function rafraichirEtat() {
     ? `${col.examines} examinée(s) · ${col.trouvees} gardée(s)` + (e.tache.type && e.tache.type !== "collecte" ? ` · ${e.tache.type}` : "")
     : (e.tache.actif ? `Tâche : ${e.tache.type}` : (e.planning.prochain ? `Prochaine tournée ${e.planning.prochain}` : ""));
 
+  // La publication en un clic : son avancement dans le panneau, et la fin annoncée.
+  const pub = e.tache.actif && e.tache.type === "publication";
+  const ucProg = $("#p-uc-progression");
+  if (pub && etat.ouvert && (!e.tache.cible || e.tache.cible === etat.ouvert.id)) {
+    ucProg.hidden = false; ucProg.textContent = e.tache.detail || "En cours…";
+  }
+  if (!pub && etat.publicationEnCours) {
+    const id = etat.publicationEnCours; etat.publicationEnCours = null;
+    const derniere = (e.journal || []).find((l) => /Publiée en un clic|À blanc|refusé la publication|publication :/.test(l.message));
+    toast(derniere ? derniere.message : "Publication terminée.", derniere && /refus|erreur/.test(derniere.message) ? "erreur" : "succes");
+    if (etat.ouvert && etat.ouvert.id === id) ouvrirPanneau(id); else rafraichirVue();
+  }
   $("#btn-collecte").hidden = enCours; $("#btn-arret").hidden = !enCours;
   const prog = $("#progression");
   prog.hidden = !enCours && !col.fin;
@@ -201,6 +214,7 @@ function carteTrouvaille(t, mini = false) {
   const statut = t.statut !== "nouvelle" ? `<span class="badge statut-${t.statut}">${STATUTS[t.statut]}</span>` : "";
   const avert = t.avertissements && t.avertissements.length ? `<span class="badge rouge" title="${echapper(t.avertissements.join(" · "))}">⚠ à vérifier</span>` : "";
   const actions = mini ? "" : `<div class="actions">
+      ${t.statut !== "publiee" && t.statut !== "ecartee" ? `<button class="btn petit un-clic-btn" data-act="un-clic" data-id="${t.id}" title="Refait le texte, importe les médias, publie sur la page">🚀 Publier</button>` : ""}
       ${t.statut === "nouvelle" || t.statut === "ecartee" ? `<button class="btn petit" data-act="garder" data-id="${t.id}">Garder</button>` : ""}
       ${t.statut !== "ecartee" ? `<button class="btn petit" data-act="ecarter" data-id="${t.id}">Écarter</button>` : ""}
       ${t.statut === "gardee" ? `<button class="btn petit" data-act="programmer" data-id="${t.id}">Programmer</button>` : ""}
@@ -238,6 +252,28 @@ async function actionTrouvaille(act, id) {
     }
   } else if (act === "detail") ouvrirPanneau(id);
   else if (act === "ouvrir") agir(api(`/api/trouvailles/${id}/ouvrir`, { method: "POST" }), (r) => `Ouvert : ${r.chemin}`);
+  else if (act === "un-clic") publierEnUnClic(id, {});
+}
+
+/** Le bouton « Publier en un clic » : texte refait + médias + envoi, dans un fil du serveur.
+ *  Si la publication est éteinte, on propose de l'allumer et on recommence — c'est
+ *  Andry qui vient de cliquer, la décision est prise. */
+async function publierEnUnClic(id, options) {
+  const corps = { a_blanc: !!options.a_blanc, message: options.message || "",
+    refaire_texte: options.refaire_texte ?? null, avec_video: options.avec_video ?? null };
+  if (!corps.a_blanc && !confirm("Publier cette trouvaille sur la page Hourdis Madagascar, avec ses médias ?")) return;
+  try {
+    await api(`/api/publication/${id}/un-clic`, { method: "POST", corps });
+  } catch (e) {
+    if (/éteinte/.test(e.message)) {
+      if (!confirm("La publication est éteinte. L'allumer maintenant et publier ?")) return;
+      const r = await agir(api(`/api/publication/${id}/un-clic`, { method: "POST", corps: { ...corps, allumer: true } }));
+      if (!r) return;
+    } else { toast(e.message, "erreur"); return; }
+  }
+  etat.publicationEnCours = id;
+  toast(corps.a_blanc ? "Essai à blanc lancé — suivez l'avancement." : "Publication lancée — le texte, les médias, puis l'envoi. Suivez l'avancement.", "succes");
+  if (etat.ouvert && etat.ouvert.id === id) { const p = $("#p-uc-progression"); p.hidden = false; p.textContent = "Démarrage…"; }
 }
 function rafraichirVue() {
   ({ trouvailles: chargerTrouvailles, publication: chargerPublication, dossiers: () => chargerDossiers(true) }[etat.vue] || rafraichirEtat)();
@@ -303,6 +339,13 @@ async function ouvrirPanneau(id) {
   $("#p-texte").textContent = t.texte || "(aucun texte)";
   const pub = etat.dernierEtat && etat.dernierEtat.publication.active;
   $("#p-publication-aide").textContent = pub ? "La publication est active : « Publier maintenant » envoie sur la page." : "Publication éteinte : copiez le texte, ou allumez-la dans Réglages. « À blanc » montre ce qui partirait.";
+  const ucp = $("#p-uc-progression");
+  ucp.hidden = !(etat.publicationEnCours === t.id); ucp.textContent = "";
+  $("#p-uc-aide").textContent = t.statut === "publiee"
+    ? `Déjà publiée sur la page${t.publie_fb_id ? ` (${t.publie_fb_id})` : ""}.`
+    : (t.genre === "video" ? "Refait le texte, télécharge la vidéo YouTube (720p max) et la publie en vidéo native, source citée. Si la vidéo est refusée ou trop longue : vignette + lien."
+      : "Refait le texte, importe les images de la page, et publie un album avec le texte et le lien.");
+  $("#p-uc-video").closest("label").hidden = t.genre !== "video";
   const dans10 = new Date(Date.now() + 3600 * 1000); dans10.setSeconds(0, 0);
   $("#p-quand").value = dans10.toISOString().slice(0, 16);
   $("#panneau").hidden = false; $("#voile").hidden = false;
@@ -315,6 +358,15 @@ $$("[data-p]").forEach((b) => (b.onclick = async () => {
   const t = etat.ouvert; if (!t) return;
   const id = t.id, act = b.dataset.p;
   if (["garder", "ecarter", "programmer"].includes(act)) return actionTrouvaille(act, id);
+  if (act === "un-clic" || act === "un-clic-blanc") {
+    return publierEnUnClic(id, {
+      a_blanc: act === "un-clic-blanc",
+      refaire_texte: $("#p-uc-texte").checked,
+      avec_video: $("#p-uc-video").checked,
+      // Le texte du panneau est imposé seulement si Andry a décoché « refaire » : sinon on le refait.
+      message: $("#p-uc-texte").checked ? "" : $("#p-post").value,
+    });
+  }
   if (act === "ouvrir") return actionTrouvaille("ouvrir", id);
   if (act === "supprimer") {
     if (!confirm("Supprimer cette trouvaille et son dossier ?")) return;

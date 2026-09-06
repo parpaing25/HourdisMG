@@ -120,6 +120,13 @@ DEFAUTS = {
     "publication_auto_programmee": False,
     "heures_publication": ["07:00", "19:00"],
     "publier_avec_photo": True,
+    # ── « Publier en un clic » : refait le texte, importe les médias, envoie ──
+    "un_clic_refaire_texte": True,    # réécrit le brouillon à chaque clic (modèle si allumé, sinon gabarit)
+    "un_clic_video": True,            # pour une vidéo YouTube : la télécharger et la publier en vidéo native
+    "un_clic_photos_max": 4,          # images attachées à une publication (article, PDF, post)
+    "video_hauteur_max": 720,         # 720p suffit à Facebook et pèse 4 fois moins que 1080p
+    "video_taille_max_mo": 250,
+    "video_duree_max_s": 1500,        # au-delà de 25 min, on publie la vignette et le lien
     "langue_post": "mix",             # 'fr' | 'mg' | 'mix'
     "contact_ligne": "📞 032 47 041 43 | 033 71 063 34 · 🌐 https://hourdis.fonenako.mg/",
     "hashtags": "#Hourdis #ConstructionMadagascar #TranoGasy #BriqueMadagascar #TerreCuite",

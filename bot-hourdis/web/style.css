@@ -222,6 +222,11 @@ textarea { width: 100%; resize: vertical; }
 .p-images { display: flex; gap: 8px; flex-wrap: wrap; }
 .p-images img { height: 90px; border-radius: 6px; border: 1px solid var(--bordure); }
 .p-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.un-clic { background: var(--terre-douce); border-radius: var(--rayon-petit); padding: 10px 12px; display: flex; gap: 8px 14px; flex-wrap: wrap; align-items: center; }
+.un-clic .case { padding: 0; font-size: 13px; }
+.un-clic .aide, .un-clic .progression { width: 100%; margin: 0; }
+.un-clic .progression { background: white; }
+.fiche .btn.un-clic-btn { background: var(--terre); border-color: var(--terre); color: white; }
 #p-conseils ul { margin: 0; padding-left: 18px; }
 #p-conseils .avert { color: var(--rouge); }
 

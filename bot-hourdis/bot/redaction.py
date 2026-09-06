@@ -131,6 +131,13 @@ def phrases_cles(texte: str, n: int = 3) -> list[str]:
         reduit = score.sans_accents(phrase)
         if _BRUIT.search(reduit):
             continue
+        # Bourrage de mots-clés (« monter cloison brique, monter cloison brique
+        # creuse, monter cloison brique de verre… ») : beaucoup de virgules,
+        # peu de mots distincts. Mesuré le 06/09/2026 sur une description
+        # YouTube qui a battu la transcription à ce jeu.
+        mots = re.findall(r"[a-z0-9']+", reduit)        # sans la ponctuation collée
+        if phrase.count(",") >= 4 or (len(mots) >= 8 and len(set(mots)) < 0.65 * len(mots)):
+            continue
         points = sum(poids * len(m.findall(reduit)) for m, poids in _METIER)
         if points == 0:
             continue

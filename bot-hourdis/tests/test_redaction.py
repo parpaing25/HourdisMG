@@ -30,6 +30,15 @@ def test_phrases_cles_sur_une_transcription_sans_ponctuation():
     assert all("abonner" not in p for p in phrases)
 
 
+def test_phrases_cles_ecarte_le_bourrage_de_mots_cles():
+    bourrage = ("Dans ce tutoriel nous allons découvrir comment monter une cloison en brique creuse avec soin. "
+                "Nous traiterons également des sujets similaires tels que monter cloison brique, monter cloison "
+                "brique creuse, monter cloison brique de verre, monter une cloison en brique creuse, monter une "
+                "cloison en brique de verre, cloison brique, brique cloison, brique de cloison, brique pour cloison.")
+    phrases = redaction.phrases_cles(bourrage, 3)
+    assert phrases and all("tels que" not in p and p.count(",") < 4 for p in phrases)
+
+
 def test_resume_propre_sans_liens():
     description = ("Bonjour, je vous montre comment maçonner un mur en briques creuses.\n"
                    "⚡ Les liens ci dessous sont affiliés, une commission m'est reversée.\n"

@@ -30,9 +30,9 @@ from .config import PORT, RACINE, charger, enregistrer
 WEB = RACINE / "web"
 app = FastAPI(title="Bot de veille Hourdis", docs_url=None, redoc_url=None)
 
-tache = {"type": None, "actif": False, "message": ""}
+tache = {"type": None, "actif": False, "message": "", "detail": "", "cible": ""}
 RESSOURCE = {"collecte": "collecte", "import": "collecte", "connexion": "navigateur",
-             "relecture": "llm", "decouverte": "reseau", "publication": "reseau"}
+             "relecture": "llm", "decouverte": "reseau", "publication": "publication"}
 _prises: dict[str, str] = {}
 _verrou_taches = threading.Lock()
 _planificateur: plan.Planificateur | None = None
@@ -44,7 +44,7 @@ def _lancer(type_tache: str, fonction) -> bool:
         if ressource in _prises:
             return False
         _prises[ressource] = type_tache
-    tache.update({"type": type_tache, "actif": True, "message": ""})
+    tache.update({"type": type_tache, "actif": True, "message": "", "detail": ""})
 
     def enveloppe():
         try:
@@ -57,6 +57,9 @@ def _lancer(type_tache: str, fonction) -> bool:
                 _prises.pop(ressource, None)
                 tache["actif"] = bool(_prises)
                 tache["type"] = next(iter(_prises.values()), None)
+                if not _prises:
+                    tache["detail"] = ""
+                    tache["cible"] = ""
 
     threading.Thread(target=enveloppe, daemon=True).start()
     return True
@@ -105,6 +108,14 @@ class PublierEntree(BaseModel):
     quand: str | None = None          # ISO local 'AAAA-MM-JJTHH:MM'
     a_blanc: bool = False
     message: str = ""
+
+
+class UnClicEntree(BaseModel):
+    refaire_texte: bool | None = None  # None = réglage `un_clic_refaire_texte`
+    avec_video: bool | None = None     # None = réglage `un_clic_video`
+    message: str = ""                  # texte imposé (celui du panneau), sinon refait
+    a_blanc: bool = False              # tout faire sauf envoyer
+    allumer: bool = False              # allume `publication_active` avant d'envoyer
 
 
 class ConfigEntree(BaseModel):
@@ -418,6 +429,9 @@ def etat_publication(page: bool = False):
     cfg = charger()
     return {"active": bool(cfg.get("publication_active")),
             "auto": bool(cfg.get("publication_auto_programmee")),
+            "un_clic": {"refaire_texte": bool(cfg.get("un_clic_refaire_texte", True)),
+                        "video": bool(cfg.get("un_clic_video", True)),
+                        "llm": bool(cfg.get("llm_actif"))},
             "file": publication.file_attente(),
             "historique": base.publications(40),
             "page": publication.etat_page() if page else None}
@@ -436,6 +450,45 @@ def publier(tid: str, entree: PublierEntree):
     if not resultat.get("ok"):
         raise HTTPException(409, resultat.get("erreur", "refus"))
     return resultat
+
+
+@app.post("/api/publication/{tid}/un-clic")
+def publier_un_clic(tid: str, entree: UnClicEntree):
+    """Texte refait + médias importés + envoi, dans un fil de fond.
+
+    Le refus « publication éteinte » tombe ICI, avant tout travail, pour que le
+    bouton puisse proposer d'allumer et de recommencer. `allumer` le fait en un
+    seul aller-retour, parce que c'est Andry qui vient de cliquer.
+    """
+    t = base.trouvaille(tid)
+    if not t:
+        raise HTTPException(404, "Trouvaille inconnue")
+    cfg = charger()
+    if entree.allumer and not cfg.get("publication_active"):
+        cfg["publication_active"] = True
+        enregistrer(cfg)
+        base.logguer("Publication allumée depuis le bouton « Publier en un clic ».", "avert")
+    if not entree.a_blanc and not cfg.get("publication_active"):
+        raise HTTPException(409, publication.REFUS_ETEINT)
+    if t.get("statut") == "publiee" and not entree.a_blanc:
+        raise HTTPException(409, "Déjà publiée sur la page.")
+
+    def progression(message: str) -> None:
+        tache["detail"] = message
+        base.logguer(f"[{t['titre'][:40]}] {message}", "info")
+
+    resultat: dict = {}
+
+    def travail():
+        resultat.update(publication.publier_en_un_clic(
+            tid, cfg, progression, entree.refaire_texte, entree.avec_video, entree.message, entree.a_blanc))
+        if not resultat.get("ok"):
+            tache["message"] = resultat.get("erreur", "échec")
+
+    if not _lancer("publication", travail):
+        raise HTTPException(409, "Une publication est déjà en cours — attendez qu'elle finisse.")
+    tache["cible"] = tid
+    return {"lancee": True, "a_blanc": entree.a_blanc}
 
 
 @app.get("/api/publication/{tid}/apercu")

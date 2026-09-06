@@ -103,6 +103,28 @@ appel à l'action, contact, hashtags — **jamais de prix**.
   la prochaine trouvaille **que vous avez passée en « programmée »** — jamais une que
   vous n'avez pas relue.
 
+### 🚀 Publier en un clic
+
+Le bouton « 🚀 Publier » (sur chaque carte, et en tête du panneau de détail) fait tout :
+
+1. **refait le texte** — le modèle réécrit s'il est allumé (résumé, conseils, FR + MG),
+   sinon le gabarit refait le brouillon depuis le texte ; décochez « refaire le texte »
+   pour imposer celui du panneau ;
+2. **importe les médias** — les images de l'article (jusqu'à `un_clic_photos_max`), la
+   vignette YouTube, et **la vidéo elle-même** (MP4, 720p max, `video_taille_max_mo`,
+   `video_duree_max_s`) dans `media/` du dossier de la fiche ;
+3. **publie avec le contenu attaché** — vidéo native (`graph-video`), sinon album de
+   photos + texte + lien, sinon texte + lien. Une vidéo refusée par Facebook (droits,
+   poids, jeton sans `publish_video`) retombe sur l'album, la publication n'est pas perdue.
+
+L'avancement s'affiche dans le panneau (« Téléchargement de la vidéo… », « Envoi… »)
+et dans le journal. « Essai à blanc » fait tout sauf envoyer. Si la publication est
+éteinte, le bouton propose de l'allumer et recommence.
+
+⚠ Une vidéo republiée reste celle de son auteur : la source est toujours citée dans la
+description, et c'est vous qui décidez, vidéo par vidéo. Pour partager sans republier,
+décochez « importer la vidéo » : la vignette et le lien partent à la place.
+
 ⚠ **Un seul répondeur par page** : ce bot publie, il ne répond à aucun message ni
 commentaire (rôle du profil Hermes hourdis).
 

@@ -191,6 +191,89 @@ def sous_titres(video_id: str, langues: tuple[str, ...] = ("fr", "mg", "en")) ->
             return "", ""
 
 
+def video_id_de(url: str) -> str:
+    """`https://youtube.com/watch?v=abc`, `youtu.be/abc`, `/shorts/abc` -> `abc`."""
+    from urllib.parse import parse_qs, urlsplit
+    d = urlsplit(url or "")
+    if "youtu.be" in d.netloc:
+        return d.path.strip("/").split("/")[0]
+    if "youtube.com" in d.netloc:
+        if d.path == "/watch":
+            return (parse_qs(d.query).get("v") or [""])[0]
+        trouve = re.match(r"^/(?:shorts|embed|v)/([A-Za-z0-9_-]{6,})", d.path)
+        if trouve:
+            return trouve.group(1)
+    return ""
+
+
+DELAI_TELECHARGEMENT = 900
+
+
+def ffmpeg_disponible() -> str:
+    """Le chemin d'un ffmpeg : celui du PATH, sinon celui livré avec Playwright.
+
+    🔴 SANS ffmpeg, PAS DE VIDÉO. Mesuré le 06/09/2026 : YouTube ne sert plus
+    de fichier MP4 combiné (vidéo + audio) au-delà de 360p — souvent aucun. La
+    vidéo 720p et l'audio m4a arrivent séparés, et c'est ffmpeg qui les
+    assemble. Le premier essai « sans ffmpeg » a rendu « Requested format is
+    not available » sur une vidéo d'une minute.
+    """
+    chemin = shutil.which("ffmpeg")
+    if chemin:
+        return chemin
+    for candidat in sorted((Path.home() / "AppData" / "Local" / "ms-playwright").glob("ffmpeg-*/ffmpeg-win64.exe"),
+                           reverse=True):
+        return str(candidat)
+    return ""
+
+
+def telecharger_video(video_id: str, dossier: Path, hauteur_max: int = 720,
+                      taille_max_mo: int = 250) -> tuple[Path | None, str]:
+    """Rapatrie la vidéo en MP4 (vidéo ≤ `hauteur_max` + audio, fusionnés par ffmpeg).
+    Rend (chemin, erreur). Jamais plus de `taille_max_mo`.
+
+    Sert UNIQUEMENT à « Publier en un clic » : la vidéo part alors sur la page
+    en vidéo native, source citée dans la description. C'est Andry qui appuie.
+    """
+    dossier.mkdir(parents=True, exist_ok=True)
+    existante = next(iter(sorted(dossier.glob("video.mp4"))), None)
+    if existante and existante.stat().st_size > 0:
+        return existante, ""
+    gabarit = str(dossier / "video.%(ext)s")
+    h = int(hauteur_max)
+    ffmpeg = ffmpeg_disponible()
+    if ffmpeg:
+        formats = (f"bv*[ext=mp4][height<={h}]+ba[ext=m4a]/bv*[height<={h}]+ba/"
+                   f"b[ext=mp4][height<={h}]/b[height<={h}]/b")
+        options = ["--merge-output-format", "mp4", "--ffmpeg-location", ffmpeg]
+    else:
+        formats = f"b[ext=mp4][height<={h}]/b[ext=mp4]/b[height<={h}]/b"
+        options = []
+    sortie, erreur, code = _executer(
+        [f"https://www.youtube.com/watch?v={video_id}", "-f", formats, "--max-filesize",
+         f"{int(taille_max_mo)}M", "-o", gabarit, "--no-progress", *options], DELAI_TELECHARGEMENT)
+    fichier = next(iter(sorted(dossier.glob("video.mp4"))), None) or next(
+        (f for f in sorted(dossier.glob("video.*")) if not f.name.endswith((".part", ".ytdl"))), None)
+    if fichier and fichier.stat().st_size > 0:
+        for reste in dossier.glob("video.*"):
+            if reste != fichier:
+                reste.unlink(missing_ok=True)
+        return fichier, ""
+    for reste in dossier.glob("video.*"):
+        reste.unlink(missing_ok=True)
+    texte = sortie + erreur
+    if "File is larger than max-filesize" in texte:
+        return None, f"vidéo plus lourde que {taille_max_mo} Mo"
+    if "Requested format is not available" in texte and not ffmpeg:
+        return None, "aucun MP4 combiné, et ffmpeg introuvable (winget install ffmpeg)"
+    return None, (erreur.strip().splitlines() or [sortie.strip()[-160:] or "téléchargement échoué"])[-1][:200]
+
+
+def vignettes(video_id: str) -> list[str]:
+    return [f"https://i.ytimg.com/vi/{video_id}/maxresdefault.jpg",
+            f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg"]
+
+
 def duree_lisible(secondes: int | None) -> str:
     if not secondes:
         return ""
