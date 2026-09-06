@@ -1,25 +1,28 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Build (régénéré par build.py) et captures du banc
+dist/
+tests/captures/
+outils/verifier_en_ligne.log
 
-node_modules
-dist
-dist-ssr
+# Originaux photo (30 Mo, 8000×6000) : sur le serveur et le téléphone d'Andry, pas dans git
+sources-photos/
+
+# Secrets : la configuration du formulaire vit HORS racine web, jamais ici
+hourdis-config.php
+.env
+.env.*
 *.local
 
-# Editor directories and files
+# Bot de veille Hourdis : base, session Facebook, collectes (hors dépôt)
+bot-hourdis/data/
+bot-hourdis/.pytest_cache/
+
+# Python / Node / éditeurs
+__pycache__/
+*.pyc
+node_modules/
+logs
+*.log
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.env

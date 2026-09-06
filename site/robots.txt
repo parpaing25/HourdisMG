@@ -1,0 +1,17 @@
+# hourdis.fonenako.mg — tout le site est public et indexable.
+User-agent: *
+Allow: /
+Disallow: /contact.php
+Disallow: /stat.php
+
+# Moteurs de réponse IA : autorisés explicitement (stratégie GEO, voir llms.txt).
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://hourdis.fonenako.mg/sitemap.xml

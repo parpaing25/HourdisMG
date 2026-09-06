@@ -1,0 +1,70 @@
+# Qualité du site Hourdis — à chaque poussée : build + garde-fous + banc de fumée sur le build local.
+# Chaque nuit : le même banc contre la production, les liens, et Lighthouse avec budgets.
+name: qualite
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 1 * * *"   # 04:17 à Antananarivo (UTC+3)
+
+permissions:
+  contents: read
+
+jobs:
+  build-et-banc:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Dépendances
+        run: |
+          pip install --quiet playwright pillow
+          python -m playwright install --with-deps chromium
+      - name: Build et garde-fous (style en ligne, liens, h1, alt, titres, budget)
+        run: python build.py
+      - name: Banc de fumée sur le build
+        run: |
+          python build.py --servir &
+          for i in $(seq 1 30); do curl -s -o /dev/null http://127.0.0.1:8765/ && break; sleep 1; done
+          python tests/smoke_test.py http://127.0.0.1:8765
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: captures, path: tests/captures/*.jpg, retention-days: 14 }
+
+  production-chaque-nuit:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Dépendances
+        run: |
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Banc de fumée contre la production (le formulaire est intercepté, rien n'est envoyé)
+        run: python tests/smoke_test.py https://hourdis.fonenako.mg
+      - name: Vérifications en ligne (en-têtes, certificat, TTFB, formulaire vivant)
+        run: python outils/verifier_en_ligne.py --sans-telegram
+      - name: Liens cassés
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --accept 200,204,303,405 --user-agent "Mozilla/5.0 (Linux; Android 13) Chrome/128 Mobile" https://hourdis.fonenako.mg/ https://hourdis.fonenako.mg/faq https://hourdis.fonenako.mg/mentions-legales https://hourdis.fonenako.mg/confidentialite
+          fail: true
+      - name: Lighthouse avec budgets
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://hourdis.fonenako.mg/
+            https://hourdis.fonenako.mg/faq
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: false
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: captures-prod, path: tests/captures/*.jpg, retention-days: 14 }

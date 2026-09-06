@@ -1,0 +1,1954 @@
+{
+ "url": "https://hourdis.fonenako.mg/",
+ "date": "2026-09-06 08:21",
+ "views": {
+  "mobile390": {
+   "wall_load_s": 5.05,
+   "vitals": {
+    "ttfb": 597,
+    "domContentLoaded": 1693,
+    "load": 1826,
+    "proto": "h2",
+    "transfer": 10852,
+    "fcp": 1440,
+    "lcp": 1440,
+    "lcpEl": "P.hero-subtitle",
+    "lcpUrl": "",
+    "cls": 0,
+    "shifts": [],
+    "longtasks": 0,
+    "resources": [
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis_maina_betsaka_1920x1080.webp",
+      "type": "link",
+      "bytes": 306402,
+      "dur": 1073,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/src/styles/main.css",
+      "type": "link",
+      "bytes": 5852,
+      "dur": 721,
+      "proto": "h2",
+      "renderBlocking": "blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/logo.webp",
+      "type": "img",
+      "bytes": 2234,
+      "dur": 1073,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/src/js/main.js",
+      "type": "script",
+      "bytes": 4739,
+      "dur": 918,
+      "proto": "h2",
+      "renderBlocking": "blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis%2020.webp",
+      "type": "img",
+      "bytes": 26528,
+      "dur": 409,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis%2015.webp",
+      "type": "img",
+      "bytes": 28584,
+      "dur": 446,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis%2015%202.webp",
+      "type": "img",
+      "bytes": 31526,
+      "dur": 448,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/272687838_316063163787066_1797550773836676255_n.webp",
+      "type": "img",
+      "bytes": 23644,
+      "dur": 620,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     }
+    ],
+    "nResources": 8,
+    "totalBytes": 440361,
+    "thirdParty": []
+   },
+   "struct": {
+    "scrollWidth": 390,
+    "innerWidth": 390,
+    "overflowX": false,
+    "wide": [],
+    "nTargets": 31,
+    "small44": [
+     {
+      "t": "A",
+      "txt": "Facebook",
+      "w": 40,
+      "h": 40
+     },
+     {
+      "t": "BUTTON",
+      "txt": "Menu",
+      "w": 41,
+      "h": 43
+     },
+     {
+      "t": "A",
+      "txt": "032 47 041 43",
+      "w": 111,
+      "h": 35
+     },
+     {
+      "t": "A",
+      "txt": "033 71 063 34",
+      "w": 111,
+      "h": 35
+     },
+     {
+      "t": "A",
+      "txt": "Messenger",
+      "w": 95,
+      "h": 35
+     },
+     {
+      "t": "A",
+      "txt": "Facebook",
+      "w": 40,
+      "h": 40
+     }
+    ],
+    "small24": [],
+    "heads": [
+     "H1: Planchers solides, prix maîtrisés",
+     "H3: Rapidité",
+     "H3: Économie",
+     "H3: Durabilité",
+     "H2: Nos produits",
+     "H3: Hourdis (9 pcs/m²)",
+     "H4: Hourdis 20×33×33 cm",
+     "H4: Hourdis 15×33×33 cm",
+     "H4: Hourdis 12×33×33 cm",
+     "H3: Briques creuses (12 pcs/m²)",
+     "H4: Brique creuse 20×20×40 cm",
+     "H4: Brique creuse 15×20×40 cm",
+     "H4: Brique creuse 10×20×40 cm",
+     "H2: Mises en œuvre",
+     "H2: Comment choisir l'hourdis",
+     "H3: Selon la charge",
+     "H3: Selon la portée",
+     "H3: Selon l'isolation",
+     "H3: Selon le budget",
+     "H3: Types de matériaux",
+     "H4: Terre cuite",
+     "H4: Polystyrène",
+     "H4: Béton",
+     "H2: Pourquoi choisir l'hourdis",
+     "H3: Rapidité de pose",
+     "H3: Réduction de béton",
+     "H3: Intégration réseaux",
+     "H3: Solution éprouvée",
+     "H2: À propos de HOURDIS MADAGASCAR",
+     "H4: Zone desservie",
+     "H4: Engagement client",
+     "H2: Contact & Devis gratuit",
+     "H3: Contactez-nous",
+     "H4: Téléphone 1",
+     "H4: Téléphone 2",
+     "H4: Email",
+     "H4: Messenger",
+     "H3: Demande de devis",
+     "H3: HOURDIS MADAGASCAR",
+     "H4: Contact",
+     "H3: Calculateur de quantités"
+    ],
+    "imgs": [
+     {
+      "src": "logo.webp",
+      "alt": "HOURDIS MADAGASCAR Logo",
+      "w": 120,
+      "h": 120,
+      "dw": 60,
+      "dh": 60,
+      "lazy": "auto",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis_maina_betsaka_1920x1080.webp",
+      "alt": "Hourdis maina betsaka empilés sur un chantier à Madagascar",
+      "w": 1600,
+      "h": 900,
+      "dw": 390,
+      "dh": 844,
+      "lazy": "eager",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2020.webp",
+      "alt": "Hourdis 20",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015.webp",
+      "alt": "Hourdis 15",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015%202.webp",
+      "alt": "Hourdis 12",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "272687838_316063163787066_1797550773836676255_n.we",
+      "alt": "Brique creuse 20x20x40",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Brique creuse 15x20x40",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Brique creuse 10x20x40",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Tuile",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Hourdis mando sur étalage",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Brique creuse mando sur étalage",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Brique creuse maina Betsaka profil",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Brique creuse mando am tany",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Fandorana brique creuse",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Équipe HOURDIS MADAGASCAR sur un chantier",
+      "w": 0,
+      "h": 0,
+      "dw": 374,
+      "dh": 400,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "",
+      "w": 0,
+      "h": 0,
+      "dw": 0,
+      "dh": 0,
+      "lazy": "auto",
+      "srcset": false
+     }
+    ],
+    "inputsNoLabel": [],
+    "inputs": [
+     {
+      "id": "",
+      "type": "text",
+      "inputmode": null,
+      "autocomplete": "off",
+      "required": false
+     },
+     {
+      "id": "name",
+      "type": "text",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": true
+     },
+     {
+      "id": "phone",
+      "type": "tel",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": true
+     },
+     {
+      "id": "email",
+      "type": "email",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": false
+     },
+     {
+      "id": "location",
+      "type": "text",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": true
+     },
+     {
+      "id": "surface",
+      "type": "number",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": false
+     },
+     {
+      "id": "message",
+      "type": "textarea",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": false
+     }
+    ],
+    "landmarks": [
+     "header=1",
+     "nav=1",
+     "main=1",
+     "footer=1",
+     "[role=banner]=0",
+     "[role=main]=0",
+     "[role=contentinfo]=0"
+    ],
+    "headerHeight": 128.78125,
+    "fixed": [
+     "header h=129"
+    ],
+    "words": 433,
+    "lorem": false,
+    "lang": "fr",
+    "title": "HOURDIS MADAGASCAR - Planchers solides, prix maîtrisés",
+    "docHeight": 14271
+   },
+   "console": [],
+   "pageerrors": [],
+   "responses": [
+    {
+     "url": "https://hourdis.fonenako.mg/",
+     "status": 200,
+     "ct": "text/html",
+     "cache": "no-cache, must-revalidate, max-age=0",
+     "enc": "br"
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis_maina_betsaka_1920x1080.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/src/styles/main.css",
+     "status": 200,
+     "ct": "text/css",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": "br"
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/logo.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%2020.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/src/js/main.js",
+     "status": 200,
+     "ct": "application/javascript",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": "br"
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%2015.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%2015%202.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/272687838_316063163787066_1797550773836676255_n.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/BC%2015.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20mando%20am%20tany.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Tuile.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%20mando%20sur%20etalage.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20mando%20sur%20etalage.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20maina%20Betsaka%20profil.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Fandorana%20brique%20creuse.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+     "status": 200,
+     "ct": "image/avif",
+     "cache": "public, max-age=31536000",
+     "enc": ""
+    },
+    {
+     "url": "https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.10.2/axe.min.js",
+     "status": 200,
+     "ct": "application/javascript; charset=utf-8",
+     "cache": "no-transform, public, s-maxage=30672000, max-age=30672000, immutable",
+     "enc": "br"
+    }
+   ],
+   "bad_responses": [],
+   "shots": [
+    "mobile390-01-hero.jpg",
+    "mobile390-02-produits.jpg",
+    "mobile390-03-contact.jpg",
+    "mobile390-04-menu.jpg",
+    "mobile390-05-calculateur.jpg",
+    "mobile390-06-lightbox.jpg",
+    "mobile390-07-form-envoye.jpg"
+   ],
+   "vitals_after_scroll": {
+    "cls": 0,
+    "shifts": [],
+    "nResources": 16,
+    "totalBytes": 961755
+   },
+   "struct_after_scroll": {
+    "imgs": [
+     {
+      "src": "logo.webp",
+      "alt": "HOURDIS MADAGASCAR Logo",
+      "w": 120,
+      "h": 120,
+      "dw": 60,
+      "dh": 60,
+      "lazy": "auto",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis_maina_betsaka_1920x1080.webp",
+      "alt": "Hourdis maina betsaka empilés sur un chantier à Madagascar",
+      "w": 1600,
+      "h": 900,
+      "dw": 390,
+      "dh": 844,
+      "lazy": "eager",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2020.webp",
+      "alt": "Hourdis 20",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015.webp",
+      "alt": "Hourdis 15",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015%202.webp",
+      "alt": "Hourdis 12",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "272687838_316063163787066_1797550773836676255_n.we",
+      "alt": "Brique creuse 20x20x40",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "BC%2015.webp",
+      "alt": "Brique creuse 15x20x40",
+      "w": 720,
+      "h": 540,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20am%20tany.webp",
+      "alt": "Brique creuse 10x20x40",
+      "w": 800,
+      "h": 600,
+      "dw": 374,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Tuile.webp",
+      "alt": "Tuile",
+      "w": 800,
+      "h": 600,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%20mando%20sur%20etalage.webp",
+      "alt": "Hourdis mando sur étalage",
+      "w": 800,
+      "h": 600,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20sur%20etalage.webp",
+      "alt": "Brique creuse mando sur étalage",
+      "w": 800,
+      "h": 600,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20maina%20Betsaka%20profil.webp",
+      "alt": "Brique creuse maina Betsaka profil",
+      "w": 800,
+      "h": 600,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20am%20tany.webp",
+      "alt": "Brique creuse mando am tany",
+      "w": 800,
+      "h": 600,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Fandorana%20brique%20creuse.webp",
+      "alt": "Fandorana brique creuse",
+      "w": 800,
+      "h": 600,
+      "dw": 374,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "pexels-photo-1216589.jpeg?auto=compress&cs=tinysrg",
+      "alt": "Équipe HOURDIS MADAGASCAR sur un chantier",
+      "w": 600,
+      "h": 400,
+      "dw": 374,
+      "dh": 400,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "",
+      "w": 0,
+      "h": 0,
+      "dw": 0,
+      "dh": 0,
+      "lazy": "auto",
+      "srcset": false
+     }
+    ],
+    "overflowX": false,
+    "scrollWidth": 390,
+    "wide": []
+   },
+   "header_after_scroll_down": {
+    "transform": "translateY(-100%)",
+    "top": -128.78125
+   },
+   "axe": {
+    "violations": [
+     {
+      "id": "heading-order",
+      "impact": "moderate",
+      "help": "Heading levels should only increase by one",
+      "n": 2,
+      "tags": [],
+      "sample": [
+       {
+        "target": ".advantage-item.fade-in-up:nth-child(1) > h3",
+        "msg": "Fix any of the following:\n  Heading order invalid"
+       },
+       {
+        "target": ".about-feature:nth-child(1) > div:nth-child(2) > h4",
+        "msg": "Fix any of the following:\n  Heading order invalid"
+       }
+      ]
+     }
+    ],
+    "passes": 40,
+    "incomplete": [
+     {
+      "id": "color-contrast",
+      "n": 6
+     }
+    ]
+   },
+   "focus_walk": [
+    {
+     "tag": "A",
+     "txt": "Téléphone 1\n             ",
+     "outline": "solid 2px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Téléphone 2\n             ",
+     "outline": "solid 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Email\n                   ",
+     "outline": "solid 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Messenger\n               ",
+     "outline": "solid 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "TEXTAREA",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "BUTTON",
+     "txt": "Envoyer ma demande",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Facebook",
+     "outline": "solid 3px",
+     "boxShadow": false,
+     "visible": false
+    },
+    {
+     "tag": "BODY"
+    },
+    {
+     "tag": "A",
+     "txt": "Facebook",
+     "outline": "solid 3px",
+     "boxShadow": false,
+     "visible": true
+    }
+   ],
+   "menu_open": {
+    "expanded": "true",
+    "h": 419,
+    "links": [
+     {
+      "t": "Accueil",
+      "h": 26,
+      "visible": true
+     },
+     {
+      "t": "Nos produits",
+      "h": 26,
+      "visible": true
+     },
+     {
+      "t": "Mises en œuvre",
+      "h": 26,
+      "visible": true
+     },
+     {
+      "t": "Comment choisir",
+      "h": 26,
+      "visible": true
+     },
+     {
+      "t": "Pourquoi l'hourdis",
+      "h": 26,
+      "visible": true
+     },
+     {
+      "t": "À propos",
+      "h": 26,
+      "visible": true
+     },
+     {
+      "t": "Contact",
+      "h": 26,
+      "visible": true
+     }
+    ],
+    "coversScreen": 0.4966306279620853
+   },
+   "menu_closes_on_escape": false,
+   "toggle_visible_after_scroll_down_then_up": true,
+   "menu_link_navigates": {
+    "closed": true,
+    "scrollY": 1687,
+    "produitsTop": 129,
+    "headerTransform": "translateY(-100%)"
+   },
+   "calculator": {
+    "title": "Calculateur - Hourdis 15×33×33 cm",
+    "result": "Résultat du calcul Surface: 50 m² Pièces nécessaires: 450 pcs Prix unitaire: 2 800 Ar Prix total estimé: 1 260 000 Ar Prix indicatif - Contactez-nous pour un devis personnalisé",
+    "focusInModal": true,
+    "bodyScrollLocked": "visible"
+   },
+   "calculator_negative": "calculator-result",
+   "calculator_huge": "Résultat du calcul Surface: 1000000000 m² Pièces nécessaires: 9000000000 pcs Prix unitaire: 2 800 Ar Prix total estimé: 25 200 000 000 000 Ar Prix indicatif - Contactez-nous pour un devis personnalisé",
+   "calculator_closes_on_escape": false,
+   "calculator_focus_escapes_modal": true,
+   "lightbox": {
+    "src": "Tuile.webp",
+    "natural": "800x600",
+    "displayed": "351x263",
+    "focusInside": false
+   },
+   "form_loading_state": " Envoi en cours...",
+   "form_requests_after_submit": [],
+   "form_message": "Votre demande a été envoyée avec succès ! Nous vous contacterons rapidement.",
+   "dark_bg": "rgb(255, 255, 255) / rgb(26, 26, 26)",
+   "reduced_motion_transition": "0.3s | anim=fadeInUp"
+  },
+  "desktop1366": {
+   "wall_load_s": 6.71,
+   "vitals": {
+    "ttfb": 595,
+    "domContentLoaded": 1775,
+    "load": 1942,
+    "proto": "h2",
+    "transfer": 10852,
+    "fcp": 1464,
+    "lcp": 1464,
+    "lcpEl": "P.hero-subtitle",
+    "lcpUrl": "",
+    "cls": 0,
+    "shifts": [],
+    "longtasks": 0,
+    "resources": [
+     {
+      "url": "https://hourdis.fonenako.mg/src/styles/main.css",
+      "type": "link",
+      "bytes": 5852,
+      "dur": 788,
+      "proto": "h2",
+      "renderBlocking": "blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis_maina_betsaka_1920x1080.webp",
+      "type": "link",
+      "bytes": 306402,
+      "dur": 1173,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/logo.webp",
+      "type": "img",
+      "bytes": 2234,
+      "dur": 1173,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/src/js/main.js",
+      "type": "script",
+      "bytes": 4739,
+      "dur": 989,
+      "proto": "h2",
+      "renderBlocking": "blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis%2020.webp",
+      "type": "img",
+      "bytes": 26528,
+      "dur": 503,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis%2015.webp",
+      "type": "img",
+      "bytes": 28584,
+      "dur": 526,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis%2015%202.webp",
+      "type": "img",
+      "bytes": 31526,
+      "dur": 529,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/272687838_316063163787066_1797550773836676255_n.webp",
+      "type": "img",
+      "bytes": 23644,
+      "dur": 720,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/BC%2015.webp",
+      "type": "img",
+      "bytes": 33200,
+      "dur": 723,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20mando%20am%20tany.webp",
+      "type": "img",
+      "bytes": 77714,
+      "dur": 1104,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Tuile.webp",
+      "type": "img",
+      "bytes": 91676,
+      "dur": 1300,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Hourdis%20mando%20sur%20etalage.webp",
+      "type": "img",
+      "bytes": 65518,
+      "dur": 1493,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20mando%20sur%20etalage.webp",
+      "type": "img",
+      "bytes": 90538,
+      "dur": 1729,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20maina%20Betsaka%20profil.webp",
+      "type": "img",
+      "bytes": 90550,
+      "dur": 2074,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     },
+     {
+      "url": "https://hourdis.fonenako.mg/image/Fandorana%20brique%20creuse.webp",
+      "type": "img",
+      "bytes": 72198,
+      "dur": 2268,
+      "proto": "h2",
+      "renderBlocking": "non-blocking"
+     }
+    ],
+    "nResources": 15,
+    "totalBytes": 961755,
+    "thirdParty": []
+   },
+   "struct": {
+    "scrollWidth": 1366,
+    "innerWidth": 1366,
+    "overflowX": false,
+    "wide": [],
+    "nTargets": 37,
+    "small44": [
+     {
+      "t": "A",
+      "txt": "Facebook",
+      "w": 40,
+      "h": 40
+     },
+     {
+      "t": "A",
+      "txt": "Accueil",
+      "w": 52,
+      "h": 26
+     },
+     {
+      "t": "A",
+      "txt": "Nos produits",
+      "w": 94,
+      "h": 26
+     },
+     {
+      "t": "A",
+      "txt": "Mises en œuvre",
+      "w": 114,
+      "h": 26
+     },
+     {
+      "t": "A",
+      "txt": "Comment choisir",
+      "w": 123,
+      "h": 26
+     },
+     {
+      "t": "A",
+      "txt": "Pourquoi l'hourdis",
+      "w": 134,
+      "h": 26
+     },
+     {
+      "t": "A",
+      "txt": "À propos",
+      "w": 66,
+      "h": 26
+     },
+     {
+      "t": "A",
+      "txt": "Contact",
+      "w": 56,
+      "h": 26
+     },
+     {
+      "t": "A",
+      "txt": "032 47 041 43",
+      "w": 142,
+      "h": 38
+     },
+     {
+      "t": "A",
+      "txt": "033 71 063 34",
+      "w": 141,
+      "h": 38
+     },
+     {
+      "t": "A",
+      "txt": "Messenger",
+      "w": 123,
+      "h": 38
+     },
+     {
+      "t": "A",
+      "txt": "Facebook",
+      "w": 40,
+      "h": 40
+     }
+    ],
+    "small24": [],
+    "heads": [
+     "H1: Planchers solides, prix maîtrisés",
+     "H3: Rapidité",
+     "H3: Économie",
+     "H3: Durabilité",
+     "H2: Nos produits",
+     "H3: Hourdis (9 pcs/m²)",
+     "H4: Hourdis 20×33×33 cm",
+     "H4: Hourdis 15×33×33 cm",
+     "H4: Hourdis 12×33×33 cm",
+     "H3: Briques creuses (12 pcs/m²)",
+     "H4: Brique creuse 20×20×40 cm",
+     "H4: Brique creuse 15×20×40 cm",
+     "H4: Brique creuse 10×20×40 cm",
+     "H2: Mises en œuvre",
+     "H2: Comment choisir l'hourdis",
+     "H3: Selon la charge",
+     "H3: Selon la portée",
+     "H3: Selon l'isolation",
+     "H3: Selon le budget",
+     "H3: Types de matériaux",
+     "H4: Terre cuite",
+     "H4: Polystyrène",
+     "H4: Béton",
+     "H2: Pourquoi choisir l'hourdis",
+     "H3: Rapidité de pose",
+     "H3: Réduction de béton",
+     "H3: Intégration réseaux",
+     "H3: Solution éprouvée",
+     "H2: À propos de HOURDIS MADAGASCAR",
+     "H4: Zone desservie",
+     "H4: Engagement client",
+     "H2: Contact & Devis gratuit",
+     "H3: Contactez-nous",
+     "H4: Téléphone 1",
+     "H4: Téléphone 2",
+     "H4: Email",
+     "H4: Messenger",
+     "H3: Demande de devis",
+     "H3: HOURDIS MADAGASCAR",
+     "H4: Contact",
+     "H3: Calculateur de quantités"
+    ],
+    "imgs": [
+     {
+      "src": "logo.webp",
+      "alt": "HOURDIS MADAGASCAR Logo",
+      "w": 120,
+      "h": 120,
+      "dw": 60,
+      "dh": 60,
+      "lazy": "auto",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis_maina_betsaka_1920x1080.webp",
+      "alt": "Hourdis maina betsaka empilés sur un chantier à Madagascar",
+      "w": 1600,
+      "h": 900,
+      "dw": 1366,
+      "dh": 768,
+      "lazy": "eager",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2020.webp",
+      "alt": "Hourdis 20",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015.webp",
+      "alt": "Hourdis 15",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015%202.webp",
+      "alt": "Hourdis 12",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "272687838_316063163787066_1797550773836676255_n.we",
+      "alt": "Brique creuse 20x20x40",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "BC%2015.webp",
+      "alt": "Brique creuse 15x20x40",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20am%20tany.webp",
+      "alt": "Brique creuse 10x20x40",
+      "w": 800,
+      "h": 600,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Tuile.webp",
+      "alt": "Tuile",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%20mando%20sur%20etalage.webp",
+      "alt": "Hourdis mando sur étalage",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20sur%20etalage.webp",
+      "alt": "Brique creuse mando sur étalage",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20maina%20Betsaka%20profil.webp",
+      "alt": "Brique creuse maina Betsaka profil",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20am%20tany.webp",
+      "alt": "Brique creuse mando am tany",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Fandorana%20brique%20creuse.webp",
+      "alt": "Fandorana brique creuse",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "Équipe HOURDIS MADAGASCAR sur un chantier",
+      "w": 0,
+      "h": 0,
+      "dw": 500,
+      "dh": 400,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "",
+      "w": 0,
+      "h": 0,
+      "dw": 0,
+      "dh": 0,
+      "lazy": "auto",
+      "srcset": false
+     }
+    ],
+    "inputsNoLabel": [],
+    "inputs": [
+     {
+      "id": "",
+      "type": "text",
+      "inputmode": null,
+      "autocomplete": "off",
+      "required": false
+     },
+     {
+      "id": "name",
+      "type": "text",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": true
+     },
+     {
+      "id": "phone",
+      "type": "tel",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": true
+     },
+     {
+      "id": "email",
+      "type": "email",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": false
+     },
+     {
+      "id": "location",
+      "type": "text",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": true
+     },
+     {
+      "id": "surface",
+      "type": "number",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": false
+     },
+     {
+      "id": "message",
+      "type": "textarea",
+      "inputmode": null,
+      "autocomplete": null,
+      "required": false
+     }
+    ],
+    "landmarks": [
+     "header=1",
+     "nav=1",
+     "main=1",
+     "footer=1",
+     "[role=banner]=0",
+     "[role=main]=0",
+     "[role=contentinfo]=0"
+    ],
+    "headerHeight": 92,
+    "fixed": [
+     "header h=92"
+    ],
+    "words": 446,
+    "lorem": false,
+    "lang": "fr",
+    "title": "HOURDIS MADAGASCAR - Planchers solides, prix maîtrisés",
+    "docHeight": 7169
+   },
+   "console": [],
+   "pageerrors": [],
+   "responses": [
+    {
+     "url": "https://hourdis.fonenako.mg/",
+     "status": 200,
+     "ct": "text/html",
+     "cache": "no-cache, must-revalidate, max-age=0",
+     "enc": "br"
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis_maina_betsaka_1920x1080.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/src/styles/main.css",
+     "status": 200,
+     "ct": "text/css",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": "br"
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/logo.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%2020.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/src/js/main.js",
+     "status": 200,
+     "ct": "application/javascript",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": "br"
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%2015.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%2015%202.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/272687838_316063163787066_1797550773836676255_n.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/BC%2015.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20mando%20am%20tany.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Tuile.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Hourdis%20mando%20sur%20etalage.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20mando%20sur%20etalage.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Brique%20creuse%20maina%20Betsaka%20profil.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://hourdis.fonenako.mg/image/Fandorana%20brique%20creuse.webp",
+     "status": 200,
+     "ct": "image/webp",
+     "cache": "public, max-age=31536000, immutable",
+     "enc": ""
+    },
+    {
+     "url": "https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+     "status": 200,
+     "ct": "image/avif",
+     "cache": "public, max-age=31536000",
+     "enc": ""
+    },
+    {
+     "url": "https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.10.2/axe.min.js",
+     "status": 200,
+     "ct": "application/javascript; charset=utf-8",
+     "cache": "no-transform, public, s-maxage=30672000, max-age=30672000, immutable",
+     "enc": "br"
+    }
+   ],
+   "bad_responses": [],
+   "shots": [
+    "desktop1366-01-hero.jpg",
+    "desktop1366-02-produits.jpg",
+    "desktop1366-03-contact.jpg",
+    "desktop1366-05-calculateur.jpg",
+    "desktop1366-06-lightbox.jpg",
+    "desktop1366-07-form-envoye.jpg"
+   ],
+   "vitals_after_scroll": {
+    "cls": 0,
+    "shifts": [],
+    "nResources": 16,
+    "totalBytes": 961755
+   },
+   "struct_after_scroll": {
+    "imgs": [
+     {
+      "src": "logo.webp",
+      "alt": "HOURDIS MADAGASCAR Logo",
+      "w": 120,
+      "h": 120,
+      "dw": 60,
+      "dh": 60,
+      "lazy": "auto",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis_maina_betsaka_1920x1080.webp",
+      "alt": "Hourdis maina betsaka empilés sur un chantier à Madagascar",
+      "w": 1600,
+      "h": 900,
+      "dw": 1366,
+      "dh": 768,
+      "lazy": "eager",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2020.webp",
+      "alt": "Hourdis 20",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015.webp",
+      "alt": "Hourdis 15",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%2015%202.webp",
+      "alt": "Hourdis 12",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "272687838_316063163787066_1797550773836676255_n.we",
+      "alt": "Brique creuse 20x20x40",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "BC%2015.webp",
+      "alt": "Brique creuse 15x20x40",
+      "w": 720,
+      "h": 540,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20am%20tany.webp",
+      "alt": "Brique creuse 10x20x40",
+      "w": 800,
+      "h": 600,
+      "dw": 368,
+      "dh": 200,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Tuile.webp",
+      "alt": "Tuile",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Hourdis%20mando%20sur%20etalage.webp",
+      "alt": "Hourdis mando sur étalage",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20sur%20etalage.webp",
+      "alt": "Brique creuse mando sur étalage",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20maina%20Betsaka%20profil.webp",
+      "alt": "Brique creuse maina Betsaka profil",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Brique%20creuse%20mando%20am%20tany.webp",
+      "alt": "Brique creuse mando am tany",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "Fandorana%20brique%20creuse.webp",
+      "alt": "Fandorana brique creuse",
+      "w": 800,
+      "h": 600,
+      "dw": 373,
+      "dh": 300,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "pexels-photo-1216589.jpeg?auto=compress&cs=tinysrg",
+      "alt": "Équipe HOURDIS MADAGASCAR sur un chantier",
+      "w": 600,
+      "h": 400,
+      "dw": 500,
+      "dh": 400,
+      "lazy": "lazy",
+      "srcset": false
+     },
+     {
+      "src": "",
+      "alt": "",
+      "w": 0,
+      "h": 0,
+      "dw": 0,
+      "dh": 0,
+      "lazy": "auto",
+      "srcset": false
+     }
+    ],
+    "overflowX": false,
+    "scrollWidth": 1366,
+    "wide": []
+   },
+   "header_after_scroll_down": {
+    "transform": "translateY(-100%)",
+    "top": -92
+   },
+   "axe": {
+    "violations": [
+     {
+      "id": "heading-order",
+      "impact": "moderate",
+      "help": "Heading levels should only increase by one",
+      "n": 2,
+      "tags": [],
+      "sample": [
+       {
+        "target": ".advantage-item.fade-in-up:nth-child(1) > h3",
+        "msg": "Fix any of the following:\n  Heading order invalid"
+       },
+       {
+        "target": ".about-feature:nth-child(1) > div:nth-child(2) > h4",
+        "msg": "Fix any of the following:\n  Heading order invalid"
+       }
+      ]
+     }
+    ],
+    "passes": 40,
+    "incomplete": [
+     {
+      "id": "color-contrast",
+      "n": 16
+     }
+    ]
+   },
+   "focus_walk": [
+    {
+     "tag": "A",
+     "txt": "Téléphone 1\n             ",
+     "outline": "solid 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Téléphone 2\n             ",
+     "outline": "solid 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Email\n                   ",
+     "outline": "solid 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Messenger\n               ",
+     "outline": "solid 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "INPUT",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "TEXTAREA",
+     "txt": "",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "BUTTON",
+     "txt": "Envoyer ma demande",
+     "outline": "none 3px",
+     "boxShadow": true,
+     "visible": false
+    },
+    {
+     "tag": "A",
+     "txt": "Facebook",
+     "outline": "solid 3px",
+     "boxShadow": false,
+     "visible": false
+    },
+    {
+     "tag": "BODY"
+    },
+    {
+     "tag": "A",
+     "txt": "Facebook",
+     "outline": "solid 3px",
+     "boxShadow": false,
+     "visible": true
+    }
+   ],
+   "calculator": {
+    "title": "Calculateur - Hourdis 15×33×33 cm",
+    "result": "Résultat du calcul Surface: 50 m² Pièces nécessaires: 450 pcs Prix unitaire: 2 800 Ar Prix total estimé: 1 260 000 Ar Prix indicatif - Contactez-nous pour un devis personnalisé",
+    "focusInModal": true,
+    "bodyScrollLocked": "visible"
+   },
+   "calculator_negative": "calculator-result",
+   "calculator_huge": "Résultat du calcul Surface: 1000000000 m² Pièces nécessaires: 9000000000 pcs Prix unitaire: 2 800 Ar Prix total estimé: 25 200 000 000 000 Ar Prix indicatif - Contactez-nous pour un devis personnalisé",
+   "calculator_closes_on_escape": false,
+   "calculator_focus_escapes_modal": true,
+   "lightbox": {
+    "src": "Tuile.webp",
+    "natural": "800x600",
+    "displayed": "800x600",
+    "focusInside": false
+   },
+   "form_loading_state": " Envoi en cours...",
+   "form_requests_after_submit": [],
+   "form_message": "Votre demande a été envoyée avec succès ! Nous vous contacterons rapidement.",
+   "dark_bg": "rgb(255, 255, 255) / rgb(26, 26, 26)",
+   "reduced_motion_transition": "0.3s | anim=fadeInUp"
+  }
+ },
+ "breakpoints": {
+  "360": {
+   "overflowX": false,
+   "scrollWidth": 360,
+   "wide": [],
+   "small44": 6,
+   "headerHeight": 128.78125
+  },
+  "390": {
+   "overflowX": false,
+   "scrollWidth": 390,
+   "wide": [],
+   "small44": 6,
+   "headerHeight": 128.78125
+  },
+  "414": {
+   "overflowX": false,
+   "scrollWidth": 414,
+   "wide": [],
+   "small44": 6,
+   "headerHeight": 128.78125
+  },
+  "768": {
+   "overflowX": false,
+   "scrollWidth": 813,
+   "wide": [],
+   "small44": 6,
+   "headerHeight": 144.78125
+  },
+  "1024": {
+   "overflowX": false,
+   "scrollWidth": 1024,
+   "wide": [],
+   "small44": 5,
+   "headerHeight": 134.375
+  },
+  "1280": {
+   "overflowX": false,
+   "scrollWidth": 1280,
+   "wide": [],
+   "small44": 12,
+   "headerHeight": 92
+  },
+  "1536": {
+   "overflowX": false,
+   "scrollWidth": 1536,
+   "wide": [],
+   "small44": 12,
+   "headerHeight": 92
+  },
+  "844x390-paysage": {
+   "overflowX": false,
+   "headerHeight": 134.375,
+   "fixed": [
+    "header h=134"
+   ]
+  }
+ },
+ "slow3g": {
+  "wall_load_s": 9.7,
+  "ttfb": 594,
+  "fcp": 1684,
+  "lcp": 1684,
+  "cls": 0,
+  "load": 9702,
+  "domContentLoaded": 2234,
+  "totalBytes": 440361,
+  "shot": "slow3g-apres-load.jpg"
+ }
+}

@@ -1,0 +1,75 @@
+# HOURDIS MADAGASCAR — hourdis.fonenako.mg (o2switch, Apache 2.4)
+# Audit pré-lancement 06/09/2026. Chaque bloc dit ce qu'il corrige.
+
+Options -Indexes -MultiViews
+ServerSignature Off
+AddDefaultCharset UTF-8
+
+# ── 1. Un seul hôte, toujours en HTTPS (www → sans www, http → https) ──
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} !on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# ── 2. URL propres : /faq → faq.html ; l'ancienne /faq.html redirige vers /faq ──
+RewriteCond %{THE_REQUEST} \s/([a-z0-9-]+)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^([a-z0-9-]+)/?$ $1.html [L]
+
+# ── 3. Rien de ce qui n'est pas le site n'est servi (sources, configs, restes de l'ancien dépôt) ──
+RedirectMatch 404 ^/(\.git|\.bolt|node_modules|project|cgi-bin)(/|$)
+RedirectMatch 404 ^/src/(?!js/|styles/).*
+<FilesMatch "^(package(-lock)?\.json|tsconfig[^/]*\.json|eslint\.config\.js|postcss\.config\.js|tailwind\.config\.js|vite\.config\.ts|[^/]+\.tsx?|[^/]+\.md|\.gitignore|\.env[^/]*|images|send_mail\.php|composer\.(json|lock))$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "\.(log|sqlite|jsonl|bak|old|orig|swp)$">
+  Require all denied
+</FilesMatch>
+
+# ── 4. Pages système ──
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
+
+# ── 5. En-têtes de sécurité (aucun script ni style en ligne dans le site : la CSP peut être stricte) ──
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header unset X-Powered-By
+
+  # Cache : ce qui porte un hash dans son nom est immuable ; le reste se revalide.
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(webp|avif|jpe?g|png|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(webmanifest|xml|txt)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  <FilesMatch "\.(html|php)$">
+    Header set Cache-Control "no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
+
+# ── 6. Types et compression ──
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType application/manifest+json .webmanifest
+  AddType text/plain .txt
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/javascript application/javascript application/json application/manifest+json image/svg+xml application/xml
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/manifest+json image/svg+xml application/xml
+</IfModule>

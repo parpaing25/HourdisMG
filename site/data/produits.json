@@ -1,0 +1,59 @@
+{
+  "_source": "Catalogue et prix : bible-business.md du profil Hermes hourdis (fournie par Andry le 16/07/2026, délais confirmés le 12/08/2026) et site en ligne du 17/07/2026. Le build (build.py) injecte ce fichier dans index.html, faq.html et le JSON-LD : un prix se change ICI et nulle part ailleurs.",
+  "_alerte": "Hourdis 15 et Hourdis 12 : la bible dit 3 000 et 2 800 Ar, le site en ligne dit 2 800 et 2 500 Ar. Les valeurs ci-dessous sont celles du SITE (publiées depuis le 17/07). Andry doit trancher (question Q1 de l'audit) ; la ligne à modifier est le champ prix.",
+  "devise": "Ar",
+  "unite": "pièce",
+  "categories": [
+    {
+      "id": "hourdis",
+      "titre": "Hourdis",
+      "sous_titre": "9 pièces par m² de plancher (entrevous 33×33)",
+      "pcs_m2": 9,
+      "produits": [
+        {"id": "hourdis-20", "nom": "Hourdis 20×33×33 cm", "dims": "20 × 33 × 33 cm", "prix": 3400, "image": "hourdis-20.webp", "alt": "Hourdis de 20 cm en terre cuite, vue de profil montrant les alvéoles"},
+        {"id": "hourdis-15", "nom": "Hourdis 15×33×33 cm", "dims": "15 × 33 × 33 cm", "prix": 2800, "image": "hourdis-15.webp", "alt": "Hourdis de 15 cm en terre cuite, vue de profil"},
+        {"id": "hourdis-12", "nom": "Hourdis 12×33×33 cm", "dims": "12 × 33 × 33 cm", "prix": 2500, "image": "hourdis-12.webp", "alt": "Hourdis de 12 cm en terre cuite (photo à remplacer par le modèle 12)"}
+      ]
+    },
+    {
+      "id": "briques-creuses",
+      "titre": "Briques creuses",
+      "sous_titre": "12 pièces par m² de mur",
+      "pcs_m2": 12,
+      "produits": [
+        {"id": "brique-creuse-20", "nom": "Brique creuse 20×20×40 cm", "dims": "20 × 20 × 40 cm", "prix": 3500, "image": "brique-creuse-20.webp", "alt": "Deux briques creuses de 20 cm en terre cuite posées sur une table"},
+        {"id": "brique-creuse-15", "nom": "Brique creuse 15×20×40 cm", "dims": "15 × 20 × 40 cm", "prix": 3000, "image": "brique-creuse-15.webp", "alt": "Briques creuses de 15 cm en terre cuite"},
+        {"id": "brique-creuse-10", "nom": "Brique creuse 10×20×40 cm", "dims": "10 × 20 × 40 cm", "prix": 2500, "image": "brique-creuse-10.webp", "alt": "Briques creuses de 10 cm en séchage avant cuisson"}
+      ]
+    },
+    {
+      "id": "tuiles",
+      "titre": "Tuiles",
+      "sous_titre": "Terre cuite, pour toitures",
+      "produits": [
+        {"id": "tuile-mecanique", "nom": "Tuile mécanique 22×33,5 cm", "dims": "2 × 22 × 33,5 cm", "prix": 2200, "pcs_m2": 15, "image": "tuile-mecanique.webp", "alt": "Tuiles mécaniques en terre cuite posées sur une toiture"},
+        {"id": "tuile-ecaille", "nom": "Tuile écaille", "dims": "—", "prix": 500, "pcs_m2": 75, "image": "tuile-ecaille.webp", "alt": "Tuiles écaille en terre cuite posées en écailles sur un toit"}
+      ]
+    },
+    {
+      "id": "autres",
+      "titre": "Briques pleines, plaquettes et tonettes",
+      "sous_titre": "Sans photo pour l'instant : demandez-nous, nous vous envoyons des images par Messenger",
+      "tableau": true,
+      "produits": [
+        {"id": "brique-repressee", "nom": "Brique repressée", "dims": "6 × 11 × 22 cm", "prix": 2200, "pcs_m2": 42},
+        {"id": "briquette", "nom": "Briquette", "dims": "2 × 5 × 22 cm", "prix": 500, "pcs_m2": 82},
+        {"id": "plaquette", "nom": "Plaquette", "dims": "2 × 7 × 22 cm", "prix": 500, "pcs_m2": 72},
+        {"id": "plaquette-chinois", "nom": "Plaquette chinois", "dims": "2 × 10 × 20 cm", "prix": 700, "pcs_m2": 50},
+        {"id": "tonette", "nom": "Tonette", "dims": "4 × 20 × 40 cm", "prix": 1800, "pcs_m2": 25}
+      ]
+    }
+  ],
+  "livraison": {
+    "zones": "Antananarivo et périphérie proche (Ambohimanga, Alasora, Imerintsiatosika, Andramasina)",
+    "tarif": "1 500 Ar par km depuis le stock d'Ambohimanga Rova",
+    "delai_livraison": "3 à 7 jours après la commande, selon la distance",
+    "delai_commande": "environ 30 jours (production sur commande ; le stock disponible part vite)",
+    "stock": "Ambohimanga Rova"
+  }
+}
