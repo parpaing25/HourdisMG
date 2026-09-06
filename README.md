@@ -14,7 +14,8 @@ détaillé, corrections, plan IA, amélioration continue, checklist de lancement
 | `site/` | **La source du site.** `index.html`, pages (`faq`, `mentions-legales`, `confidentialite`, `merci`, `404`), `_partials/` (en-tête, pied de page), `src/styles/main.css`, `src/js/main.js`, `image/`, `contact.php`, `stat.php`, `.htaccess`, `robots.txt`, `llms.txt`, `manifest.webmanifest`, icônes |
 | `site/data/produits.json` | **La seule source des prix et du catalogue.** Le build l'injecte dans les cartes, le tableau, le JSON-LD et la FAQ |
 | `build.py` | `site/` → `dist/` : partiels, produits, hash des ressources (`assets/index-<hash>.css/.js`), sitemap, puis **garde-fous** (style en ligne, liens cassés, h1, alt, titres, budget de poids). `--servir` pour regarder en local |
-| `tests/smoke_test.py` | Banc Playwright : pages, console, mobile 390, menu, calculateur, visionneuse, formulaire, 7 points de rupture, axe-core |
+| `tests/smoke_test.py` | Banc Playwright : pages, console, mobile 390, menu, calculateur, visionneuse, formulaire, 8 points de rupture, axe-core |
+| `tests/test_devis_serveur.py` | Test du VRAI `contact.php` sur le VRAI serveur (script temporaire, journaux sauvegardés puis restaurés) : e-mail, Telegram, validation, limite, robots. **À lancer avant tout déploiement qui touche le formulaire** |
 | `outils/preparer_images.py` | Originaux → WebP légers, icônes, image de partage |
 | `outils/verifier_en_ligne.py` | Contrôle quotidien de la production, alerte Telegram |
 | `outils/nettoyage_serveur.py` | Retire du serveur ce que le build ne contient pas (à blanc par défaut) |
@@ -28,7 +29,12 @@ détaillé, corrections, plan IA, amélioration continue, checklist de lancement
 python build.py --servir          # construit et sert http://127.0.0.1:8765
 python tests/smoke_test.py        # banc contre le serveur local
 python tests/smoke_test.py https://hourdis.fonenako.mg   # banc contre la prod (rien n'est envoyé)
+python tests/test_devis_serveur.py                       # le formulaire pour de vrai (6 messages de test)
 ```
+
+⚠ Un test de formulaire passe **toujours** par un navigateur : o2switch oppose un défi Tiger Protect
+(307 + cookie) aux POST d'un client HTTP nu, et rend parfois 504 là où PHP a répondu 429. Le code
+renvoyé au client ne prouve rien ; ce qui compte est ce que le serveur a écrit dans ses journaux.
 
 Changer un prix : `site/data/produits.json`, puis `python build.py`. Changer un texte : la page
 dans `site/`. Ajouter une photo : l'original dans `sources-photos/` (hors git), une ligne dans

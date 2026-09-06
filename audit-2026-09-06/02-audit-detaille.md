@@ -44,6 +44,36 @@ de `curl`, d'`openssl` et du listing FTP.
 
 ---
 
+## Deuxième passe — revue adversariale et test réel du 06/09/2026 (après-midi)
+
+Le formulaire corrigé a été exercé **contre le vrai `contact.php` sur le vrai serveur**, dans un vrai
+navigateur (`tests/test_devis_serveur.py`, 24 contrôles, 0 échec). Le script est déposé sous un nom
+aléatoire, exercé, effacé ; les journaux sont sauvegardés et restaurés. Ce test a trouvé ce qu'aucune
+lecture de code n'avait vu, et une revue en huit dimensions a trouvé le reste.
+
+| ID | Crit. | Constat | Correction |
+|---|---|---|---|
+| R-01 | **P0** | **Un téléphone dont l'horloge avance faisait disparaître la demande.** Le champ `t` porte l'heure du *navigateur* ; l'écart avec l'heure serveur devenait **négatif**, donc inférieur au seuil de 3 s, donc « robot » : réponse « ok », redirection vers `/merci`, et rien nulle part. Les horloges décalées sont courantes sur les téléphones. | test du signe (`$ecart >= 0`), et **toute** demande écartée est désormais écrite dans `refuses.jsonl` avec sa raison |
+| R-02 | P1 | **Telegram en `parse_mode: Markdown` sans échappement.** Une adresse contenant un souligné (`rakoto_j@gmail.com`) ou une étoile isolée fait répondre 400 « Can't parse entities » : la notification disparaissait, et le journal disait seulement « telegram KO ou non configuré ». Accessoirement, un visiteur pouvait glisser un lien masqué dans le message que lit le patron. | texte brut, sans `parse_mode` ; le journal porte maintenant **le message d'erreur de l'API** |
+| R-03 | P1 | **Compteur de limite sans section critique** : lecture, décision et écriture séparées, `LOCK_EX` seulement sur l'écriture. Deux requêtes simultanées lisaient la même valeur et passaient toutes les deux. | `fopen('c+')` + `flock` autour des trois opérations |
+| R-04 | P1 | **Le quota était consommé avant la validation** : trois numéros mal tapés et le client n'avait plus droit qu'à deux vraies demandes dans l'heure. Vérifié en production : les trois refus de validation mangeaient trois des cinq crédits. | le bloc de limite est passé **après** la validation ; les refus sont journalisés |
+| R-05 | P1 | **Le chien de garde quotidien mourait sans aboyer** : `verifier_en_ligne.py` ne rattrapait que `HTTPError`. Site injoignable (DNS, TLS, délai) = exception non rattrapée = aucune alerte Telegram, dans le seul cas qui compte. | `except Exception` dans `lire()` et `statut_sans_suivre()`, et `main()` protégé |
+| R-06 | P1 | **Faux OK sur une version périmée** : le contrôle vérifiait qu'un bundle haché existe et est servi en JavaScript, jamais que c'est **celui du build local**. Une version d'il y a six mois passait au vert. | comparaison au hash de `dist/index.html` |
+| R-07 | P1 | **Le rapport hebdo local téléchargeait `leads.jsonl` dans `dist/`** — le dossier qui part en entier à la racine web au déploiement suivant. Noms, téléphones et messages des clients à un `redeploy` du web. | cache déplacé dans `~/.hourdis-rapport` ; `.htaccess` élargi en second rideau |
+| R-08 | P1 | **Deux échelles de temps incompatibles** : `contact.php` horodatait en heure locale du serveur (Europe/Paris) et `stat.php` en UTC, alors que les deux rapports construisent leur fenêtre en UTC et **comparent des chaînes**. La fenêtre de sept jours était fausse de deux heures, et le tri par chaîne ne tenait plus entre `…Z` et `…+02:00`. | tout est en UTC au format court `…Z` ; seul l'affichage humain est en heure de Tana |
+| R-09 | P2 | `stat.php` n'avait **ni limite ni purge** : chiffres falsifiables par n'importe qui et base sans borne sur un quota partagé. | 300 événements/heure/adresse sous verrou, purge au-delà de 400 jours |
+| R-10 | P2 | Les retours chariot n'étaient **pas** retirés des champs : la classe de caractères sautait `\x0A` et `\x0D`. Non exploitable ici (le sujet est encodé en base64), mais la fonction prétendait le faire. | `\p{C}` sur les champs d'une ligne, sauts de ligne conservés pour le seul message |
+| R-11 | P2 | Deux appels au système de fichiers non préfixés par `@` dans le bloc de limite : un avertissement PHP aurait précédé le JSON et fait fuir un chemin absolu. | `@` posés, et `display_errors` coupé en tête des deux scripts |
+| R-12 | P3 | La troncature d'adresse réseau ne traitait que l'IPv4 : une IPv6 partait **entière** dans chaque e-mail, ce que le commentaire de la ligne disait éviter. | troncature au préfixe /48 pour l'IPv6 |
+
+Ce que le test réel a appris sur l'hébergeur, et qui vaut pour tous les sites du compte :
+
+- o2switch oppose un **défi Tiger Protect (307 + cookie) aux POST d'un client HTTP nu**. Un vrai
+  navigateur le franchit sans s'en apercevoir : le formulaire des visiteurs n'est pas gêné, mais un
+  test écrit avec `curl` ou `urllib` ne prouve rien. Tout test de formulaire passe par un navigateur.
+- Sur une rafale de POST, le pare-feu rend parfois **504 là où PHP a répondu 429**. Le code renvoyé
+  au client n'est donc pas une preuve : le test juge sur ce que le serveur a **écrit**.
+
 ## 2.1 Performance et Core Web Vitals — poids 12 — **avant 88 · après 95**
 
 | Contrôle | Mesure (mobile, Pixel 7 émulé) | Verdict |

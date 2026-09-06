@@ -8,8 +8,31 @@
  */
 declare(strict_types=1);
 
+@ini_set('display_errors', '0');
 header('Cache-Control: no-store');
+header('X-Content-Type-Options: nosniff');
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') { http_response_code(405); exit; }
+
+// Cette mesure n'a aucune valeur si n'importe qui peut la gonfler, et la base ne doit pas grossir
+// sans borne sur un hébergement à quota : 300 événements par heure et par adresse, largement au-dessus
+// d'un visiteur réel (une dizaine par visite) et loin en dessous d'un arrosage. (Revue du 06/09/2026.)
+$dossier = dirname(__DIR__) . '/hourdis-data';
+if (!is_dir($dossier) && !@mkdir($dossier, 0700, true)) { http_response_code(204); exit; }
+$limite = $dossier . '/limite-stat';
+if (is_dir($limite) || @mkdir($limite, 0700, true)) {
+    $f = $limite . '/' . hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . gmdate('YmdH')) . '.n';
+    $h = @fopen($f, 'c+');
+    if ($h) {
+        @flock($h, LOCK_EX);
+        $n = (int)stream_get_contents($h);
+        if ($n >= 300) { @flock($h, LOCK_UN); @fclose($h); http_response_code(204); exit; }
+        rewind($h); ftruncate($h, 0); fwrite($h, (string)($n + 1)); fflush($h);
+        @flock($h, LOCK_UN); @fclose($h);
+    }
+    foreach ((array)glob($limite . '/*.n') as $vieux) {
+        if ((int)@filemtime($vieux) < time() - 7200) { @unlink($vieux); }
+    }
+}
 
 $brut = file_get_contents('php://input', false, null, 0, 2048);
 $d = json_decode((string)$brut, true);
@@ -31,9 +54,6 @@ elseif (str_contains($ua, 'android')) { $famille = 'android'; }
 elseif (str_contains($ua, 'iphone') || str_contains($ua, 'ipad')) { $famille = 'ios'; }
 elseif (str_contains($ua, 'windows') || str_contains($ua, 'macintosh') || str_contains($ua, 'linux')) { $famille = 'ordinateur'; }
 
-$dossier = dirname(__DIR__) . '/hourdis-data';
-if (!is_dir($dossier) && !@mkdir($dossier, 0700, true)) { http_response_code(204); exit; }
-
 try {
     $pdo = new PDO('sqlite:' . $dossier . '/stats.sqlite', null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_TIMEOUT => 3]);
     $pdo->exec('PRAGMA journal_mode=WAL');
@@ -41,8 +61,12 @@ try {
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_ts ON evenements (ts)');
     $st = $pdo->prepare('INSERT INTO evenements (ts, e, page, ref, largeur, langue, famille, extra) VALUES (?,?,?,?,?,?,?,?)');
     $st->execute([gmdate('Y-m-d\TH:i:s\Z'), $e, $page, $ref, $larg, $langue, $famille, $extra]);
+    // purge : au-delà d'un an, la mesure ne sert plus à rien et la base est sur un quota partagé
+    if (random_int(1, 500) === 1) {
+        $pdo->prepare('DELETE FROM evenements WHERE ts < ?')->execute([gmdate('Y-m-d\TH:i:s\Z', time() - 400 * 86400)]);
+    }
 } catch (Throwable $err) {
-    // repli : une ligne JSON par événement, le rapport sait lire les deux
-    @file_put_contents($dossier . '/stats.jsonl', json_encode(['ts' => gmdate('c'), 'e' => $e, 'page' => $page, 'ref' => $ref, 'largeur' => $larg, 'langue' => $langue, 'famille' => $famille, 'extra' => $extra]) . "\n", FILE_APPEND | LOCK_EX);
+    // repli : une ligne JSON par événement, dans le MÊME format d'horodatage que la base
+    @file_put_contents($dossier . '/stats.jsonl', json_encode(['ts' => gmdate('Y-m-d\TH:i:s\Z'), 'e' => $e, 'page' => $page, 'ref' => $ref, 'largeur' => $larg, 'langue' => $langue, 'famille' => $famille, 'extra' => $extra]) . "\n", FILE_APPEND | LOCK_EX);
 }
 http_response_code(204);

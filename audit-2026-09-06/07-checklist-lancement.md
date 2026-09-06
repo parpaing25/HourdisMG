@@ -5,21 +5,19 @@ jamais `&&`) ou pour Git Bash quand c'est indiqué. Responsable : Andry, sauf me
 
 ## J-7 — Décisions et comptes
 
-- [ ] **Q1** Trancher les prix Hourdis 15 et 12 → éditer `site/data/produits.json` (champ `prix`).
-- [ ] **Q2** Remplir les 7 cases « À COMPLÉTER » de `site/mentions-legales.html` et l'acompte dans `site/faq.html` (#paiement).
-- [ ] **Q3** Confirmer que le 032 47 041 43 est sur WhatsApp (sinon dire lequel, ou retirer).
-- [ ] **Q4** cPanel → Comptes de messagerie → créer `hourdis@fonenako.mg` (mot de passe dans le trousseau).
-- [ ] **Q5** Photographier le hourdis 12, le hourdis 15 sans filigrane, la brique creuse 10 finie → `sources-photos/`, adapter `outils/preparer_images.py`, relancer `python outils\preparer_images.py sources-photos`.
+- [x] **Q1** Prix : tranché le 06/09 par Andry, la référence est la page Facebook (publications du 13/07 au 12/08) → `produits.json` aligné (hourdis 15 = 3 000, 12 = 2 800).
+- [ ] **Q2** Identité légale : NIF et STAT **reportés** (décision d'Andry du 06/09, lignes retirées de la page, prêtes en commentaire). Restent 4 cases « À COMPLÉTER » : dénomination, forme juridique, adresse précise, responsable de publication ; et l'acompte dans `site/faq.html` (#paiement).
+- [x] **Q3** WhatsApp sur le 032 47 041 43 : confirmé par Andry le 06/09.
+- [x] **Q4** Boîte `hourdis@fonenako.mg` : **inutile** — testé le 06/09 depuis le serveur, l'e-mail expédié de cette adresse sans boîte arrive dans la boîte de réception Gmail (SPF + DKIM du domaine). Configuration posée : `/home/<compte>/hourdis-config.php` (copie dans `~/.fonenako-secrets/`), Telegram testé (message reçu).
+- [x] **Q5** Photos : reprises des publications de la page Facebook (filigrane retiré au recadrage) ; hourdis 20/15/12, brique creuse 10, et trois photos de chantiers dans « Sur les chantiers ». Une vraie photo par épaisseur reste souhaitable un jour.
 - [ ] F-30 Vérifier qui répond aux messages privés de la page Facebook (un seul automate).
-- [ ] Créer le compte Google Search Console pour `hourdis.fonenako.mg` (vérification par balise HTML : l'ajouter dans `site/_partials/header.html` est inutile, la mettre dans le `<head>` de `site/index.html`) et Bing Webmaster (import depuis Search Console).
+- [ ] Créer le compte Google Search Console pour `hourdis.fonenako.mg` (balise HTML dans le `<head>` de `site/index.html`) et Bing Webmaster (import depuis Search Console).
 
 ## J-3 — Serveur
 
-- [ ] cPanel → Gestionnaire de fichiers → créer `/home/<compte>/hourdis-outils/` et y déposer `outils-serveur/rapport_hebdo.php`.
-- [ ] Copier `outils-serveur/hourdis-config.exemple.php` en `/home/<compte>/hourdis-config.php` (hors racine web) ; renseigner `from_email`, `telegram_token` (celui de @Hourdis_bot), `telegram_chat` (identifiant Telegram d'Andry).
-- [ ] cPanel → Tâches cron → `0 7 * * 6 /usr/local/bin/php /home/<compte>/hourdis-outils/rapport_hebdo.php`.
+- [x] `/home/<compte>/hourdis-outils/rapport_hebdo.php`, `/home/<compte>/hourdis-config.php` et `/home/<compte>/hourdis-data/` posés par FTP le 06/09 (PHP 8.1.34, PDO SQLite et cURL présents, dossier personnel inscriptible : vérifié par le script de test).
+- [ ] Rapport hebdo, **une seule des deux options** : (a) cPanel → Tâches cron → `0 7 * * 6 /usr/local/bin/php /home/<compte>/hourdis-outils/rapport_hebdo.php` ; ou (b) sur le PC, Planificateur de tâches → samedi 07:00 → `outils\rapport_hebdo_local.cmd` (même rapport, calculé depuis les fichiers téléchargés par FTP). Sans accès cPanel depuis la session, (b) est prêt.
 - [ ] cPanel → JetBackup → restaurer un fichier test → noter la date ici : ______.
-- [ ] cPanel → Sélecteur PHP → vérifier PHP ≥ 8.1 (le `contact.php` utilise `str_contains`, `never`).
 
 ## J-1 — Répétition générale en local (Claude ou Andry)
 

@@ -52,6 +52,9 @@ def ko(msg: str) -> None:
 
 
 def lire(url: str, methode: str = "GET") -> tuple[int, dict, bytes, float]:
+    """Rend le code 0 quand le site est INJOIGNABLE (DNS, connexion refusée, TLS, délai dépassé).
+    Sans ce filet, l'exception traversait le script et le chien de garde mourait sans envoyer
+    d'alerte, exactement dans le seul cas pour lequel il existe. (Revue du 06/09/2026.)"""
     req = urllib.request.Request(url, method=methode, headers={"User-Agent": UA, "Cache-Control": "no-cache"})
     t0 = time.perf_counter()
     try:
@@ -60,6 +63,8 @@ def lire(url: str, methode: str = "GET") -> tuple[int, dict, bytes, float]:
             return r.status, dict(r.headers), corps, time.perf_counter() - t0
     except urllib.error.HTTPError as e:
         return e.code, dict(e.headers), e.read(), time.perf_counter() - t0
+    except Exception as e:
+        return 0, {}, f"{type(e).__name__}: {e}".encode(), time.perf_counter() - t0
 
 
 class SansRedirection(urllib.request.HTTPRedirectHandler):
@@ -74,6 +79,8 @@ def statut_sans_suivre(url: str) -> int:
         return op.open(req, timeout=30).status
     except urllib.error.HTTPError as e:
         return e.code
+    except Exception:
+        return 0
 
 
 def controler() -> None:
@@ -87,7 +94,7 @@ def controler() -> None:
         return
     if "tiger" in page and "429" in page:
         ko("o2switch sert sa page de blocage (tigre) : l'agent utilisateur est jugé robot")
-    # 2. bundle + css
+    # 2. bundle + css : présents, servis avec le bon type, ET identiques au build local
     m_js = re.search(r'src="(/assets/index-[A-Za-z0-9_-]+\.js)"', page)
     m_css = re.search(r'href="(/assets/index-[A-Za-z0-9_-]+\.css)"', page)
     for m, attendu in ((m_js, "javascript"), (m_css, "text/css")):
@@ -99,6 +106,18 @@ def controler() -> None:
             ok(f"{m.group(1)} servi en {e.get('Content-Type')}")
         else:
             ko(f"{m.group(1)} : code {c}, type {e.get('Content-Type')} (fichier absent ?)")
+    # Un bundle haché servi correctement ne prouve PAS que c'est le BON : sans cette comparaison,
+    # une version d'il y a six mois passait le contrôle au vert. (Revue du 06/09/2026.)
+    local = Path(__file__).resolve().parent.parent / "dist" / "index.html"
+    if local.exists():
+        attendu_js = re.search(r"/assets/index-[A-Za-z0-9_-]+\.js", local.read_text(encoding="utf-8", errors="replace"))
+        en_ligne = m_js.group(1) if m_js else None
+        if attendu_js and en_ligne == attendu_js.group(0):
+            ok(f"le bundle en ligne est celui du build local ({en_ligne})")
+        elif attendu_js:
+            ko(f"bundle en ligne {en_ligne} ≠ build local {attendu_js.group(0)} (déploiement non fait ou build local plus récent)")
+    else:
+        constats.append("· build local absent : impossible de comparer le bundle (lancer python build.py)")
     # 3. pages et fichiers
     for chemin, attendu in (("/faq", 200), ("/mentions-legales", 200), ("/confidentialite", 200), ("/robots.txt", 200), ("/sitemap.xml", 200), ("/llms.txt", 200), ("/page-inexistante-" + str(int(time.time())), 404)):
         c, _e, _b, _t = lire(BASE + chemin)
@@ -154,7 +173,10 @@ def telegram(texte: str) -> None:
 
 
 def main() -> None:
-    controler()
+    try:
+        controler()
+    except Exception as e:   # une panne du contrôle ne doit jamais remplacer l'alerte par une trace
+        ko(f"contrôle interrompu : {type(e).__name__} {e}")
     print("\n".join(constats))
     etat = "PROBLÈME" if problemes else "OK"
     print(f"\n{etat} : {len(problemes)} point(s) en défaut sur {len(constats)}")

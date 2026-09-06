@@ -30,7 +30,7 @@ function evenements(string $dossier, DateTimeImmutable $depuis): array {
     if (is_file("$dossier/stats.jsonl")) {
         foreach (file("$dossier/stats.jsonl", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $l) {
             $d = json_decode($l, true);
-            if (is_array($d) && ($d['ts'] ?? '') >= $depuis->format('c')) { $out[] = $d; }
+            if (is_array($d) && ($d['ts'] ?? '') >= $depuis->format('Y-m-d\TH:i:s\Z')) { $out[] = $d; }
         }
     }
     return $out;
@@ -64,13 +64,24 @@ $evts = evenements($donnees, $avant);
 $sem = compter($evts, $depuis, $maintenant);
 $prec = compter($evts, $avant, $depuis);
 
-$leads = [];
-if (is_file("$donnees/leads.jsonl")) {
-    foreach (file("$donnees/leads.jsonl", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $l) {
-        $d = json_decode($l, true);
-        if (is_array($d) && ($d['ts'] ?? '') >= $depuis->format('c')) { $leads[] = $d; }
+/**
+ * Tout est horodaté en UTC au format court « ...Z » par stat.php comme par contact.php : la
+ * comparaison de chaînes ci-dessous n'a de sens que si les deux côtés ont exactement ce format.
+ * (Avant la revue du 06/09/2026, contact.php écrivait en heure locale avec décalage : la fenêtre
+ * de sept jours était fausse de deux heures et le tri par chaîne ne tenait plus.)
+ */
+$demandes = function (string $fichier) use ($donnees, $depuis): array {
+    $out = [];
+    if (is_file("$donnees/$fichier")) {
+        foreach (file("$donnees/$fichier", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $l) {
+            $d = json_decode($l, true);
+            if (is_array($d) && ($d['ts'] ?? '') >= $depuis->format('Y-m-d\TH:i:s\Z')) { $out[] = $d; }
+        }
     }
-}
+    return $out;
+};
+$leads = $demandes('leads.jsonl');
+$refuses = $demandes('refuses.jsonl');
 
 $delta = fn(int $a, int $b): string => $b === 0 ? ($a > 0 ? ' (nouveau)' : '') : sprintf(' (%+d %%)', (int)round(($a - $b) * 100 / $b));
 $contacts = $sem['tel'] + $sem['whatsapp'] + $sem['messenger'] + $sem['email'] + $sem['devis'];
@@ -94,6 +105,14 @@ if ($leads) {
     $lignes[] = "Demandes reçues (" . count($leads) . ") :";
     foreach (array_slice($leads, -8) as $l) {
         $lignes[] = "  • " . substr($l['ts'], 5, 5) . " {$l['nom']} — {$l['lieu']}" . ($l['surface'] !== '' ? " · {$l['surface']} m²" : '') . (($l['mail'] ?? true) ? '' : ' · mail KO') . (($l['telegram'] ?? true) ? '' : ' · TG KO');
+    }
+}
+if ($refuses) {
+    // une demande écartée comme robot ou par la limite peut être un vrai client : on la montre
+    $lignes[] = "";
+    $lignes[] = "⚠ Demandes ÉCARTÉES (" . count($refuses) . ") — vérifier qu'aucun vrai client n'est dedans :";
+    foreach (array_slice($refuses, -6) as $l) {
+        $lignes[] = "  • " . substr($l['ts'], 5, 5) . " " . ($l['nom'] ?: '(sans nom)') . " " . ($l['tel'] ?? '') . " — " . ($l['refuse'] ?? '?');
     }
 }
 if ($sem['pages'] === 0) {

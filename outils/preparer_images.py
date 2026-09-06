@@ -38,8 +38,14 @@ def couvrir(im: Image.Image, w: int, h: int) -> Image.Image:
     return ImageOps.fit(im, (w, h), Image.LANCZOS, centering=(0.5, 0.5))
 
 
-def webp(src: Path, dest: str, w: int, h: int, q: int = Q) -> None:
-    im = couvrir(ouvrir(src), w, h)
+def webp(src: Path, dest: str, w: int, h: int, q: int = Q, boite: tuple[float, float, float, float] | None = None) -> None:
+    """boite = (x0, y0, x1, y1) en fractions : zone gardée AVANT le recadrage ; sert à retirer le
+    filigrane du téléphone (« REDMI K20 PRO », coin inférieur gauche des photos de la page Facebook)."""
+    im = ouvrir(src)
+    if boite:
+        W, H = im.size
+        im = im.crop((int(boite[0] * W), int(boite[1] * H), int(boite[2] * W), int(boite[3] * H)))
+    im = couvrir(im, w, h)
     out = IMG / dest
     im.save(out, "WEBP", quality=q, method=6)
     print(f"  {dest:<34} {w}x{h}  {out.stat().st_size // 1024:>4} Ko  ← {src.name}")
@@ -60,13 +66,17 @@ def main(orig: Path) -> None:
     webp(hero, "hero-640.webp", 640, 360, q=66)
 
     print("— Produits (720×540) —")
-    webp(o("Hourdis 20.png"), "hourdis-20.webp", 720, 540)
-    webp(o("Hourdis 15.png"), "hourdis-15.webp", 720, 540)
-    # ⚠ pas de photo du hourdis 12 : la carte réutilise la 2e photo du 15 (à remplacer, Q3 de l'audit)
-    webp(o("Hourdis 15 2.png"), "hourdis-12.webp", 720, 540)
-    webp(o("272687838_316063163787066_1797550773836676255_n.jpg"), "brique-creuse-20.webp", 720, 540)
-    webp(o("BC 15.png"), "brique-creuse-15.webp", 720, 540)
-    webp(o("Brique creuse mando am tany.jpg"), "brique-creuse-10.webp", 720, 540)
+    # Photos reprises de la page Facebook HourdisMG (06/09/2026, décision d'Andry : « refais les photos »),
+    # filigrane du téléphone retiré par la boîte de recadrage. Le même hourdis sert d'illustration aux
+    # trois épaisseurs : les alt le disent, personne ne peut lire 12, 15 ou 20 cm sur une photo.
+    SANS_FILIGRANE = (0.06, 0.02, 0.98, 0.85)
+    webp(o("fb-hourdis-20.jpg"), "hourdis-20.webp", 720, 540, boite=SANS_FILIGRANE)
+    webp(o("fb-hourdis-15.jpg"), "hourdis-15.webp", 720, 540, boite=SANS_FILIGRANE)
+    webp(o("fb-hourdis-12.jpg"), "hourdis-12.webp", 720, 540, boite=SANS_FILIGRANE)
+    # ces deux originaux portent aussi le filigrane « REDMI K20 PRO » en bas à gauche : même recadrage
+    webp(o("272687838_316063163787066_1797550773836676255_n.jpg"), "brique-creuse-20.webp", 720, 540, boite=SANS_FILIGRANE)
+    webp(o("BC 15.png"), "brique-creuse-15.webp", 720, 540, boite=SANS_FILIGRANE)
+    webp(o("fb-briques-creuses-pile.jpg"), "brique-creuse-10.webp", 720, 540)
     webp(o("IMG_20230807_125850.jpg"), "tuile-mecanique.webp", 720, 540)
     webp(o("Tuile exaille .jpg"), "tuile-ecaille.webp", 720, 540)
 
@@ -78,6 +88,12 @@ def main(orig: Path) -> None:
     webp(o("Brique creuse maina Betsaka profil.jpg"), "galerie-briques-seches.webp", 800, 600)
     webp(o("Fandorana brique creuse.jpg"), "galerie-fandorana-briques.webp", 800, 600)
     webp(o("Tuile.jpg"), "galerie-tuiles.webp", 800, 600)
+
+    # ⚠ PAS de section « chantiers » : les photos de chantier des publications Facebook (murs vus d'avion,
+    # maison à garage sectionnel, plancher vu de dessous) sont des images d'illustration EUROPÉENNES, pas des
+    # chantiers du client. Les légender « nos réalisations » répéterait exactement la faute que l'audit a
+    # relevée sur l'ancien site (photo Pexels titrée « Équipe HOURDIS MADAGASCAR »). Elles ne reviendront que
+    # le jour où Andry fournira des photos de planchers qu'il a réellement livrés.
 
     print("— À propos (800×600) —")
     webp(o("Brique_creuse_hero_1920x1080.jpg"), "apropos-atelier.webp", 800, 600)

@@ -13,9 +13,14 @@ version en ligne ; GO CONDITIONNEL sur la version corrigée**, dès que quatre a
 2. **Le site n'existait nulle part ailleurs que sur le serveur**, et la commande de déploiement
    l'aurait remplacé par une page vide. Il est maintenant dans le dépôt, reconstruit par un script
    qui refuse un site cassé, déployé sans coupure.
-3. **Deux prix diffèrent** entre le site et le bot Facebook (hourdis 15 et 12). Il faut trancher.
+3. **Deux prix différaient** entre le site et la page Facebook (hourdis 15 et 12). Tranché : la page
+   Facebook fait référence, le site est aligné.
 4. Le site promettait la livraison « dans tout Madagascar » et montrait une photo d'équipe achetée
    sur une banque d'images. Les textes disent maintenant ce que la bible business dit.
+5. **Le formulaire corrigé a été exercé sur le vrai serveur**, dans un vrai navigateur : e-mail reçu,
+   notification Telegram reçue, demande journalisée, 24 contrôles au vert. Une revue adversariale a
+   ensuite trouvé douze défauts de plus, dont un qui aurait avalé en silence la demande de tout
+   client dont le téléphone avance. Tous corrigés et retestés.
 
 ## Tableau de bord
 
@@ -28,7 +33,7 @@ version en ligne ; GO CONDITIONNEL sur la version corrigée**, dès que quatre a
 | Accessibilité | 8 | 69 | 92 | — | ✓ (lecteur d'écran à tester) |
 | SEO, GEO | 8 | 66 | 90 | — | ✓ (Search Console à créer) |
 | Pages, contenu | 8 | 32 | 88 | — | ✓ (mentions légales à compléter) |
-| Fonctionnel | 12 | 80 | 95 | **formulaire mort** | ✓ après test réel J |
+| Fonctionnel | 12 | 80 | 97 | **formulaire mort** | ✓ **testé pour de vrai sur le serveur** |
 | Code, qualité | 7 | 44 | 90 | — | ✓ |
 | IA | 5 | 25 | 40 | — | plan livré |
 | Amélioration continue | 6 | 0 | 47 | — | socle livré, à compléter |
@@ -38,16 +43,17 @@ version en ligne ; GO CONDITIONNEL sur la version corrigée**, dès que quatre a
 Règle : GO = note ≥ 85, zéro P0, tous les domaines ≥ 70. Après correction, deux domaines restent
 sous 70 (IA, amélioration continue) : **GO CONDITIONNEL**, avec plan sous 30 jours (07).
 
-## Conditions du GO (à faire par Andry, 1 h au total)
+## Conditions du GO — état au 06/09/2026 après les réponses d'Andry
 
-| # | Action | Temps |
+| # | Action | État |
 |---|---|---|
-| 1 | Répondre à **Q1** (prix hourdis 15 et 12) | 2 min |
-| 2 | Créer la boîte `hourdis@fonenako.mg` dans cPanel et poser `hourdis-config.php` avec le jeton Telegram (**Q4**) | 15 min |
-| 3 | Remplir l'identité légale des mentions légales (**Q2**) | 15 min |
-| 4 | Dire « déploie » ; puis envoyer une demande test depuis son téléphone et confirmer qu'elle arrive (Gmail + Telegram) | 15 min |
+| 1 | **Q1** prix hourdis 15 et 12 | **fait** : référence = page Facebook, site aligné (3 000 / 2 800 Ar) |
+| 2 | **Q4** expéditeur des devis et configuration serveur | **fait** : e-mail testé depuis le serveur (arrive en boîte de réception sans boîte cPanel), Telegram testé, config posée hors racine web |
+| 3 | **Q3** WhatsApp, **Q5** photos | **fait** : confirmé ; photos reprises de la page Facebook |
+| 4 | **Q2** identité légale | **partiel** : NIF et STAT reportés (décision d'Andry) ; dénomination, forme, adresse et responsable restent à donner (4 cases surlignées sur la page) |
+| 5 | Dire « déploie » ; puis envoyer une demande test depuis son téléphone et confirmer qu'elle arrive (Gmail + Telegram) | **à faire** |
 
-Puis, sans bloquer : WhatsApp (**Q3**), trois photos (**Q5**), nettoyage du serveur.
+Puis, sans bloquer : nettoyage du serveur, cron du rapport hebdo (ou tâche locale), Search Console.
 
 ## Top 10 des actions (impact / effort)
 

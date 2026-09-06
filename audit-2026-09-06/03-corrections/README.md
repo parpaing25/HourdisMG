@@ -41,11 +41,13 @@ Header always set Content-Security-Policy "default-src 'self'; script-src 'self'
 "style=" en ligne · lien interne cassé · ancre absente · ≠ 1 h1 · img sans alt · title hors 20-65 · description hors 100-165 · marqueur oublié · photo de banque d'images · première vue > 500 Ko
 ```
 
-## Ce qui n'est PAS corrigé par le code (décision ou action d'Andry)
+## Réponses d'Andry du 06/09/2026 et ce qu'il en reste
 
-- **Q1** prix Hourdis 15 / 12 → `site/data/produits.json`, champ `prix`.
-- **Q2** identité légale → `site/mentions-legales.html`, cases « À COMPLÉTER » ; acompte → `site/faq.html` (#paiement).
-- **Q3** WhatsApp sur le 032 → sinon retirer `.is-whatsapp` et le repli WhatsApp dans `main.js`.
-- **Q4** boîte `hourdis@fonenako.mg` + `hourdis-config.php` sur le serveur.
-- **Q5** trois photos → `sources-photos/`, `outils/preparer_images.py`.
-- F-25 DMARC, F-26 témoignages, F-30 répondeur unique de la page Facebook.
+- **Q1** prix → **réglé** : la page Facebook fait référence (publications 13/07 → 12/08 lues par l'API Graph) ; `produits.json` corrigé (hourdis 15 = 3 000, 12 = 2 800). Le site en ligne portait les prix d'avant le 13/07.
+- **Q2** identité légale → NIF et STAT **reportés** par Andry (lignes retirées, gardées en commentaire HTML) ; restent dénomination, forme, adresse, responsable, acompte (FAQ).
+- **Q3** WhatsApp → **confirmé**, rien à changer.
+- **Q4** → **réglé sans boîte cPanel** : test réel depuis le serveur (script temporaire, effacé) : les deux e-mails (expéditeur `hourdis@fonenako.mg` sans boîte, et `contact@fonenako.mg`) sont arrivés en boîte de réception Gmail. `hourdis-config.php` (jeton @Hourdis_bot + chat d'Andry) posé dans le dossier personnel du compte, `hourdis-outils/rapport_hebdo.php` et `hourdis-data/` créés. Telegram testé.
+- **Q5** photos → **refaites depuis la page Facebook** (`sources-photos/fb-*.jpg`) : hourdis 20/15/12 et brique creuse 10. Le filigrane « REDMI K20 PRO » est retiré par recadrage (`boite=` dans `preparer_images.py`), sur les photos reprises comme sur les deux anciennes photos de briques creuses qui le portaient aussi. Une planche de contrôle des 19 images servies a été regardée : plus aucun filigrane, toutes les scènes sont malgaches.
+  ⚠ Trois photos de chantier des publications Facebook ont été essayées puis **retirées** : vue aérienne de murs, maison à garage sectionnel, plancher vu de dessous en 512 × 384. Ce sont des images d'illustration européennes, pas des chantiers du client ; les légender « nos réalisations » aurait répété la faute reprochée à l'ancien site (photo Pexels titrée « Équipe HOURDIS MADAGASCAR »). La section reviendra quand Andry fournira des photos de planchers qu'il a livrés (F-26).
+- Au passage : les trois skills du bot Hermes `hourdis` envoyaient encore vers `hourdismg.artimmomada.com` (domaine mort) → remplacés par `hourdis.fonenako.mg`.
+- Restent : F-25 DMARC, F-26 témoignages, F-30 répondeur unique de la page Facebook, cron cPanel (ou `outils/rapport_hebdo_local.cmd`).

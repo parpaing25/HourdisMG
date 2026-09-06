@@ -1,6 +1,6 @@
 {
   "_source": "Catalogue et prix : bible-business.md du profil Hermes hourdis (fournie par Andry le 16/07/2026, délais confirmés le 12/08/2026) et site en ligne du 17/07/2026. Le build (build.py) injecte ce fichier dans index.html, faq.html et le JSON-LD : un prix se change ICI et nulle part ailleurs.",
-  "_alerte": "Hourdis 15 et Hourdis 12 : la bible dit 3 000 et 2 800 Ar, le site en ligne dit 2 800 et 2 500 Ar. Les valeurs ci-dessous sont celles du SITE (publiées depuis le 17/07). Andry doit trancher (question Q1 de l'audit) ; la ligne à modifier est le champ prix.",
+  "_reference": "Tranché par Andry le 06/09/2026 : la référence des prix est la page Facebook HourdisMG. Ses publications du 13/07 au 12/08/2026 (50 lues par l'API Graph) donnent : hourdis 20/15/12 = 3 400 / 3 000 / 2 800 ; briques creuses 20/15/10 = 3 500 / 3 000 / 2 500 ; tuile écaille 500, mécanique 2 200 ; briquette 500, plaquette 500, plaquette chinois 700, tonette 1 800, brique repressée 2 200. Le site en ligne du 17/07 portait encore les prix d'avant le 13/07 (hourdis 15 = 2 800, 12 = 2 500) : corrigés ici.",
   "devise": "Ar",
   "unite": "pièce",
   "categories": [
@@ -10,9 +10,9 @@
       "sous_titre": "9 pièces par m² de plancher (entrevous 33×33)",
       "pcs_m2": 9,
       "produits": [
-        {"id": "hourdis-20", "nom": "Hourdis 20×33×33 cm", "dims": "20 × 33 × 33 cm", "prix": 3400, "image": "hourdis-20.webp", "alt": "Hourdis de 20 cm en terre cuite, vue de profil montrant les alvéoles"},
-        {"id": "hourdis-15", "nom": "Hourdis 15×33×33 cm", "dims": "15 × 33 × 33 cm", "prix": 2800, "image": "hourdis-15.webp", "alt": "Hourdis de 15 cm en terre cuite, vue de profil"},
-        {"id": "hourdis-12", "nom": "Hourdis 12×33×33 cm", "dims": "12 × 33 × 33 cm", "prix": 2500, "image": "hourdis-12.webp", "alt": "Hourdis de 12 cm en terre cuite (photo à remplacer par le modèle 12)"}
+        {"id": "hourdis-20", "nom": "Hourdis 20×33×33 cm", "dims": "20 × 33 × 33 cm", "prix": 3400, "image": "hourdis-20.webp", "alt": "Hourdis en terre cuite vu de face, alvéoles et ailes d'appui visibles"},
+        {"id": "hourdis-15", "nom": "Hourdis 15×33×33 cm", "dims": "15 × 33 × 33 cm", "prix": 3000, "image": "hourdis-15.webp", "alt": "Hourdis en terre cuite posé sur un muret, vue de trois quarts"},
+        {"id": "hourdis-12", "nom": "Hourdis 12×33×33 cm", "dims": "12 × 33 × 33 cm", "prix": 2800, "image": "hourdis-12.webp", "alt": "Hourdis en terre cuite vu de face, profil bas"}
       ]
     },
     {
@@ -23,7 +23,7 @@
       "produits": [
         {"id": "brique-creuse-20", "nom": "Brique creuse 20×20×40 cm", "dims": "20 × 20 × 40 cm", "prix": 3500, "image": "brique-creuse-20.webp", "alt": "Deux briques creuses de 20 cm en terre cuite posées sur une table"},
         {"id": "brique-creuse-15", "nom": "Brique creuse 15×20×40 cm", "dims": "15 × 20 × 40 cm", "prix": 3000, "image": "brique-creuse-15.webp", "alt": "Briques creuses de 15 cm en terre cuite"},
-        {"id": "brique-creuse-10", "nom": "Brique creuse 10×20×40 cm", "dims": "10 × 20 × 40 cm", "prix": 2500, "image": "brique-creuse-10.webp", "alt": "Briques creuses de 10 cm en séchage avant cuisson"}
+        {"id": "brique-creuse-10", "nom": "Brique creuse 10×20×40 cm", "dims": "10 × 20 × 40 cm", "prix": 2500, "image": "brique-creuse-10.webp", "alt": "Pile de briques creuses cuites, alvéoles visibles sur la tranche"}
       ]
     },
     {
