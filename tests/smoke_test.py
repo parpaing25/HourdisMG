@@ -81,6 +81,16 @@ def main() -> None:
         page.wait_for_timeout(300)
         hauteurs = page.evaluate("[...document.querySelectorAll('#navMenu a')].map(a => a.getBoundingClientRect().height)")
         controle("menu ouvert, liens ≥ 44 px", page.get_attribute("#navToggle", "aria-expanded") == "true" and min(hauteurs) >= 44, f"min {min(hauteurs):.0f} px")
+        page.keyboard.press("Escape")
+        page.wait_for_timeout(200)
+
+        # Toute la page, pas seulement le menu : compacter une carte ne doit jamais rétrécir sa cible.
+        # (Le 06/09/2026, la refonte mobile a ramené les 8 boutons « Calculer » à 39 px sans que rien ne le dise.)
+        petites = page.evaluate("""() => [...document.querySelectorAll('a, button, input:not([type=hidden]), textarea, select')]
+            .filter(el => { const r = el.getBoundingClientRect();
+              return r.width > 0 && (r.width < 44 || r.height < 44) && !el.closest('.hp') && el.parentElement.tagName !== 'P'; })
+            .map(el => ((el.textContent || el.getAttribute('aria-label') || el.name || '?').trim().slice(0, 24)) + ' ' + Math.round(el.getBoundingClientRect().height) + 'px')""")
+        controle("toutes les cibles tactiles de la page font 44 px", not petites, "; ".join(petites[:5]))
         page.screenshot(path=str(CAP / "mobile-menu.jpg"), type="jpeg", quality=60)
         page.keyboard.press("Escape")
         page.wait_for_timeout(200)

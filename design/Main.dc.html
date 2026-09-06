@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    a { color: #9A4A2B; text-decoration: none; } a:hover { color: #B85C38; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; background: #FFFFFF; color: #1A1A1A; position: relative">
+
+  <!-- En-tete 64 px -->
+  <header style="height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 16px; border-bottom: 1px solid #E5E7EB; background: #FFFFFF">
+    <img src="logo.webp" alt="" style="width: 40px; height: 40px; border-radius: 6px; display: block">
+    <div style="display: flex; flex-direction: column; gap: 1px; flex-grow: 1; min-width: 0">
+      <span style="font-size: 14px; font-weight: 800; letter-spacing: .01em; white-space: nowrap">HOURDIS MADAGASCAR</span>
+      <span style="font-size: 11px; color: #9A4A2B">Planchers solides, prix maîtrisés</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px">
+      <span style="width: 36px; height: 36px; border-radius: 50%; background: #B85C38; display: flex; align-items: center; justify-content: center">
+        <svg width="17" height="17" viewBox="0 0 320 512" fill="#FFFFFF" aria-hidden="true"><path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"/></svg>
+      </span>
+      <span style="width: 40px; height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px">
+        <span style="width: 22px; height: 2px; background: #1A1A1A; border-radius: 2px"></span>
+        <span style="width: 22px; height: 2px; background: #1A1A1A; border-radius: 2px"></span>
+        <span style="width: 22px; height: 2px; background: #1A1A1A; border-radius: 2px"></span>
+      </span>
+    </div>
+  </header>
+
+  <!-- Bandeau compact : 320 px au lieu de 646 -->
+  <section style="position: relative; height: 320px; overflow: hidden">
+    <img src="hero.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
+    <div style="position: absolute; inset: 0; background: linear-gradient(160deg, rgba(120,45,20,.86) 0%, rgba(90,60,50,.72) 60%, rgba(40,40,40,.70) 100%)"></div>
+    <div style="position: relative; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 0 16px; color: #FFFFFF">
+      <span style="align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(255,255,255,.18); padding: 4px 10px; border-radius: 999px">Terre cuite fabriquée à Madagascar</span>
+      <h1 style="margin: 0; font-size: 30px; line-height: 1.12; font-weight: 800; max-width: 12ch; text-shadow: 0 2px 8px rgba(0,0,0,.35)">Planchers solides, prix maîtrisés</h1>
+      <p style="margin: 0; font-size: 15px; line-height: 1.45; max-width: 32ch; text-shadow: 0 1px 4px rgba(0,0,0,.35)">Hourdis, briques creuses et tuiles, livrés sur votre chantier à Antananarivo.</p>
+      <div style="display: flex; align-items: baseline; gap: 8px">
+        <span style="font-size: 13px; opacity: .9">à partir de</span>
+        <span style="font-size: 22px; font-weight: 800">500 Ar</span>
+        <span style="font-size: 13px; opacity: .9">la pièce</span>
+      </div>
+      <a href="#contact" style="display: flex; align-items: center; justify-content: center; min-height: 48px; background: #B85C38; color: #FFFFFF; border-radius: 8px; font-size: 16px; font-weight: 600">Demander un devis gratuit</a>
+    </div>
+  </section>
+
+  <!-- Contact rapide : 3 pastilles, 56 px -->
+  <nav style="display: flex; gap: 8px; padding: 10px 16px; background: #F8F9FA; border-bottom: 1px solid #E5E7EB">
+    <a href="tel:+261324704143" style="flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 999px; font-size: 13px; font-weight: 600; color: #9A4A2B">
+      <svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
+      Appeler
+    </a>
+    <a href="https://wa.me/261324704143" style="flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 999px; font-size: 13px; font-weight: 600; color: #0E6F64">
+      <svg width="15" height="15" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+      WhatsApp
+    </a>
+    <a href="https://m.me/HourdisMG" style="flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 999px; font-size: 13px; font-weight: 600; color: #9A4A2B">
+      <svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256.55 8C116.52 8 8 110.34 8 248.57c0 72.3 29.71 134.78 78.07 177.94 8.35 7.51 6.63 11.86 8.05 58.23A19.92 19.92 0 0 0 122 502.31c52.91-23.3 53.59-25.14 62.56-22.7C337.85 521.8 504 423.7 504 248.57 504 110.34 396.59 8 256.55 8zm149.24 185.13l-73 115.57a37.37 37.37 0 0 1-53.91 9.93l-58.08-43.47a15 15 0 0 0-18 0l-78.37 59.44c-10.46 7.93-24.16-4.6-17.11-15.67l73-115.57a37.36 37.36 0 0 1 53.91-9.93l58.06 43.46a15 15 0 0 0 18 0l78.41-59.38c10.44-7.98 24.14 4.54 17.09 15.62z"/></svg>
+      Messenger
+    </a>
+  </nav>
+
+  <!-- Atouts : une bande de 84 px au lieu de trois cartes de 1044 px -->
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 14px 16px; border-bottom: 1px solid #E5E7EB">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B85C38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h10"/><circle cx="19" cy="18" r="3"/></svg>
+      <span style="font-size: 12px; font-weight: 600; line-height: 1.25">Prix affichés<br>à la pièce</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B85C38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2s5 5.5 5 10a5 5 0 0 1-10 0c0-1.9.9-3.8 2-5.4"/></svg>
+      <span style="font-size: 12px; font-weight: 600; line-height: 1.25">Séchage et<br>cuisson aux normes</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B85C38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 4h13v12H1zM14 8h4l3 4v4h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="17.5" cy="18.5" r="2"/></svg>
+      <span style="font-size: 12px; font-weight: 600; line-height: 1.25">Livraison Tana<br>et périphérie</span>
+    </div>
+  </div>
+
+  <!-- Produits : ils commencent ici, a 528 px du haut -->
+  <section style="padding: 20px 16px 24px">
+    <h2 style="margin: 0 0 4px; font-size: 22px; font-weight: 800">Nos produits et prix</h2>
+    <p style="margin: 0 0 14px; font-size: 13px; color: #495057; line-height: 1.4">Prix par pièce, hors livraison. Calculez la quantité pour votre surface.</p>
+
+    <h3 style="margin: 0 0 2px; font-size: 15px; font-weight: 700; color: #9A4A2B">Hourdis</h3>
+    <p style="margin: 0 0 10px; font-size: 12px; color: #6B7280">9 pièces par m² de plancher</p>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+
+      <div style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden">
+        <img src="p-hourdis-20.webp" alt="" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block">
+        <div style="display: flex; flex-direction: column; gap: 3px; padding: 9px 10px 10px">
+          <span style="font-size: 13px; font-weight: 700; line-height: 1.25">Hourdis 20×33×33</span>
+          <span style="font-size: 17px; font-weight: 800; color: #9A4A2B">3 400 Ar</span>
+          <a href="#calc" style="display: flex; align-items: center; justify-content: center; min-height: 34px; margin-top: 3px; border: 1.5px solid #B85C38; border-radius: 7px; font-size: 12px; font-weight: 600">Calculer</a>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden">
+        <img src="p-hourdis-15.webp" alt="" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block">
+        <div style="display: flex; flex-direction: column; gap: 3px; padding: 9px 10px 10px">
+          <span style="font-size: 13px; font-weight: 700; line-height: 1.25">Hourdis 15×33×33</span>
+          <span style="font-size: 17px; font-weight: 800; color: #9A4A2B">3 000 Ar</span>
+          <a href="#calc" style="display: flex; align-items: center; justify-content: center; min-height: 34px; margin-top: 3px; border: 1.5px solid #B85C38; border-radius: 7px; font-size: 12px; font-weight: 600">Calculer</a>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden">
+        <img src="p-hourdis-12.webp" alt="" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block">
+        <div style="display: flex; flex-direction: column; gap: 3px; padding: 9px 10px 10px">
+          <span style="font-size: 13px; font-weight: 700; line-height: 1.25">Hourdis 12×33×33</span>
+          <span style="font-size: 17px; font-weight: 800; color: #9A4A2B">2 800 Ar</span>
+          <a href="#calc" style="display: flex; align-items: center; justify-content: center; min-height: 34px; margin-top: 3px; border: 1.5px solid #B85C38; border-radius: 7px; font-size: 12px; font-weight: 600">Calculer</a>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; justify-content: center; gap: 6px; background: #F7EAE3; border: 1px solid #B85C38; border-radius: 10px; padding: 12px; text-align: center">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9A4A2B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M16 15h0M8 19h6"/></svg>
+        <span style="font-size: 13px; font-weight: 700; color: #9A4A2B; line-height: 1.3">Combien pour<br>votre plancher ?</span>
+        <span style="font-size: 11px; color: #495057; line-height: 1.35">Surface en m² → nombre de pièces et budget</span>
+      </div>
+
+    </div>
+
+    <h3 style="margin: 20px 0 2px; font-size: 15px; font-weight: 700; color: #9A4A2B">Briques creuses</h3>
+    <p style="margin: 0 0 10px; font-size: 12px; color: #6B7280">12 pièces par m² de mur</p>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <div style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden">
+        <img src="p-brique-20.webp" alt="" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block">
+        <div style="display: flex; flex-direction: column; gap: 3px; padding: 9px 10px 10px">
+          <span style="font-size: 13px; font-weight: 700; line-height: 1.25">Brique creuse 20</span>
+          <span style="font-size: 17px; font-weight: 800; color: #9A4A2B">3 500 Ar</span>
+          <a href="#calc" style="display: flex; align-items: center; justify-content: center; min-height: 34px; margin-top: 3px; border: 1.5px solid #B85C38; border-radius: 7px; font-size: 12px; font-weight: 600">Calculer</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden">
+        <img src="p-brique-15.webp" alt="" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block">
+        <div style="display: flex; flex-direction: column; gap: 3px; padding: 9px 10px 10px">
+          <span style="font-size: 13px; font-weight: 700; line-height: 1.25">Brique creuse 15</span>
+          <span style="font-size: 17px; font-weight: 800; color: #9A4A2B">3 000 Ar</span>
+          <a href="#calc" style="display: flex; align-items: center; justify-content: center; min-height: 34px; margin-top: 3px; border: 1.5px solid #B85C38; border-radius: 7px; font-size: 12px; font-weight: 600">Calculer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Repere : le bas du premier ecran -->
+  <div style="position: absolute; top: 844px; left: 0; right: 0; height: 0; border-top: 2px dashed #B91C1C"></div>
+  <span style="position: absolute; top: 850px; right: 8px; font-size: 10px; font-weight: 700; color: #B91C1C; background: rgba(255,255,255,.9); padding: 2px 6px; border-radius: 4px">bas du 1ᵉʳ écran (844 px)</span>
+  <div style="position: absolute; top: 528px; left: 0; right: 0; height: 0; border-top: 2px dashed #128C7E"></div>
+  <span style="position: absolute; top: 502px; left: 8px; font-size: 10px; font-weight: 700; color: #0E6F64; background: rgba(255,255,255,.9); padding: 2px 6px; border-radius: 4px">les produits commencent ici — 528 px</span>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":1420}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

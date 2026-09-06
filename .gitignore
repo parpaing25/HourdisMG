@@ -16,6 +16,11 @@ hourdis-config.php
 bot-hourdis/data/
 bot-hourdis/.pytest_cache/
 
+# Canvas Claude Design : 2,7 Mo d'éditeur embarqué, régénéré depuis design/*.dc.html
+design/hourdis-mobile.html
+design/apercu-canvas.png
+design/apercu-canvas.jpg
+
 # Python / Node / éditeurs
 __pycache__/
 *.pyc

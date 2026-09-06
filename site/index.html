@@ -83,6 +83,7 @@
                     <span class="hero-kicker">Terre cuite fabriquée à Madagascar</span>
                     <h1 class="hero-title" id="titre-principal">Planchers solides, prix maîtrisés</h1>
                     <p class="hero-subtitle">Hourdis, briques creuses et tuiles en terre cuite, fabriqués à Ambohimanga Rova et livrés sur votre chantier à Antananarivo.</p>
+                    <p class="hero-prix"><span>à partir de</span> <strong>500 Ar</strong> <span>la pièce</span></p>
                     <div class="hero-cta">
                         <a href="#contact" class="btn btn-primary">Demander un devis gratuit</a>
                         <a href="#produits" class="btn btn-secondary">Voir les prix</a>
@@ -116,27 +117,25 @@
             </a>
         </nav>
 
-        <!-- Atouts -->
-        <section class="section section-alt" aria-labelledby="titre-atouts">
+        <!-- Atouts : une bande, juste avant les produits -->
+        <section class="atouts" aria-label="Nos trois engagements">
             <div class="container">
-                <h2 class="section-title" id="titre-atouts">Pourquoi les maçons et les particuliers nous choisissent</h2>
-                <p class="section-subtitle">Trois engagements simples, tenus sur chaque commande.</p>
-                <div class="advantages-grid">
-                    <article class="advantage-item reveal">
-                        <div class="advantage-icon"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384H384c0-35.3 28.7-64 64-64v64zm0-192c-35.3 0-64-28.7-64-64h64v64zM256 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg></div>
-                        <h3>Prix affichés</h3>
-                        <p>Chaque produit a son prix à la pièce, visible ici, le même qu'au dépôt. Le calculateur vous donne la quantité et le budget pour votre surface.</p>
-                    </article>
-                    <article class="advantage-item reveal">
-                        <div class="advantage-icon"><svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M159.3 5.4c7.8-7.3 19.9-7.2 27.7 .1c27.6 25.9 53.5 53.8 77.7 84c11-14.4 23.5-30.1 37-42.9c7.9-7.4 20.1-7.4 28 .1c34.6 33 63.9 76.6 84.5 118c20.3 40.8 33.8 82.5 33.8 111.9C448 404.2 348.2 512 224 512C98.4 512 0 404.1 0 276.5c0-38.4 17.8-85.3 45.4-131.7C73.3 97.7 112.7 48.6 159.3 5.4zM225.7 416c25.3 0 47.7-7 68.8-21c42.1-29.4 53.4-88.2 28.1-134.4c-4.5-9-16-9.6-22.5-2l-25.2 29.3c-6.6 7.6-18.5 7.4-24.7-.5c-16.5-21-46-58.5-62.8-79.8c-6.3-8-18.3-8.1-24.7-.1c-33.8 42.5-50.8 69.3-50.8 99.4C112 375.4 162.6 416 225.7 416z"/></svg></div>
-                        <h3>Fabrication soignée</h3>
-                        <p>Terre cuite séchée puis cuite aux normes : des pièces régulières, résistantes, qui se posent vite et durent.</p>
-                    </article>
-                    <article class="advantage-item reveal">
-                        <div class="advantage-icon"><svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M48 0C21.5 0 0 21.5 0 48V368c0 26.5 21.5 48 48 48H64c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H48zM416 160h50.7L544 237.3V256H416V160zM112 416a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm368-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
-                        <h3>Livraison chantier</h3>
-                        <p>Camion jusqu'à votre chantier sur Antananarivo et sa périphérie, tarif au kilomètre annoncé avant la commande.</p>
-                    </article>
+                <div class="atouts-grid">
+                    <div class="atout">
+                        <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384H384c0-35.3 28.7-64 64-64v64zm0-192c-35.3 0-64-28.7-64-64h64v64zM256 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                        <b>Prix affichés à la pièce</b>
+                        <span>Les mêmes qu'au dépôt, avec le calculateur de quantités.</span>
+                    </div>
+                    <div class="atout">
+                        <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M159.3 5.4c7.8-7.3 19.9-7.2 27.7 .1c27.6 25.9 53.5 53.8 77.7 84c11-14.4 23.5-30.1 37-42.9c7.9-7.4 20.1-7.4 28 .1c34.6 33 63.9 76.6 84.5 118c20.3 40.8 33.8 82.5 33.8 111.9C448 404.2 348.2 512 224 512C98.4 512 0 404.1 0 276.5c0-38.4 17.8-85.3 45.4-131.7C73.3 97.7 112.7 48.6 159.3 5.4zM225.7 416c25.3 0 47.7-7 68.8-21c42.1-29.4 53.4-88.2 28.1-134.4c-4.5-9-16-9.6-22.5-2l-25.2 29.3c-6.6 7.6-18.5 7.4-24.7-.5c-16.5-21-46-58.5-62.8-79.8c-6.3-8-18.3-8.1-24.7-.1c-33.8 42.5-50.8 69.3-50.8 99.4C112 375.4 162.6 416 225.7 416z"/></svg>
+                        <b>Séchage et cuisson aux normes</b>
+                        <span>Des pièces régulières, résistantes, qui se posent vite.</span>
+                    </div>
+                    <div class="atout">
+                        <svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M48 0C21.5 0 0 21.5 0 48V368c0 26.5 21.5 48 48 48H64c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H48zM416 160h50.7L544 237.3V256H416V160zM112 416a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm368-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+                        <b>Livraison Tana et périphérie</b>
+                        <span>Tarif au kilomètre annoncé avant la commande.</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -184,6 +183,18 @@
                     <button type="button" class="gallery-item reveal" aria-label="Agrandir : tuiles en terre cuite">
                         <img src="/image/galerie-tuiles.webp" alt="Tuiles en terre cuite empilées" width="800" height="600" loading="lazy" decoding="async">
                         <span class="gallery-caption">Tuiles en terre cuite</span>
+                    </button>
+                    <button type="button" class="gallery-item reveal" aria-label="Agrandir : pile de hourdis cuits prêts à charger">
+                        <img src="/image/galerie-pile-hourdis.webp" alt="Grande pile de hourdis cuits alignés en plein air, prêts à charger" width="800" height="600" loading="lazy" decoding="async">
+                        <span class="gallery-caption">Le stock prêt à charger</span>
+                    </button>
+                    <button type="button" class="gallery-item reveal" aria-label="Agrandir : hangar de séchage des briques">
+                        <img src="/image/galerie-hangar-briques.webp" alt="Rangées d'étagères de séchage remplies de briques creuses sous le hangar" width="800" height="600" loading="lazy" decoding="async">
+                        <span class="gallery-caption">Le hangar de séchage</span>
+                    </button>
+                    <button type="button" class="gallery-item reveal" aria-label="Agrandir : briques crues avant cuisson">
+                        <img src="/image/galerie-briques-crues.webp" alt="Briques creuses crues, encore grises, en séchage à l'air libre avant la cuisson" width="800" height="600" loading="lazy" decoding="async">
+                        <span class="gallery-caption">Avant cuisson : les briques crues</span>
                     </button>
                 </div>
             </div>

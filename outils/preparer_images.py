@@ -88,6 +88,10 @@ def main(orig: Path) -> None:
     webp(o("Brique creuse maina Betsaka profil.jpg"), "galerie-briques-seches.webp", 800, 600)
     webp(o("Fandorana brique creuse.jpg"), "galerie-fandorana-briques.webp", 800, 600)
     webp(o("Tuile.jpg"), "galerie-tuiles.webp", 800, 600)
+    # ajoutées le 06/09/2026 : elles dormaient dans sources-photos sans jamais être publiées
+    webp(o("1.jpg"), "galerie-pile-hourdis.webp", 800, 600)
+    webp(o("Brique creuse mando sur etalage 2.jpg"), "galerie-hangar-briques.webp", 800, 600)
+    webp(o("Brique creuse mando am tany ivelany .jpg"), "galerie-briques-crues.webp", 800, 600)
 
     # ⚠ PAS de section « chantiers » : les photos de chantier des publications Facebook (murs vus d'avion,
     # maison à garage sectionnel, plancher vu de dessous) sont des images d'illustration EUROPÉENNES, pas des

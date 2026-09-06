@@ -1,0 +1,39 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 390, "h": 1420, "title": "A — Haut de page (retenu)" },
+    { "file": "HeroCourt.dc.html", "x": 510, "y": 0, "w": 390, "h": 940, "title": "B — Bandeau court (variante)" },
+    { "file": "Produits.dc.html", "x": 1020, "y": 0, "w": 390, "h": 1900, "title": "Les 13 produits, en 2 colonnes" },
+    { "file": "Sections.dc.html", "x": 1530, "y": 0, "w": 390, "h": 1450, "title": "Production, livraison, choix" }
+  ],
+  "annotations": [
+    {
+      "id": "constat",
+      "x": 0,
+      "y": -300,
+      "w": 390,
+      "text": "CE QU'ANDRY VOIT AUJOURD'HUI (mesuré au Pixel 7, 390 x 844)\n\nPage en ligne : 14 271 px = 16,9 écrans.\nMa version reconstruite : 18 415 px = 21,8 écrans.\nPremier produit : 2,4 puis 2,6 écrans de défilement.\nSection produits seule : 5 570 px = 6,6 écrans, 8 cartes de 501 px empilées.\nTrois cartes d'atouts : 1 044 px.\n\nC'est ce que cette refonte corrige."
+    },
+    {
+      "id": "apres",
+      "x": 510,
+      "y": -300,
+      "w": 390,
+      "text": "APRÈS (visé)\n\nBandeau 320 px au lieu de 646.\nAtouts : une bande de 84 px au lieu de 1 044.\nProduits en grille 2 colonnes : carte de 250 px au lieu de 501.\nPremier produit à 528 px = 0,63 écran (A) ou 296 px = 0,35 écran (B).\nPage entière : environ 11 écrans au lieu de 21,8.\n\nAucun contenu n'est supprimé : les 13 produits, la production, la livraison et le choix sont tous là — repliés, pas jetés."
+    },
+    {
+      "id": "choix",
+      "x": 1020,
+      "y": -300,
+      "w": 390,
+      "text": "DEUX DIRECTIONS POUR LE HAUT DE PAGE\n\nA — bandeau 320 px, prix d'appel « à partir de 500 Ar », barre de contact séparée, atouts en bande. Le plus lisible ; produits à 0,63 écran.\n\nB — bandeau 232 px, atouts fondus en trois puces, appel et WhatsApp collés au bouton devis. Le plus direct ; produits à 0,35 écran, mais le bandeau respire moins et la promesse de prix disparaît.\n\nJ'ai retenu A par défaut. Dis-moi si tu préfères B."
+    },
+    {
+      "id": "photos",
+      "x": 1530,
+      "y": -300,
+      "w": 390,
+      "text": "LES PHOTOS DE « MISES EN ŒUVRE »\n\nLa section s'appelait « Mises en œuvre — nos réalisations sur différents chantiers » et montrait des piles de stock : le titre mentait.\n\nAucune photo de POSE n'existe : les 28 originaux du PC et les 82 photos de la page Facebook montrent tous la production et le stock. Les seules photos de chantier des publications sont des illustrations européennes.\n\nDonc la section porte le nom de ce qu'elle montre : « Notre production ». Le jour où tu photographies un plancher que tu as livré, elle redevient « Mises en œuvre »."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}
