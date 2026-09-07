@@ -23,6 +23,13 @@ UA_MOBILE = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML,
 UA_DESKTOP = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 AXE = "https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.10.2/axe.min.js"
 echecs: list[str] = []
+# Contre une cible distante, "networkidle" n'est jamais atteint : le pare-feu o2switch ralentit
+# apres une rafale et les images differees relancent du trafic. (Constate le 07/09/2026 :
+# 7 controles verts puis Timeout 60 s sur la premiere navigation du contexte mobile.)
+DISTANT = not BASE.startswith("http://127.")
+ATTENDRE = "load" if DISTANT else "networkidle"
+PAUSE = 1500 if DISTANT else 0
+
 
 
 def controle(nom: str, ok: bool, detail: str = "") -> None:
@@ -50,7 +57,7 @@ def main() -> None:
         page.on("pageerror", lambda e: console.append("pageerror " + str(e)))
         print("— Pages —")
         for chemin in ("/", "/faq", "/mentions-legales", "/confidentialite", "/merci"):
-            r = page.goto(BASE + chemin, wait_until="networkidle", timeout=60000)
+            r = page.goto(BASE + chemin, wait_until=ATTENDRE, timeout=60000)
             s = structure(page)
             controle(f"{chemin} répond 200 et a une seule h1", r is not None and r.status == 200 and s["h1"] == 1, f"{r.status if r else None}, h1={s['h1']}")
             for bloc in page.evaluate("[...document.querySelectorAll('script[type=\"application/ld+json\"]')].map(s => s.textContent)"):
@@ -59,7 +66,7 @@ def main() -> None:
                 except Exception as e:
                     controle(f"{chemin} JSON-LD valide", False, str(e)[:80])
         controle("console sans erreur ni avertissement sur les 5 pages", not console, "; ".join(console)[:200])
-        r = page.goto(BASE + "/page-qui-n-existe-pas", wait_until="networkidle")  # cette navigation produit légitimement un 404 en console
+        r = page.goto(BASE + "/page-qui-n-existe-pas", wait_until=ATTENDRE)  # cette navigation produit légitimement un 404 en console
         controle("page absente → 404 designée", r is not None and r.status == 404 and page.locator("h1").inner_text().startswith("Cette page"), str(r.status if r else None))
         ctx.close()
 
@@ -71,7 +78,7 @@ def main() -> None:
         page.on("request", lambda rq: envois.append(rq) if rq.method == "POST" else None)
         if not BASE.startswith("http://127."):
             page.route("**/contact.php", lambda route: route.fulfill(status=200, content_type="application/json", body='{"ok":true}'))
-        page.goto(BASE + "/", wait_until="networkidle", timeout=60000)
+        page.goto(BASE + "/", wait_until=ATTENDRE, timeout=60000)
         s = structure(page)
         controle("en-tête ≤ 72 px (≤ 9 % de l'écran)", s["headerH"] <= 72, f"{s['headerH']:.0f} px")
         controle("aucun débordement horizontal à 390", not s["overflow"], f"{s['scrollWidth']}/{s['clientWidth']}")
@@ -143,7 +150,7 @@ def main() -> None:
         print("— Points de rupture —")
         ctx = b.new_context(user_agent=UA_DESKTOP)
         page = ctx.new_page()
-        page.goto(BASE + "/", wait_until="networkidle", timeout=60000)
+        page.goto(BASE + "/", wait_until=ATTENDRE, timeout=60000)
         for w in (360, 414, 768, 820, 1024, 1120, 1280, 1536):
             page.set_viewport_size({"width": w, "height": 800})
             page.wait_for_timeout(250)
@@ -157,18 +164,23 @@ def main() -> None:
         page.screenshot(path=str(CAP / "bureau-1366.jpg"), type="jpeg", quality=60)
 
         # ── Accessibilité (axe-core) ──
+        # Contre la PRODUCTION, la CSP (script-src 'self') refuse le script du CDN — c'est
+        # précisément son travail, et le constater est un bon signe. On ne masque pas ce trou :
+        # on le dit. Les fichiers servis sont ceux du build, donc le passage local fait foi.
         print("— Accessibilité —")
-        try:
-            page.add_script_tag(url=AXE)
-            page.wait_for_function("typeof axe !== 'undefined'", timeout=15000)
-            for chemin in ("/", "/faq"):
-                page.goto(BASE + chemin, wait_until="networkidle")
-                page.add_script_tag(url=AXE)
-                page.wait_for_function("typeof axe !== 'undefined'", timeout=15000)
-                res = page.evaluate("async () => { const r = await axe.run(document, {runOnly: {type: 'tag', values: ['wcag2a','wcag2aa','wcag21aa','wcag22aa','best-practice']}}); return r.violations.map(v => v.id + ' (' + v.impact + ', ' + v.nodes.length + ')'); }")
-                controle(f"axe-core {chemin} : 0 violation", not res, "; ".join(res)[:200])
-        except Exception as e:
-            controle("axe-core chargé", False, str(e)[:80])
+        if DISTANT:
+            print("  · axe-core non exécuté : la CSP de la production refuse les scripts externes (voulu).")
+            print("    L'accessibilité est vérifiée par ce même banc en local, sur les fichiers identiques.")
+        else:
+            try:
+                for chemin in ("/", "/faq"):
+                    page.goto(BASE + chemin, wait_until=ATTENDRE)
+                    page.add_script_tag(url=AXE)
+                    page.wait_for_function("typeof axe !== 'undefined'", timeout=15000)
+                    res = page.evaluate("async () => { const r = await axe.run(document, {runOnly: {type: 'tag', values: ['wcag2a','wcag2aa','wcag21aa','wcag22aa','best-practice']}}); return r.violations.map(v => v.id + ' (' + v.impact + ', ' + v.nodes.length + ')'); }")
+                    controle(f"axe-core {chemin} : 0 violation", not res, "; ".join(res)[:200])
+            except Exception as e:
+                controle("axe-core chargé", False, str(e)[:80])
         ctx.close()
         b.close()
 
