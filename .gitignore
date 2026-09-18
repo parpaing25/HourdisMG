@@ -31,3 +31,11 @@ logs
 !.vscode/extensions.json
 .idea
 .DS_Store
+
+# publications-30j : tout ce qui se régénère (fabriquer.py tout / planche / cahier, planches.py)
+publications-30j/sortie/
+publications-30j/planches/
+publications-30j/captures/
+publications-30j/planche-*.jpg
+publications-30j/cahier.html
+publications-30j/__pycache__/

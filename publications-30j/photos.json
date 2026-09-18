@@ -1,0 +1,663 @@
+[
+ {
+  "id": "p01",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Hourdis maina betsaka.jpg",
+  "sujet": "hourdis (stock, cuits)",
+  "detail": "Grande pile de hourdis cuits en plein air sur terre rouge, profil à alvéoles et marches bien visibles, arbres et ciel bleu derrière ; hauteur non lisible.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "hero-1920.webp",
+   "hero-960.webp",
+   "hero-640.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "008",
+  "nb_copies_dans_les_dossiers": 17
+ },
+ {
+  "id": "p02",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Hourdis mando sur etalage.jpg",
+  "sujet": "hourdis (séchage sur étagères)",
+  "detail": "Hourdis crus alignés sur des étagères en perches de bois sous le hangar, profil vu de près.",
+  "qualite": "correcte (un peu douce)",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "galerie-hourdis-etalage.webp",
+   "galerie-sechage-hourdis.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "009",
+  "nb_copies_dans_les_dossiers": 19
+ },
+ {
+  "id": "p03",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_123847.jpg",
+  "sujet": "hourdis (séchage au sol, crus)",
+  "detail": "Blocs crus à deux rangées d'alvéoles alignés au sol sous le hangar (photo rangée par Andry dans Publication/HOURDIS ; le profil exact n'est pas lisible sur la photo).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [
+   "3 ouvriers au fond en haut à gauche, de dos ou de profil, visages non reconnaissables à la taille de publication"
+  ],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "014",
+  "nb_copies_dans_les_dossiers": 16
+ },
+ {
+  "id": "p04",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_123937.jpg",
+  "sujet": "hourdis (séchage sur étagères)",
+  "detail": "Hourdis crus posés sur des étagères en bois à montants métalliques bleus, profil à talons bien lisible.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "015",
+  "nb_copies_dans_les_dossiers": 15
+ },
+ {
+  "id": "p05",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\Pour site\\Nouveau dossier\\Hourdis 15 2.png",
+  "sujet": "hourdis (gros plan, cuit)",
+  "detail": "Un hourdis cuit à deux rangées d'alvéoles posé sur un muret de terrasse carrelé, collines boisées et quartier au fond ; fichier nommé « Hourdis 15 2 » (hauteur non lisible sur la photo).",
+  "qualite": "nette (1440x1080)",
+  "orientation": "paysage",
+  "defauts": [
+   "filigrane « REDMI K20 PRO 48MP TRIPLE CAMERA » en bas à gauche"
+  ],
+  "sur_le_site": false,
+  "recadrage_conseille": [
+   0.0,
+   0.0,
+   1.0,
+   0.87
+  ],
+  "images_site": [],
+  "dimensions": "1440x1080",
+  "ref_planche": "029",
+  "nb_copies_dans_les_dossiers": 7
+ },
+ {
+  "id": "p06",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\Pour site\\Nouveau dossier\\Hourdis 15.png",
+  "sujet": "hourdis (gros plan, cuit)",
+  "detail": "Un hourdis cuit à deux rangées d'alvéoles vu de face sur un muret, immeuble jaune et collines au fond ; le fichier s'appelle « Hourdis 15 » mais le site l'affiche comme hourdis 12 : hauteur à confirmer par Andry.",
+  "qualite": "nette (1440x1080)",
+  "orientation": "paysage",
+  "defauts": [
+   "filigrane « REDMI K20 PRO 48MP TRIPLE CAMERA » en bas à gauche"
+  ],
+  "sur_le_site": true,
+  "recadrage_conseille": [
+   0.0,
+   0.0,
+   1.0,
+   0.87
+  ],
+  "images_site": [
+   "hourdis-12.webp"
+  ],
+  "dimensions": "1440x1080",
+  "ref_planche": "030",
+  "nb_copies_dans_les_dossiers": 7
+ },
+ {
+  "id": "p07",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121649.jpg",
+  "sujet": "hourdis (séchage sur étagères)",
+  "detail": "Hourdis crus sur des étagères en perches de bois sous un hangar en tôle, vus en bout de rangée (série du 05/03/2026).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "034",
+  "nb_copies_dans_les_dossiers": 19
+ },
+ {
+  "id": "p08",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121749.jpg",
+  "sujet": "hourdis (séchage sur étagères)",
+  "detail": "Étagères chargées de hourdis crus vus de profil sous un hangar à toit de bâche rayée (05/03/2026).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "039",
+  "nb_copies_dans_les_dossiers": 24
+ },
+ {
+  "id": "p09",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121817.jpg",
+  "sujet": "hourdis (séchage sur étagères)",
+  "detail": "Allée étroite entre deux étagères de bois chargées de hourdis crus, alvéoles face à l'objectif (05/03/2026).",
+  "qualite": "correcte",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "040",
+  "nb_copies_dans_les_dossiers": 21
+ },
+ {
+  "id": "p10",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121830.jpg",
+  "sujet": "hourdis (stock avant cuisson)",
+  "detail": "Hourdis secs de teinte beige (pas encore cuits) empilés en escalier sous le hangar, étagères et un vélo au fond (05/03/2026).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "041",
+  "nb_copies_dans_les_dossiers": 24
+ },
+ {
+  "id": "p11",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\Nouveau dossier\\1-Lundi\\4.jpg",
+  "sujet": "hourdis (gros plan, cuit)",
+  "detail": "Un hourdis cuit à trois rangées d'alvéoles vu de trois quarts sur un muret, immeuble jaune au fond ; le site l'affiche comme hourdis 20 (hauteur non lisible sur la photo).",
+  "qualite": "correcte mais petite (720x540)",
+  "orientation": "paysage",
+  "defauts": [
+   "filigrane REDMI dédoublé et illisible en bas à gauche",
+   "basse résolution 720x540",
+   "le recadrage à 0,87 affleure le pied du hourdis"
+  ],
+  "sur_le_site": true,
+  "recadrage_conseille": [
+   0.0,
+   0.0,
+   1.0,
+   0.87
+  ],
+  "images_site": [
+   "hourdis-20.webp"
+  ],
+  "dimensions": "720x540",
+  "ref_planche": "047",
+  "nb_copies_dans_les_dossiers": 12
+ },
+ {
+  "id": "p12",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\Nouveau dossier\\3-Mercredi\\3.jpg",
+  "sujet": "hourdis (gros plan, cuit)",
+  "detail": "Un hourdis cuit à trois rangées d'alvéoles vu de trois quarts, un second hourdis derrière, immeuble jaune et collines ; le site l'affiche comme hourdis 15 alors qu'une copie s'appelle « Hourdis 20.png » : hauteur à confirmer par Andry.",
+  "qualite": "correcte mais petite (720x540)",
+  "orientation": "paysage",
+  "defauts": [
+   "filigrane « REDMI K20 PRO 48MP TRIPLE CAMERA » en bas à gauche",
+   "basse résolution 720x540"
+  ],
+  "sur_le_site": true,
+  "recadrage_conseille": [
+   0.0,
+   0.0,
+   1.0,
+   0.87
+  ],
+  "images_site": [
+   "hourdis-15.webp"
+  ],
+  "dimensions": "720x540",
+  "ref_planche": "048",
+  "nb_copies_dans_les_dossiers": 6
+ },
+ {
+  "id": "p13",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Brique creuse maina Betsaka profil.jpg",
+  "sujet": "brique creuse (stock, cuites)",
+  "detail": "Pile de briques creuses cuites dans la cour, terre latérite rouge, une autre pile et des arbres au fond, ciel bleu.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "brique-creuse-10.webp",
+   "galerie-briques-seches.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "001",
+  "nb_copies_dans_les_dossiers": 20
+ },
+ {
+  "id": "p14",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Brique creuse mando am tany ivelany .jpg",
+  "sujet": "brique creuse (séchage en plein air, crues)",
+  "detail": "Des centaines de briques creuses crues posées debout au soleil pour sécher, une pile de briques cuites au fond.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "galerie-briques-crues.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "002",
+  "nb_copies_dans_les_dossiers": 16
+ },
+ {
+  "id": "p15",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Brique creuse mando am tany.jpg",
+  "sujet": "brique creuse (séchage sous hangar, crues)",
+  "detail": "Briques creuses crues à 12 alvéoles alignées au sol sous le hangar, machines bleues au fond.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "003",
+  "nb_copies_dans_les_dossiers": 9
+ },
+ {
+  "id": "p16",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Brique creuse mando sur etalage 2.jpg",
+  "sujet": "brique creuse (séchage sur étagères)",
+  "detail": "Briques creuses crues rangées sur des étagères en bois sous un hangar couvert de chaume.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "galerie-hangar-briques.webp",
+   "apropos-atelier.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "004",
+  "nb_copies_dans_les_dossiers": 11
+ },
+ {
+  "id": "p17",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Brique creuse mando sur etalage.jpg",
+  "sujet": "brique creuse (séchage sur étagères)",
+  "detail": "Briques creuses crues sur des étagères à montants métalliques bleus sous le hangar.",
+  "qualite": "correcte (un peu douce)",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "galerie-briques-etalage.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "005",
+  "nb_copies_dans_les_dossiers": 12
+ },
+ {
+  "id": "p18",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\Pour site\\Nouveau dossier\\BC 15.png",
+  "sujet": "brique creuse (gros plan, cuites)",
+  "detail": "Deux briques creuses cuites posées sur le muret d'un balcon, alvéoles face à l'objectif, maisons au fond ; fichier nommé « BC 15 ».",
+  "qualite": "nette (1440x1080)",
+  "orientation": "paysage",
+  "defauts": [
+   "filigrane « REDMI K20 PRO 48MP TRIPLE CAMERA » en bas à gauche"
+  ],
+  "sur_le_site": true,
+  "recadrage_conseille": [
+   0.0,
+   0.0,
+   1.0,
+   0.87
+  ],
+  "images_site": [
+   "brique-creuse-15.webp"
+  ],
+  "dimensions": "1440x1080",
+  "ref_planche": "028",
+  "nb_copies_dans_les_dossiers": 4
+ },
+ {
+  "id": "p19",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\IMG_20230807_120335.jpg",
+  "sujet": "brique creuse (séchage sous hangar, crues)",
+  "detail": "Briques creuses crues hautes à 9 alvéoles dressées au sol sous le hangar, étagères et machines au fond (modèle différent de p15).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "031",
+  "nb_copies_dans_les_dossiers": 1
+ },
+ {
+  "id": "p20",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121907.jpg",
+  "sujet": "brique creuse (stock, cuites)",
+  "detail": "Pile de briques creuses cuites dans la cour de l'atelier, hangars, four et conteneur rouge au fond, ciel bleu (05/03/2026).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "042",
+  "nb_copies_dans_les_dossiers": 24
+ },
+ {
+  "id": "p21",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\Nouveau dossier\\1-Lundi\\272687838_316063163787066_1797550773836676255_n.jpg",
+  "sujet": "brique creuse (gros plan, cuites)",
+  "detail": "Deux briques creuses cuites sur un muret, l'une vue en bout (alvéoles), l'autre en long, immeuble jaune au fond ; le site l'affiche comme brique creuse 20.",
+  "qualite": "correcte mais petite (720x540)",
+  "orientation": "paysage",
+  "defauts": [
+   "filigrane « REDMI K20 PRO 48MP TRIPLE CAMERA » en bas à gauche",
+   "basse résolution 720x540"
+  ],
+  "sur_le_site": true,
+  "recadrage_conseille": [
+   0.0,
+   0.0,
+   1.0,
+   0.87
+  ],
+  "images_site": [
+   "brique-creuse-20.webp"
+  ],
+  "dimensions": "720x540",
+  "ref_planche": "046",
+  "nb_copies_dans_les_dossiers": 8
+ },
+ {
+  "id": "p22",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_123651.jpg",
+  "sujet": "tuile mécanique (abri couvert)",
+  "detail": "Abri en briques couvert de tuiles mécaniques vu de face, cheminée de briques et pins au fond (même abri que p27, autre angle).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "013",
+  "nb_copies_dans_les_dossiers": 2
+ },
+ {
+  "id": "p23",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_125824.jpg",
+  "sujet": "tuile mécanique (stock)",
+  "detail": "Tuiles mécaniques cuites rangées sur chant en longues rangées, profil d'emboîtement bien visible.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "023",
+  "nb_copies_dans_les_dossiers": 2
+ },
+ {
+  "id": "p24",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_125850.jpg",
+  "sujet": "tuile mécanique (posée)",
+  "detail": "Toit de l'abri couvert de tuiles mécaniques vu en biais, cheminée de briques et arbres au fond.",
+  "qualite": "correcte",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "tuile-mecanique.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "024",
+  "nb_copies_dans_les_dossiers": 17
+ },
+ {
+  "id": "p25",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_125900.jpg",
+  "sujet": "tuile mécanique (posée, gros plan)",
+  "detail": "Rangs de tuiles mécaniques le long du toit de l'abri, maison en briques et collines au fond (10 s après p24, cadrage différent).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "025",
+  "nb_copies_dans_les_dossiers": 14
+ },
+ {
+  "id": "p26",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Tuile exaille .jpg",
+  "sujet": "tuile écaille",
+  "detail": "Panneau d'échantillon couvert de tuiles écailles en quinconce, posé en pente sur l'herbe sèche, briques au fond.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "tuile-ecaille.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "026",
+  "nb_copies_dans_les_dossiers": 13
+ },
+ {
+  "id": "p27",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Tuile.jpg",
+  "sujet": "tuile mécanique (abri couvert)",
+  "detail": "Abri en briques couvert de tuiles mécaniques vu en diagonale, cheminée de briques et petites cabanes en bois au fond.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "galerie-tuiles.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "027",
+  "nb_copies_dans_les_dossiers": 11
+ },
+ {
+  "id": "p28",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_123559.jpg",
+  "sujet": "brique repressée / briquette / plaquette",
+  "detail": "Plaquette décorative à motif en losanges posée debout sur un lit de plaquettes, pile de briques au fond (type exact non lisible sur la photo).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "011",
+  "nb_copies_dans_les_dossiers": 2
+ },
+ {
+  "id": "p29",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_125653.jpg",
+  "sujet": "tuile mécanique + plaquettes décoratives",
+  "detail": "Sur une étagère métallique : une tuile mécanique et trois plaquettes à motif en losanges, mur gris.",
+  "qualite": "correcte (légèrement douce, lumière plate)",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "018",
+  "nb_copies_dans_les_dossiers": 2
+ },
+ {
+  "id": "p30",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_125732.jpg",
+  "sujet": "brique repressée / briquette / plaquette",
+  "detail": "Trois plaquettes décoratives à motif en losanges posées sur une pile, cadrage vertical.",
+  "qualite": "nette",
+  "orientation": "portrait",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "6000x8000",
+  "ref_planche": "019",
+  "nb_copies_dans_les_dossiers": 2
+ },
+ {
+  "id": "p31",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_125743.jpg",
+  "sujet": "brique repressée / briquette / plaquette (stock)",
+  "detail": "Stock de plaquettes et de briques empilées à l'intérieur d'un abri en briques, herbes vues par l'ouverture.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "020",
+  "nb_copies_dans_les_dossiers": 2
+ },
+ {
+  "id": "p32",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_125810.jpg",
+  "sujet": "brique repressée / briquette / plaquette",
+  "detail": "Paquet de plaquettes rainurées dressé sur un sol de plaquettes, pile de briques et herbes sèches au fond.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "022",
+  "nb_copies_dans_les_dossiers": 2
+ },
+ {
+  "id": "p33",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_122015.jpg",
+  "sujet": "briques pleines (stock)",
+  "detail": "Grand mur de briques pleines empilées sous le hangar, une brique posée au premier plan ; cuites ou non : pas vérifiable sur la photo (05/03/2026).",
+  "qualite": "correcte",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "045",
+  "nb_copies_dans_les_dossiers": 1
+ },
+ {
+  "id": "p34",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\Fandorana brique creuse.jpg",
+  "sujet": "four / cuisson (fandorana)",
+  "detail": "Le four : briques crues empilées sur le dessus, fumée qui s'échappe, paroi du four à droite, grand arbre au fond.",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": true,
+  "recadrage_conseille": null,
+  "images_site": [
+   "galerie-fandorana-briques.webp"
+  ],
+  "dimensions": "8000x6000",
+  "ref_planche": "006",
+  "nb_copies_dans_les_dossiers": 11
+ },
+ {
+  "id": "p35",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\Apres traitement\\IMG_20230807_124106.jpg",
+  "sujet": "four / cuisson (fandorana)",
+  "detail": "Paroi du four en briques noircies par le feu, fumée, briques creuses cuites et cassées au premier plan (même four que p34, 47 s plus tôt, autre angle).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [
+   "briques cassées au premier plan (peu flatteur pour la vente)"
+  ],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "016",
+  "nb_copies_dans_les_dossiers": 8
+ },
+ {
+  "id": "p36",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121723.jpg",
+  "sujet": "moulage (extrudeuse)",
+  "detail": "La machine de moulage bleue avec un boudin d'argile sur le tapis, étagères, vélos et vêtements suspendus au fond (05/03/2026).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [
+   "une personne assise au fond, de dos, non reconnaissable",
+   "arrière-plan encombré (vélos, vêtements)"
+  ],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "037",
+  "nb_copies_dans_les_dossiers": 1
+ },
+ {
+  "id": "p37",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121701.jpg",
+  "sujet": "séchage (vue d'ensemble du hangar)",
+  "detail": "Longues rangées d'étagères de séchage chargées de hourdis crus sous le hangar en tôle, bâche bleue (05/03/2026, 12 s après p07, plan large).",
+  "qualite": "nette",
+  "orientation": "paysage",
+  "defauts": [],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "035",
+  "nb_copies_dans_les_dossiers": 17
+ },
+ {
+  "id": "p38",
+  "chemin": "C:\\Users\\ANDRIANIRINA\\Desktop\\ASA\\SERA ORDI KELY\\sera\\hourdis\\sary vaovao\\sary vaovao ce 0904\\IMG_20260305_121714.jpg",
+  "sujet": "atelier (hangar de séchage)",
+  "detail": "Allée d'un hangar sombre bordée d'étagères presque vides, ciel bleu et bâches bleues au bout (05/03/2026).",
+  "qualite": "sombre",
+  "orientation": "paysage",
+  "defauts": [
+   "sombre, contre-jour",
+   "étagères presque vides : peu de produit visible"
+  ],
+  "sur_le_site": false,
+  "recadrage_conseille": null,
+  "images_site": [],
+  "dimensions": "8000x6000",
+  "ref_planche": "036",
+  "nb_copies_dans_les_dossiers": 17
+ }
+]
