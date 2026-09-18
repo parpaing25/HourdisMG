@@ -25,9 +25,18 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 ICI = Path(__file__).resolve().parent
 RACINE = ICI.parent
 sys.path.insert(0, str(ICI))
-from serie import SERIE, CIBLES, HEURE  # noqa: E402
+import importlib  # noqa: E402
+import os  # noqa: E402
 
-SORTIE = ICI / "sortie"
+# Deux séries partagent ces outils : « serie » (18:00, reels) et « serie14 » (14:00).
+#     HOURDIS_SERIE=serie14 python publications-30j/fabriquer.py tout
+_MODULE = importlib.import_module(os.environ.get("HOURDIS_SERIE", "serie"))
+SERIE, CIBLES, HEURE = _MODULE.SERIE, _MODULE.CIBLES, _MODULE.HEURE
+CAMPAGNE = getattr(_MODULE, "CAMPAGNE", "serie30j")     # utm_campaign
+PREFIXE = getattr(_MODULE, "PREFIXE", "j")              # utm_content = j01…j30 / k01…k30
+NOM = getattr(_MODULE, "NOM", "")                       # suffixe des planches et du cahier
+
+SORTIE = ICI / getattr(_MODULE, "SORTIE_NOM", "sortie")
 CAPTURES = ICI / "captures"
 PRODUITS = json.loads((RACINE / "site/data/produits.json").read_text(encoding="utf-8"))
 LOGO = RACINE / "site/image/logo.webp"
@@ -55,8 +64,8 @@ def numero(p: dict) -> int:
 def lien(p: dict) -> str:
     cible, _ = CIBLES[p["cible"]]
     chemin, ancre = ("faq", "") if cible == "faq" else ("", cible)
-    return (f"{SITE}/{chemin}?utm_source=facebook&utm_medium=post&utm_campaign=serie30j"
-            f"&utm_content=j{numero(p):02d}{ancre}")
+    return (f"{SITE}/{chemin}?utm_source=facebook&utm_medium=post&utm_campaign={CAMPAGNE}"
+            f"&utm_content={PREFIXE}{numero(p):02d}{ancre}")
 
 
 def texte_complet(p: dict) -> str:
@@ -71,7 +80,7 @@ def photos() -> dict:
 
 
 def affectation() -> dict:
-    f = ICI / "affectation.json"
+    f = ICI / getattr(_MODULE, "AFFECTATION", "affectation.json")
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 
@@ -120,6 +129,35 @@ body{font-family:"Segoe UI",Roboto,Arial,sans-serif;color:#1A1A1A;background:#FF
 .g-carte .ligne{font-size:50px;font-weight:700;padding:18px 0;border-bottom:3px solid #F7EAE3;line-height:1.15}
 .g-carte .ligne:last-child{border-bottom:none}
 .g-carte .bande{position:absolute;left:0;width:1080px;object-fit:cover}
+.g-carte .note{font-size:32px;color:#6B7280;padding-top:14px}
+/* gabarit question */
+.g-question .tete{position:absolute;left:0;top:0;width:1080px;height:620px;background:#B85C38;color:#fff;padding:56px 56px 0}
+.g-question .tete .marque{position:static;margin-bottom:28px;text-shadow:none}
+.bulle{position:relative;background:#fff;color:#1A1A1A;border-radius:36px;padding:30px 44px;font-size:58px;font-weight:700;font-style:italic;line-height:1.18;margin-top:26px}
+.bulle:after{content:"";position:absolute;left:90px;bottom:-26px;width:52px;height:52px;background:#fff;transform:rotate(45deg)}
+.g-question .corps{position:absolute;left:0;top:660px;width:1080px;padding:26px 56px}
+.g-question .ligne{font-size:50px;font-weight:700;padding:18px 0;border-bottom:3px solid #F7EAE3;line-height:1.15}
+.g-question .ligne:last-child{border-bottom:none}
+.valiny{font-size:32px;font-weight:800;letter-spacing:4px;color:#9A4A2B}
+/* gabarit collage */
+.g-collage .tete{position:absolute;left:0;top:0;width:1080px;height:372px;background:#B85C38;color:#fff;padding:52px 56px 0}
+.g-collage .tete .marque{position:static;margin-bottom:24px;text-shadow:none}
+.g-collage .titre{font-size:72px;margin-top:18px}
+.grille{position:absolute;left:0;top:372px;width:1080px;display:grid;grid-template-columns:535px 535px;gap:10px}
+.case{position:relative;height:432px;overflow:hidden}
+.case img{width:535px;height:432px;object-fit:cover;display:block}
+.case span{position:absolute;left:18px;top:18px;width:64px;height:64px;border-radius:50%;background:#B85C38;color:#fff;font-size:38px;font-weight:800;display:flex;align-items:center;justify-content:center;border:4px solid #fff}
+/* gabarit hauteurs */
+.g-hauteurs .tete{position:absolute;left:0;top:0;width:1080px;height:420px;background:#B85C38;color:#fff;padding:56px 56px 0}
+.g-hauteurs .tete .marque{position:static;margin-bottom:34px;text-shadow:none}
+.g-hauteurs .titre{font-size:76px;margin-top:22px}
+.g-hauteurs .sous{color:#F7EAE3;font-size:42px}
+.hauteurs{position:absolute;left:56px;right:56px;top:470px;height:560px;display:flex;align-items:flex-end;justify-content:space-between}
+.hbloc{width:290px;text-align:center}
+.hforme{background:repeating-linear-gradient(90deg,#B85C38 0 58px,#9A4A2B 58px 70px);border-radius:10px;color:#fff;display:flex;align-items:center;justify-content:center}
+.hforme b{font-size:52px;font-weight:800;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.hprix{font-size:46px;font-weight:800;margin-top:18px}
+.hnote{position:absolute;left:56px;right:56px;top:1110px;font-size:40px;color:#495057;text-align:center}
 /* gabarit capture */
 .g-capture{background:#B85C38}
 .g-capture .tete{position:absolute;left:0;top:0;width:1080px;padding:56px 56px 0;color:#fff}
@@ -183,7 +221,9 @@ def html_affiche(p: dict, a: dict, photo: bool) -> str:
                       f'<span>ny iray</span></div>') + lignes
         # la bande photo prend la place que les lignes laissent libre (ligne ≈ 86 px,
         # bloc prix ≈ 130 px, marges 88 px), entre 200 et 430 px
-        besoin = 88 + (130 if a.get("prix") else 0) + 86 * len(a.get("lignes", []))
+        if a.get("note"):
+            lignes += f'<div class="note">{esc(a["note"])}</div>'
+        besoin = 88 + (130 if a.get("prix") else 0) + 86 * len(a.get("lignes", [])) + (70 if a.get("note") else 0)
         bande_h = max(200, min(430, H - 420 - 104 - besoin - 10)) if photo else 0
         corps_h = H - 420 - 104 - bande_h
         bande = (f'<img class="bande" src="photo.jpg" style="top:{H - 104 - bande_h}px;height:{bande_h}px" alt="">'
@@ -191,6 +231,30 @@ def html_affiche(p: dict, a: dict, photo: bool) -> str:
         corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
 <div class="titre" data-max="92" style="white-space:nowrap">{esc(a['titre'])}</div><div class="sous" data-max="56" style="white-space:nowrap">{esc(a.get('sous_titre'))}</div></div>
 <div class="corps" style="height:{corps_h}px" data-max="{corps_h}" data-bloc="1">{lignes}</div>{bande}{pied()}"""
+    elif g == "question":
+        # la question d'un client (reformulée, jamais son nom) dans une bulle, la réponse dessous
+        lignes = "".join(f'<div class="ligne">✓ {esc(l)}</div>' for l in a.get("lignes", []))
+        corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
+<div class="bulle" data-max="330">« {esc(a['question'])} »</div></div>
+<div class="corps" style="height:{H - 660 - 104}px" data-max="{H - 660 - 104}" data-bloc="1"><div class="valiny">VALINY</div>{lignes}</div>{pied()}"""
+    elif g == "collage":
+        cases = "".join(f'<div class="case"><img src="photo-{i}.jpg" alt=""><span>{i}</span></div>'
+                        for i in range(1, len(a["photos"]) + 1))
+        corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
+<div class="titre" data-max="92" style="white-space:nowrap">{esc(a['titre'])}</div></div>
+<div class="grille">{cases}</div>{pied()}"""
+    elif g == "hauteurs":
+        # schéma à l'échelle : les trois hourdis ne diffèrent QUE par la hauteur (33 × 33 cm)
+        cat = next(c for c in PRODUITS["categories"] if c["id"] == "hourdis")
+        blocs = []
+        for pr in sorted(cat["produits"], key=lambda x: x["prix"]):
+            h_cm = int(re.match(r"Hourdis (\d+)", pr["nom"]).group(1))
+            prix = f"{pr['prix']:,}".replace(",", " ")
+            blocs.append(f'<div class="hbloc"><div class="hforme" style="height:{h_cm * 16}px"><b>{h_cm} cm</b></div>'
+                         f'<div class="hprix">{prix} Ar</div></div>')
+        corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
+<div class="titre" data-max="92" style="white-space:nowrap">{esc(a['titre'])}</div><div class="sous" data-max="56" style="white-space:nowrap">{esc(a.get('sous_titre'))}</div></div>
+<div class="hauteurs">{''.join(blocs)}</div><div class="hnote">{esc(a.get('note'))}</div>{pied()}"""
     elif g == "capture":
         corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
 <div class="titre" data-max="92" style="white-space:nowrap">{esc(a['titre'])}</div><div class="sous" data-max="56" style="white-space:nowrap">{esc(a.get('sous_titre'))}</div></div>
@@ -235,10 +299,19 @@ def cmd_tout(seulement: list[str]) -> int:
             photo = False
             if a["gabarit"] in ("photo", "carte") and pid:
                 info = ph[pid]
-                haut = 860 if a["gabarit"] == "photo" else 250
+                # bande de carte : préparée à sa hauteur MAXIMALE (430), jamais agrandie par le navigateur
+                haut = 860 if a["gabarit"] == "photo" else 430
                 preparer_photo(Path(info["chemin"]), d / "photo.jpg", W, haut,
                                boite=info.get("recadrage_conseille"),
                                foyer=tuple(info.get("foyer", (0.5, 0.5))))
+                photo = True
+            elif a["gabarit"] == "collage":
+                for i, cid in enumerate(a["photos"], 1):
+                    info = ph[cid]
+                    preparer_photo(Path(info["chemin"]), d / f"photo-{i}.jpg", 535, 448,
+                                   boite=info.get("recadrage_conseille"),
+                                   foyer=tuple(info.get("foyer", (0.5, 0.5))))
+                pid = ",".join(a["photos"])
                 photo = True
             elif a["gabarit"] == "photo":
                 manquantes.append(p["slug"])
@@ -258,7 +331,7 @@ def cmd_tout(seulement: list[str]) -> int:
             (d / "fiche.json").write_text(json.dumps({
                 "numero": numero(p), "date": p["date"], "heure": HEURE, "slug": p["slug"],
                 "page": "Hourdis Madagascar (470850726774233)", "lien": lien(p),
-                "photo": pid, "photo_chemin": ph.get(pid, {}).get("chemin") if pid else None,
+                "photo": pid, "photo_chemin": ph.get(pid, {}).get("chemin") if pid and pid in ph else None,
                 "gabarit": a["gabarit"], "caracteres": len(texte),
             }, ensure_ascii=False, indent=2), encoding="utf-8")
             print(f"✅ {numero(p):02d} {d.name}  ({len(texte)} car.)" + ("" if photo or a["gabarit"] in ("capture", "tarifs") else "  ⚠ SANS PHOTO"))
@@ -310,7 +383,7 @@ def cmd_planche(_args) -> int:
             with Image.open(d / "affiche-fil.png") as im:
                 im = im.convert("RGB").resize((tw, th), Image.LANCZOS)
             planche.paste(im, (8 + (i % 5) * (tw + 8), 8 + (i // 5) * (th + 8)))
-        f = ICI / f"planche-{n // 15 + 1}.jpg"
+        f = ICI / f"planche{NOM}-{n // 15 + 1}.jpg"
         planche.save(f, "JPEG", quality=80)
         print(f, f.stat().st_size // 1024, "Ko")
     return 0
@@ -329,7 +402,7 @@ def cmd_cahier(_args) -> int:
         texte = (d / "brouillon.txt").read_text(encoding="utf-8") if (d / "brouillon.txt").exists() else "(non fabriqué)"
         blocs.append(f"""<article><img src="sortie/{d.name}/affiche-fil.png" alt="">
 <div><h2>{numero(p):02d} · {JOURS[j.weekday()]} {j:%d/%m} · {HEURE}</h2><pre>{esc(texte)}</pre></div></article>""")
-    (ICI / "cahier.html").write_text(f"""<!doctype html><html lang="fr"><head><meta charset="utf-8">
+    (ICI / f"cahier{NOM}.html").write_text(f"""<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Hourdis — 30 publications</title>
 <style>body{{font-family:"Segoe UI",Arial,sans-serif;margin:0 auto;max-width:1000px;padding:16px;background:#F8F9FA;color:#1A1A1A}}
 h1{{color:#9A4A2B}}article{{display:flex;flex-wrap:wrap;gap:20px;background:#fff;border-radius:10px;padding:16px;margin:16px 0;box-shadow:0 1px 4px rgba(0,0,0,.08)}}
@@ -338,7 +411,7 @@ h2{{font-size:18px;margin:0 0 8px;color:#B85C38}}pre{{white-space:pre-wrap;font-
 <body><h1>Hourdis Madagascar — 30 publications, 19/09 → 18/10/2026</h1>
 <p>Une publication par jour à {HEURE} (heure de Tana). Le texte ci-dessous est exactement celui qui partira.</p>
 {''.join(blocs)}</body></html>""", encoding="utf-8")
-    print(ICI / "cahier.html")
+    print(ICI / f"cahier{NOM}.html")
     return 0
 
 

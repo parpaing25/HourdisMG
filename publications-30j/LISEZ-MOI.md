@@ -36,7 +36,47 @@ puis `verifier.py`, puis regarder `planche-1.jpg` et `planche-2.jpg`.
 - **Lien** : `utm_content=j01…j30` ne se lit pas dans `stat.php` (il ne garde que le chemin) mais dans les
   journaux d'accès Apache d'o2switch, qui gardent l'adresse complète.
 
-## Programmation — en attente
+## Reels — ce qui part vraiment à 18:00 (ordre d'Andry du 18/09/2026)
+
+« Crée des reels à publier à chaque 18 h et programme la publication » : la série part en
+**reels** (1080×1920, ~12,5 s), un par jour à 18:00, avec le texte de `brouillon.txt` en légende.
+Les affiches 1080×1350 restent en réserve ; elles ne sont PAS programmées (sinon deux
+publications par jour).
+
+| Étape | Fichier |
+|---|---|
+| Scènes (3 par reel, écrites à la main, contrôlées par `verifier.py`) | `reels_scenes.py` |
+| Rendu : scènes PNG + montage `marketing/atelier/clip.py` de Fonenako (importé, pas copié) | `reels.py tout` → `sortie/<post>/reel.mp4` |
+| Programmation par l'API Reels (start → envoi → finish `SCHEDULED`) | `programmer_reels.py` (à blanc par défaut, `--envoyer`, `--relire`) |
+| Trace des reels acceptés (identifiants vidéo) | `programmation-reels.json` |
+
+- **Son** : musique Mixkit de la bibliothèque de l'atelier (sans attribution), catégories annonce
+  et confiance, jamais deux jours de suite la même. Sans voix, `clip.py` laissait la musique à 0.22
+  (−27,5 LUFS, inaudible) : `reels.py` ramène chaque reel vers −14 LUFS (mesuré −15,9 sur le premier).
+  **Niveau choisi par la norme, pas encore à l'oreille d'Andry.**
+- Essai du 18/09 : reel du 19/09 accepté (`published: false`, `publish_status: scheduled`,
+  15:00 UTC = 18:00 Tana), contrôle de droits d'auteur de Facebook passé sans correspondance.
+
+## Série de 14:00 — publications photo (demande d'Andry du 18/09/2026)
+
+« Fais des publications encore pour 30 jours, à chaque 14 h, regarde les publications
+nécessaires et attirantes » : `serie14.py`, 30 publications photo du 19/09 au 18/10 à 14:00,
+en plus des reels de 18:00, sans doubler le sujet du reel du même jour.
+
+- **Nécessaires** : bâties sur ce que les clients demandent vraiment. Relevé du 18/09 sur 948
+  messages privés et 21 commentaires (thèmes comptés par script, aucun nom retenu) :
+  disponible/stock 186 · prix 110 · adresse 108 · plancher/dalle 79 · quantités 76 ·
+  hauteur 12/15/20 64 · livraison 41 · photos réelles 26 · pose. Les questions sont reformulées.
+- **Attirantes** : budgets chiffrés sur des cas réels (10 m × 8 m, mur 40 m × 2,5 m, tafo
+  100 m², étage 60 m²), vraies photos de l'atelier en collage, pose en 3 épisodes, quiz,
+  vocabulaire du chantier, schéma à l'échelle des hourdis 12/15/20.
+- Gabarits ajoutés à `fabriquer.py` : `question`, `collage`, `hauteurs`, `note` sous les cartes.
+- `verifier.py` refait chaque calcul « A × B = C » (21 dans cette série) ; un total n'est admis
+  que s'il sort d'un calcul juste. Une photo ne sert qu'une fois dans la série.
+- Commandes : `set HOURDIS_SERIE=serie14` puis `fabriquer.py tout`, `verifier.py`,
+  `fabriquer.py planche`, `fabriquer.py cahier` (→ `cahier-14h.html`), `programmer_photos.py`.
+
+## Publications photo de la série de 18:00 — non programmées
 
 La programmation par l'API Graph (jeton de page du profil Hermes `hourdis`, `pages_manage_posts`) a été
 **refusée par le classificateur de la session** le 18/09/2026 : elle attend l'ordre explicite d'Andry.
