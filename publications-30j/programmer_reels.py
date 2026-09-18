@@ -33,12 +33,13 @@ import requests
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 ICI = Path(__file__).resolve().parent
 sys.path.insert(0, str(ICI))
-from serie import SERIE, HEURE  # noqa: E402
-from fabriquer import dossier  # noqa: E402
+# Série choisie par HOURDIS_SERIE : « serie » (reels muets de 18:00, défaut) ou
+# « serie_voix » (reels expliqués de 10:00). Chacune a son propre journal.
+from fabriquer import SERIE, HEURE, NOM, dossier  # noqa: E402
 
 API = "https://graph.facebook.com/v21.0"
 TANA = ZoneInfo("Indian/Antananarivo")
-JOURNAL = ICI / "programmation-reels.json"
+JOURNAL = ICI / f"programmation-reels{NOM}.json"
 
 
 def jeton() -> tuple[str, str]:

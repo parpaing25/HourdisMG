@@ -76,6 +76,33 @@ en plus des reels de 18:00, sans doubler le sujet du reel du même jour.
 - Commandes : `set HOURDIS_SERIE=serie14` puis `fabriquer.py tout`, `verifier.py`,
   `fabriquer.py planche`, `fabriquer.py cahier` (→ `cahier-14h.html`), `programmer_photos.py`.
 
+## Série de 10:00 — reels EXPLIQUÉS par la voix Abidi (demande d'Andry du 18/09/2026, 22 h 50)
+
+« Crée des reels, et travaille avec les voix malgaches comme Abidi, pour explication » puis
+« fais pour 30 j, regarde les bonnes heures pour les publications » : `serie_voix.py`, 30 reels
+de 20 à 30 s, du 20/09 au 19/10 à **10:00**.
+
+- **L'heure est mesurée** : 797 messages clients depuis 2025, pics à 10 h, 13 h, 15 h et 18 h,
+  2 à 3 fois plus en semaine que le week-end ; les publications de 10 h ont eu 0,96 réaction en
+  moyenne (170 publications) contre 0,81 à 18 h et 0,5 à 7 h. 14:00 et 18:00 étaient déjà sur
+  des pics.
+- **La voix est la chaîne validée à l'oreille**, importée telle quelle : `voix.narration()`
+  (N3 du 04/09/2026) et `marketing/atelier/film.py` (musique « tuto » 0.22 en side-chain,
+  −14 LUFS). `voix_reels.py` n'ajoute que le lexique de « hourdis » et des sous-titres terre cuite.
+- **« hourdis » porte un u** (hors alphabet malgache) : `voix_reels.py essai` le fait dire de
+  quatre façons (`essai-prononciation/ESSAI-hourdis-1-2-3-4.mp3`). Le choix d'Andry s'écrit dans
+  `prononciation.json` ({"hourdis": "ordy"} par exemple), puis `voix_reels.py tout` refait les
+  voix. Sans ce fichier, « ordy » par défaut, NON validé. Mesure du 18/09 : « hourdis » brut
+  dure 10,4 s contre ~6 s pour les trois autres — Abidi bute dessus.
+- **Nombres** : `{n:3400}` dans le texte ; la voix dit « telo arivo sy efajato », les
+  sous-titres et la légende écrivent « 3 400 » (section `## MG` de post.md). Même forme que la
+  narration Fonenako validée (« iray hetsy sy roa alina »).
+- `voix_reels.py verifier` : alphabet malgache, particule « ve », prix et calculs des écrans,
+  voix et sous-titres coupés pareil, photos uniques. Calibré le 18/09 sur 4 fautes glissées
+  exprès (c/q/u, question sans ve, calcul faux, prix hors catalogue) : 4 sur 4 attrapées.
+- Programmation : `set HOURDIS_SERIE=serie_voix` puis `programmer_reels.py` (journal
+  `programmation-reels-voix.json`), **seulement après le choix de prononciation d'Andry**.
+
 ## Publications photo de la série de 18:00 — non programmées
 
 La programmation par l'API Graph (jeton de page du profil Hermes `hourdis`, `pages_manage_posts`) a été
