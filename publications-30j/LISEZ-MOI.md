@@ -101,7 +101,16 @@ de 20 à 30 s, du 20/09 au 19/10 à **10:00**.
   voix et sous-titres coupés pareil, photos uniques. Calibré le 18/09 sur 4 fautes glissées
   exprès (c/q/u, question sans ve, calcul faux, prix hors catalogue) : 4 sur 4 attrapées.
 - Programmation : `set HOURDIS_SERIE=serie_voix` puis `programmer_reels.py` (journal
-  `programmation-reels-voix.json`), **seulement après le choix de prononciation d'Andry**.
+  `programmation-reels-voix.json`).
+- **19/09 — tranché sur délégation d'Andry (« essaye de trancher les meilleurs »)** :
+  « hourdis » se dit **hordy** (`prononciation.json`, raisons écrites dedans) ; 19 reels le
+  disent, les 11 autres ne prononcent pas le mot. On **garde trois publications par jour**
+  (10 h reel expliqué, 14 h photo, 18 h reel musique) : trois pics mesurés, trois formats,
+  et supprimer des reels programmés serait destructif — à revoir après une semaine de mesures.
+  L'oreille automatique (whisper-base) ne sait pas lire le malgache (étalonnée sur une
+  narration validée : charabia) : elle a écarté des variantes, elle n'a pas choisi seule.
+- Fin de série : le 18/10 (trois séries) et le 19/10 (10:00) dépassaient la fenêtre de
+  ~29 jours : `programmer-18-octobre.cmd`, à lancer le dimanche 20/09 après 10:00.
 
 ## Publications photo de la série de 18:00 — non programmées
 

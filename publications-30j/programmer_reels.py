@@ -180,7 +180,7 @@ def relire(tok: str, j: dict) -> int:
         print(f"   {'✅' if ok_t and ok_m else '⚠️'} {cle} → {heure_txt} · vidéo {st.get('video_status')} · "
               f"traitement {(st.get('processing_phase') or {}).get('status')} · publication {pub}"
               f"{'' if ok_m else ' · TEXTE DIFFÉRENT'}{'' if ok_t else ' · HEURE À VÉRIFIER'}")
-    print(f"\n{bons}/{len(j)} reels programmés conformes (texte exact, 18:00 Tana).")
+    print(f"\n{bons}/{len(j)} reels programmés conformes (texte exact, {HEURE} Tana).")
     return 0 if bons == len(j) else 1
 
 
