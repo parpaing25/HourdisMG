@@ -158,6 +158,23 @@ body{font-family:"Segoe UI",Roboto,Arial,sans-serif;color:#1A1A1A;background:#FF
 .hforme b{font-size:52px;font-weight:800;text-shadow:0 2px 6px rgba(0,0,0,.35)}
 .hprix{font-size:46px;font-weight:800;margin-top:18px}
 .hnote{position:absolute;left:56px;right:56px;top:1110px;font-size:40px;color:#495057;text-align:center}
+/* gabarit etapes — la chaîne commande → production → livraison, avec des DATES réelles
+   (série de novembre : le thème le plus demandé n'a pas de stock pour réponse, il a un calendrier) */
+.g-etapes .tete{position:absolute;left:0;top:0;width:1080px;height:420px;background:#B85C38;color:#fff;padding:56px 56px 0}
+.g-etapes .tete .marque{position:static;margin-bottom:34px;text-shadow:none}
+.g-etapes .titre{font-size:76px;margin-top:22px}
+.g-etapes .sous{color:#F7EAE3;font-size:42px}
+.etapes{position:absolute;left:56px;right:56px;top:470px}
+.etape{position:relative;padding:0 0 74px 128px;min-height:98px}
+.etape:before{content:"";position:absolute;left:43px;top:98px;bottom:0;width:6px;background:#F0D9CE}
+.etape:last-child{padding-bottom:0}
+.etape:last-child:before{display:none}
+.etape .puce{position:absolute;left:0;top:0;margin:0;width:92px;height:92px;border-radius:50%;background:#B85C38;color:#fff;font-size:46px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.etape b{display:block;font-size:50px;font-weight:800;line-height:1.1}
+.etape span{display:block;font-size:38px;color:#6B7280;margin-top:10px}
+.arrivee{position:absolute;left:56px;right:56px;bottom:152px;background:#F7EAE3;border-radius:26px;padding:28px 36px;text-align:center}
+.arrivee i{display:block;font-style:normal;font-size:30px;font-weight:800;letter-spacing:4px;color:#9A4A2B}
+.arrivee b{display:block;font-size:66px;font-weight:800;color:#1A1A1A;margin-top:10px}
 /* gabarit capture */
 .g-capture{background:#B85C38}
 .g-capture .tete{position:absolute;left:0;top:0;width:1080px;padding:56px 56px 0;color:#fff}
@@ -255,6 +272,16 @@ def html_affiche(p: dict, a: dict, photo: bool) -> str:
         corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
 <div class="titre" data-max="92" style="white-space:nowrap">{esc(a['titre'])}</div><div class="sous" data-max="56" style="white-space:nowrap">{esc(a.get('sous_titre'))}</div></div>
 <div class="hauteurs">{''.join(blocs)}</div><div class="hnote">{esc(a.get('note'))}</div>{pied()}"""
+    elif g == "etapes":
+        # commande → production → livraison : chaque étape porte sa durée, et l'encadré du bas
+        # porte la date d'arrivée sur le chantier (vérifiée par verifier.py depuis « calendrier »)
+        pas = "".join(f'<div class="etape"><span class="puce">{i}</span>'
+                      f'<b>{esc(titre_)}</b><span>{esc(duree_)}</span></div>'
+                      for i, (titre_, duree_) in enumerate(a["etapes"], 1))
+        corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
+<div class="titre" data-max="92" style="white-space:nowrap">{esc(a['titre'])}</div><div class="sous" data-max="56" style="white-space:nowrap">{esc(a.get('sous_titre'))}</div></div>
+<div class="etapes">{pas}</div>
+<div class="arrivee"><i>{esc(a.get('arrivee_libelle'))}</i><b>{esc(a['arrivee'])}</b></div>{pied()}"""
     elif g == "capture":
         corps = f"""<div class="tete">{marque()}<span class="badge clair">{esc(a['badge'])}</span>
 <div class="titre" data-max="92" style="white-space:nowrap">{esc(a['titre'])}</div><div class="sous" data-max="56" style="white-space:nowrap">{esc(a.get('sous_titre'))}</div></div>
@@ -334,7 +361,9 @@ def cmd_tout(seulement: list[str]) -> int:
                 "photo": pid, "photo_chemin": ph.get(pid, {}).get("chemin") if pid and pid in ph else None,
                 "gabarit": a["gabarit"], "caracteres": len(texte),
             }, ensure_ascii=False, indent=2), encoding="utf-8")
-            print(f"✅ {numero(p):02d} {d.name}  ({len(texte)} car.)" + ("" if photo or a["gabarit"] in ("capture", "tarifs") else "  ⚠ SANS PHOTO"))
+            print(f"✅ {numero(p):02d} {d.name}  ({len(texte)} car.)"
+                  + ("" if photo or a["gabarit"] in ("capture", "tarifs", "question", "hauteurs", "etapes")
+                     else "  ⚠ SANS PHOTO"))
         nav.close()
     if manquantes:
         print("⚠ photo non affectée :", ", ".join(manquantes))

@@ -124,3 +124,25 @@ Méthode prévue : `POST /{page}/photos` avec l'affiche, la légende, `published
 (5b0556cf3133) et `publier-du-jour` (d2824e3427fc) sont actifs. Ils ne publient qu'après un « OK » d'Andry
 à la proposition du lundi, et n'ont jamais rien publié (`published.log` vide). Pendant la série, les mettre
 en pause : `docker exec -u hermes hermes hermes --profile hourdis cron pause <id>`.
+
+## Série de novembre — 30 publications du 20/10 au 18/11/2026 (PRÊTE, NON PROGRAMMÉE)
+
+`serie_novembre.py`, une publication par jour à **10:00**, sortie `sortie-novembre/`.
+Préparée le 07/10/2026 pendant que la page est **bloquée par Meta** (refus du 06/10 04:00:21,
+code 368 sous-code 1404132, `bot-hourdis/data/bot.db` table `publications` id 24) : **rien n'a été
+programmé, aucun appel Meta n'a été fait**. Le mois attend le déblocage.
+
+- **Angle** : la série est *proportionnée au relevé du 18/09* (948 messages privés + 21 commentaires,
+  690 occurrences) — commande 8 · prix 5 · adresse 5 · pose 3 · quantités 3 · hauteur 3 ·
+  livraison 2 · photos 1. `verifier.py` refait cette répartition (plus fort reste, depuis `MESURE`)
+  et refuse la série si elle dérive. Le thème n°1 n'a pas un stock pour réponse mais un
+  **calendrier** : quatre publications portent des dates réelles, recalculées (commande + 33 à + 37 j).
+- **Huit mises en page** : `etapes` (nouveau gabarit, la chaîne commande → production → livraison),
+  `question`, `carte`, `photo`, `collage`, `hauteurs`, `capture`, `tarifs`.
+- **Contrôles ajoutés** (empilés sur ceux des autres séries, aucun retiré) : « stock » interdit en
+  entier, numéros de téléphone vérifiés, calendriers recalculés et dates exigées dans le texte,
+  photos ≥ 1080 px et sans filigrane, au moins 3 mises en page, répartition = mesure.
+- Commandes : `set HOURDIS_SERIE=serie_novembre` puis `fabriquer.py tout`, `verifier.py`,
+  `fabriquer.py planche` (→ `planche-novembre-1.jpg`, `-2.jpg`), `fabriquer.py cahier`
+  (→ `cahier-novembre.html`). Rendu par lots de 10 avec mesure de la mémoire virtuelle libre.
+- **L'heure (10:00) repose sur la mesure de LISEZ-MOI, NON RECALCULÉE** : une ligne `HEURE` à changer.

@@ -38,6 +38,12 @@ def nombre(s: str) -> float:
 
 INTERDITS = [r"\bstock disponible\b", r"\bmisy hatrany\b", r"\ben stock\b", r"\bdispo\b",
              r"\bdisponible\b", r"whatsapp", r"@gmail", r"\bpromo\b", r"\bgaranti"]
+# une série peut DURCIR la liste (jamais l'alléger) : INTERDITS_EN_PLUS dans son module
+INTERDITS += list(getattr(_MODULE, "INTERDITS_EN_PLUS", []))
+TELEPHONES = {"032 47 041 43", "033 71 063 34"}
+TEL = re.compile(r"\b0\d{2}[  ]?\d{2}[  ]?\d{3}[  ]?\d{2}\b")
+# le délai du catalogue, en jours : ≈ 30 de production + 3 à 7 de livraison (produits.json)
+DELAI = (33, 37)
 PRIX = {pr["prix"] for c in PRODUITS["categories"] for pr in c["produits"]} | {1500}
 RATIOS = {9, 12, 15, 75}
 INTERROGATIFS = r"\b(firy|inona|ahoana|aiza|iza|rahoviana|nahoana|ohatrinona|sa|ve)\b|\?\s*$"
@@ -45,7 +51,7 @@ INTERROGATIFS = r"\b(firy|inona|ahoana|aiza|iza|rahoviana|nahoana|ohatrinona|sa|
 
 def main() -> int:
     erreurs, avis = [], []
-    compte = {"montants": 0, "exemples": 0, "questions": 0, "calculs": 0}
+    compte = {"montants": 0, "exemples": 0, "questions": 0, "calculs": 0, "dates": 0}
     if len(SERIE) != 30:
         erreurs.append(f"{len(SERIE)} publications au lieu de 30")
     debut = date.fromisoformat(DEBUT)
@@ -115,6 +121,24 @@ def main() -> int:
         for motif in INTERDITS:
             if re.search(motif, t, re.I):
                 erreurs.append(f"{nom} : mot interdit /{motif}/")
+        # seuls les deux numéros d'appel de la page peuvent figurer dans un texte
+        for m in TEL.finditer(t):
+            if re.sub(r"[  ]", " ", m.group(0)) not in TELEPHONES:
+                erreurs.append(f"{nom} : numéro inconnu {m.group(0)!r}")
+        # le calendrier annoncé est REFAIT : commande + 33 à + 37 jours (≈ 30 de production
+        # + 3 à 7 de livraison), et les deux dates doivent être écrites dans le texte
+        cal = p.get("calendrier")
+        if cal:
+            compte["dates"] += 1
+            c0 = date.fromisoformat(cal["commande"])
+            attendu = [c0 + timedelta(days=DELAI[0]), c0 + timedelta(days=DELAI[1])]
+            dits = [date.fromisoformat(x) for x in cal["chantier"]]
+            if dits != attendu:
+                erreurs.append(f"{nom} : calendrier faux, {cal['commande']} + {DELAI[0]}–{DELAI[1]} j "
+                               f"donne {attendu[0]}…{attendu[1]}, pas {dits[0]}…{dits[1]}")
+            for d_ in [c0] + dits:
+                if f"{d_:%d/%m}" not in t:
+                    erreurs.append(f"{nom} : la date {d_:%d/%m} du calendrier n'est pas écrite dans le texte")
         if f"utm_content={PREFIXE}{i:02d}" not in t:
             erreurs.append(f"{nom} : lien sans utm_content={PREFIXE}{i:02d}")
         if len(re.findall(r"(?<!\w)#\w+", t.split("\n")[-1])) != 5:
@@ -136,12 +160,50 @@ def main() -> int:
         if pid in vues:
             erreurs.append(f"photo {pid} employée deux fois : {vues[pid]} et {slug}")
         vues[pid] = slug
+    # au moins trois mises en page différentes dans une série
+    gabarits = {p["affiche"]["gabarit"] for p in SERIE}
+    if len(gabarits) < 3:
+        erreurs.append(f"une seule famille d'affiche : {sorted(gabarits)} (il en faut au moins 3)")
+    # photos employées : connues du catalogue, assez larges, sans filigrane (sur demande du module)
+    if getattr(_MODULE, "PHOTOS_EXIGEANTES", False):
+        cat = {x["id"]: x for x in json.loads((ICI / "photos.json").read_text(encoding="utf-8"))}
+        for pid in {x[1] for x in emplois}:
+            info = cat.get(pid)
+            if not info:
+                erreurs.append(f"photo {pid} absente de photos.json (photo de provenance inconnue ?)")
+                continue
+            if int(info["dimensions"].split("x")[0]) < 1080:
+                erreurs.append(f"photo {pid} : {info['dimensions']}, trop petite pour une affiche 1080")
+            if any("filigrane" in d.lower() for d in info["defauts"]):
+                erreurs.append(f"photo {pid} : filigrane ({info['defauts']})")
+    # la série est-elle répartie comme la mesure ? (plus fort reste, refait ici)
+    mesure = getattr(_MODULE, "MESURE", None)
+    if mesure:
+        total = sum(mesure.values())
+        brut = {k: v * len(SERIE) / total for k, v in mesure.items()}
+        attendu = {k: int(v) for k, v in brut.items()}
+        reste = sorted(mesure, key=lambda k: (-(brut[k] - attendu[k]), -mesure[k]))
+        for k in reste[:len(SERIE) - sum(attendu.values())]:
+            attendu[k] += 1
+        obtenu = {k: 0 for k in mesure}
+        for p in SERIE:
+            th = p.get("theme")
+            if th not in obtenu:
+                erreurs.append(f"{p['slug']} : thème {th!r} hors de la mesure")
+            else:
+                obtenu[th] += 1
+        if obtenu != attendu:
+            erreurs.append(f"répartition {obtenu} ≠ mesure au prorata {attendu}")
+        else:
+            print("répartition au prorata de la mesure :",
+                  " · ".join(f"{k} {mesure[k]}→{attendu[k]}" for k in mesure))
     for a in avis:
         print("⚠", a)
     for e in erreurs:
         print("❌", e)
     print(f"\ncontrôlés : {compte['montants']} montants en Ar, {compte['exemples']} exemples m² → pièces, "
-          f"{compte['calculs']} calculs refaits, {compte['questions']} questions")
+          f"{compte['calculs']} calculs refaits, {compte['dates']} calendriers refaits, "
+          f"{compte['questions']} questions, {len(gabarits)} mises en page")
     print(f"{'VERDICT ok' if not erreurs else 'VERDICT REFUSÉ'} — {len(erreurs)} erreur(s), {len(avis)} avertissement(s)")
     return 0 if not erreurs else 1
 
